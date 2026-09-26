@@ -1,0 +1,11 @@
+node_modules/
+server/
+.git/
+.codex/
+.agents/
+.env
+.env.*
+package.json
+package-lock.json
+wrangler.jsonc
+*.log
