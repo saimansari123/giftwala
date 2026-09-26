@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  imageName: String, imageUrl: String, name: { type: String, required: true }, sku: { type: String, unique: true },
+  imageName: String, imageUrl: String, images: { type: [String], default: [] }, name: { type: String, required: true }, sku: { type: String, unique: true },
   category: { type: String, required: true }, price: Number, salePrice: Number,
   stock: { type: Number, default: 0 }, description: String, featured: Boolean
 }, { timestamps: true });
@@ -18,4 +18,7 @@ const orderSchema = new mongoose.Schema({
   paymentMethod: { type: String, default: 'cod' }
 }, { timestamps: true });
 
-module.exports = { Product: mongoose.model('Product', productSchema), Review: mongoose.model('Review', reviewSchema), Order: mongoose.model('Order', orderSchema) };
+const categorySchema = new mongoose.Schema({ name: { type: String, unique: true, required: true, trim: true } }, { timestamps: true });
+const settingsSchema = new mongoose.Schema({ key: { type: String, unique: true, required: true }, value: mongoose.Schema.Types.Mixed }, { timestamps: true });
+
+module.exports = { Product: mongoose.model('Product', productSchema), Review: mongoose.model('Review', reviewSchema), Order: mongoose.model('Order', orderSchema), Category: mongoose.model('Category', categorySchema), Settings: mongoose.model('Settings', settingsSchema) };
