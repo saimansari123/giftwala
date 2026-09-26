@@ -3,6 +3,12 @@
 	"name": "giftwala",
 	"compatibility_date": "2026-09-25",
 	"main": "src/worker.js",
+	"routes": [
+		{
+			"pattern": "giftwalapk.store",
+			"custom_domain": true
+		}
+	],
 	"assets": {
 		"directory": ".",
 		"binding": "ASSETS",
@@ -10,13 +16,12 @@
 			"/api/*"
 		]
 	},
-	"migrations_dir": "migrations",
 	"observability": {
 		"enabled": true
 	},
 	"d1_databases": [
 		{
-			"binding": "giftwala_db",
+			"binding": "DB",
 			"database_name": "giftwala-db",
 			"database_id": "de60f448-4afc-4838-bb4e-b4e3f46348f2",
 			"remote": true
