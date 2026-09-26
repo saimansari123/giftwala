@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS products (id TEXT PRIMARY KEY, name TEXT NOT NULL, sku TEXT UNIQUE NOT NULL, category TEXT NOT NULL, price REAL DEFAULT 0, sale_price REAL DEFAULT 0, stock INTEGER DEFAULT 0, description TEXT DEFAULT '', image_url TEXT DEFAULT '', images TEXT DEFAULT '[]', featured INTEGER DEFAULT 0, created_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, created_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, customer_name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT DEFAULT '', address TEXT NOT NULL, payment_method TEXT DEFAULT 'Cash on Delivery', items TEXT NOT NULL, total REAL DEFAULT 0, status TEXT DEFAULT 'pending', created_at INTEGER NOT NULL);
