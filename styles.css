@@ -184,11 +184,14 @@ html,body{overflow-x:hidden!important}.category-strip{position:relative!importan
 .site-header .header-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;flex:0 0 auto!important;gap:12px!important}
 .announcement span{font-size:0!important;margin:0 10px!important}.announcement span:after{content:'';font-size:11px!important}
 @media(max-width:850px){.site-header{height:72px!important;padding:0 18px!important}.site-header .desktop-nav{display:none!important}.site-header .brand{width:125px!important;flex-basis:125px!important}.site-header .header-actions{margin-left:auto!important}.site-header .menu-btn{display:grid!important}}
-.site-header>.brand,.site-header>.brand:before{background-image:url('/assets/brand/giftwala-logo.jpeg')!important}
-.site-header:before{background-image:url('/assets/brand/giftwala-logo.jpeg')!important}
-.reference-footer .footer-brand img{content:url('/assets/brand/giftwala-logo.jpeg')!important}
+.site-header>.brand,.site-header>.brand:before{background-image:url('/assets/brand/giftwala-logo.jpeg?v=20260927-1415')!important}
+.site-header:before{background-image:url('/assets/brand/giftwala-logo.jpeg?v=20260927-1415')!important}
+.reference-footer .footer-brand img{content:url('/assets/brand/giftwala-logo.jpeg?v=20260927-1415')!important}
 .site-header{background:#110e09!important}
 .site-header>.brand:before{background-color:#110e09!important}
+.site-header>.brand,.site-header>.brand:before,.site-header:before{background-size:112px 112px!important}
+@media(max-width:850px){.site-header>.brand,.site-header>.brand:before,.site-header:before{background-size:100px 100px!important}}
+.actions .light,.actions .light:hover{color:#171513!important}
 .occasion-list{gap:0!important}.occasion-list a{margin:0!important}
 @media(max-width:850px){.category-strip{padding-left:0!important;padding-right:0!important}.category-strip .section-label{margin-left:8%!important;margin-right:8%!important}.occasion-list{gap:12px!important;padding-left:8%!important;padding-right:8%!important}.occasion-list a{width:150px!important;min-width:150px!important;padding:12px!important}.occasion-list span{height:125px!important}.occasion-list b{font-size:12px!important;line-height:1.35!important}.occasion-list small{font-size:10px!important;line-height:1.45!important}}
 .occasion-list{animation:none!important;transform:none!important;overflow-x:auto!important;justify-content:flex-start!important}
