@@ -13,6 +13,20 @@ function clearDemoAdminData(){
   document.querySelectorAll('#settings input').forEach(input=>{if(input.type!=='password')input.value=''});
 }
 document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('[data-go="add-product"],[data-page="add-product"]').forEach(button=>{
+    button.type='button';
+    button.addEventListener('click',event=>{
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      document.querySelectorAll('.section').forEach(section=>section.classList.toggle('active',section.id==='add-product'));
+      document.querySelectorAll('[data-page]').forEach(item=>item.classList.toggle('active',item===button||item.dataset.page==='add-product'));
+      const crumb=document.getElementById('crumb');
+      if(crumb)crumb.textContent='Add Product';
+      window.scrollTo(0,0);
+    },true);
+  });
+});
+document.addEventListener('DOMContentLoaded',()=>{
   const style=document.createElement('style');
   style.textContent='.admin-login-overlay{background:#fff!important}.admin-password-wrap{position:relative}.admin-password-wrap input{width:100%;padding-right:44px!important}.admin-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:30px;height:30px;padding:0!important;border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;color:#7f6a4b;cursor:pointer;line-height:1}.admin-password-toggle:hover{color:#b47712;background:transparent!important}.admin-password-toggle svg{width:19px;height:19px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}';
   document.head.appendChild(style);
