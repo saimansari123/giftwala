@@ -189,8 +189,8 @@ html,body{overflow-x:hidden!important}.category-strip{position:relative!importan
 .reference-footer .footer-brand img{content:url('/assets/brand/giftwala-logo.png?v=20260927-1440')!important}
 .site-header{background:#110e09!important}
 .site-header>.brand:before{background-color:#110e09!important}
-.site-header>.brand,.site-header>.brand:before,.site-header:before{background-size:112px 112px!important}
-@media(max-width:850px){.site-header>.brand,.site-header>.brand:before,.site-header:before{background-size:100px 100px!important}}
+.site-header>.brand,.site-header>.brand:before,.site-header:before{background-size:112px auto!important;background-repeat:no-repeat!important;background-position:center!important}
+@media(max-width:850px){.site-header>.brand,.site-header>.brand:before,.site-header:before{background-size:100px auto!important}}
 .actions .light{background:#f6e4b5!important;color:#b47d1d!important}
 .actions .light:hover{background:#f2d995!important;color:#8f6013!important}
 .occasion-list{gap:0!important}.occasion-list a{margin:0!important}
@@ -240,3 +240,16 @@ body,button,input,select,textarea{font-family:'Montserrat',Arial,sans-serif!impo
 .product-image .discount-badge{min-width:52px!important;height:30px!important;top:10px!important;right:10px!important}.product-info h3{cursor:pointer!important;transition:color .2s ease,transform .2s ease!important}.product-info h3:hover{color:#b47d1d!important;transform:translateX(2px)!important}
 @media(max-width:850px){.product-image:after,.product-image:before{display:none!important;content:none!important}.product-card:hover .product-image:after,.product-card:hover .product-image:before{transform:none!important;width:0!important}}
 .crumb{display:inline-flex!important;align-items:center!important;gap:7px!important;padding:10px 14px!important;border:1px solid #e5aa3c!important;border-radius:8px!important;background:#fffaf2!important;color:#8b5b12!important;font-weight:600!important;transition:transform .22s ease,background .22s ease,box-shadow .22s ease,color .22s ease!important}.crumb:hover{background:#e5aa3c!important;color:#171513!important;transform:translateX(-3px) translateY(-2px)!important;box-shadow:0 8px 18px #b47d1d30!important}.crumb:active{transform:translateX(0) scale(.97)!important}@media(max-width:600px){.crumb{width:100%!important;justify-content:center!important;margin-bottom:4px!important;padding:12px 14px!important;font-size:12px!important}.page{padding-left:16px!important;padding-right:16px!important}}
+/* Compact search + cart toolbar */
+.site-header .header-actions{gap:24px!important}
+.site-header .header-search{display:flex!important;align-items:center!important;width:385px;height:40px;border:1px solid #cfc5b6;border-radius:6px;background:#fff;padding:0 12px;gap:10px}
+.site-header .header-search span{width:14px;height:14px;border:1.8px solid #716b63;border-radius:50%;position:relative;flex:0 0 14px}
+.site-header .header-search span:after{content:'';position:absolute;width:6px;height:1.8px;background:#716b63;right:-5px;bottom:-2px;transform:rotate(45deg)}
+.site-header .header-search input{border:0;outline:0;background:transparent;width:100%;font-size:14px;color:#171513}
+.site-header .header-search input::placeholder{color:#716b63}
+.site-header .cart-trigger{display:flex!important;align-items:center;justify-content:center;gap:9px;width:110px;height:40px;border-radius:6px;background:#111;color:#fff!important;font-size:13px;font-weight:700;position:relative}
+.site-header .cart-trigger .cart-icon{width:14px;height:13px;border:1.5px solid #fff;border-radius:2px;position:relative}
+.site-header .cart-trigger .cart-icon:before{content:'';position:absolute;width:7px;height:5px;border:1.5px solid #fff;border-bottom:0;border-radius:6px 6px 0 0;left:2px;top:-6px}
+.site-header .cart-trigger b{font-size:13px}
+.site-header .cart-trigger em{position:static!important;width:18px;height:18px;background:#3e3e3e;color:#fff;font-size:11px;font-weight:700}
+@media(max-width:850px){.site-header .header-actions{gap:8px!important}.site-header .header-search{width:calc(100vw - 150px);height:36px}.site-header .cart-trigger{width:40px;height:36px;padding:0}.site-header .cart-trigger b{display:none}.site-header .cart-trigger em{position:absolute!important;right:-5px;top:-6px}.site-header .header-search input{font-size:12px}.site-header .menu-btn{display:none!important}}
