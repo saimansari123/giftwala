@@ -1,8 +1,22 @@
 const auth=()=>localStorage.getItem('giftwala_admin_token');
+function clearDemoAdminData(){
+  document.querySelectorAll('#dashboard .stat h2').forEach((el,i)=>{el.textContent=i===0?'Rs. 0':'0'});
+  document.querySelectorAll('#dashboard .trend').forEach(el=>{el.textContent='No data yet'});
+  document.querySelector('#dashboard .activity')?.replaceChildren();
+  document.querySelector('#dashboard .bars')?.replaceChildren();
+  document.querySelector('#products tbody')?.replaceChildren();
+  document.querySelector('#orders tbody')?.replaceChildren();
+  document.querySelector('#customers tbody')?.replaceChildren();
+  document.querySelectorAll('#analytics .stat h2').forEach(el=>{el.textContent='0'});
+  document.querySelectorAll('#analytics .trend').forEach(el=>{el.textContent='No data yet'});
+  document.querySelector('#analytics .bars')?.replaceChildren();
+  document.querySelectorAll('#settings input').forEach(input=>{if(input.type!=='password')input.value=''});
+}
 document.addEventListener('DOMContentLoaded',()=>{
   const style=document.createElement('style');
   style.textContent='.admin-login-overlay{background:#fff!important}.admin-password-wrap{position:relative}.admin-password-wrap input{width:100%;padding-right:44px!important}.admin-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:30px;height:30px;padding:0!important;border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;color:#7f6a4b;cursor:pointer;line-height:1}.admin-password-toggle:hover{color:#b47712;background:transparent!important}.admin-password-toggle svg{width:19px;height:19px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}';
   document.head.appendChild(style);
+  clearDemoAdminData();
 });
 async function call(url,opts={}){opts.headers={...(opts.headers||{}),...(auth()?{Authorization:'Bearer '+auth()}:{})};const r=await fetch(url,opts);const j=await r.json().catch(()=>({}));if(r.status===401){showLogin();throw Error(j.message||'Login required')}if(!r.ok)throw Error(j.message||'Request failed');return j}
 function showLogin(){if(document.querySelector('.admin-login-overlay'))return;const x=document.createElement('div');x.className='admin-login-overlay';x.innerHTML='<div class="admin-login-box"><h1>GiftWALA Admin</h1><p>Sign in to manage your store.</p><form><input name="email" type="email" placeholder="Admin email" required><div class="admin-password-wrap"><input name="password" type="password" placeholder="Password" required><button type="button" class="admin-password-toggle" aria-label="Show password" title="Show password"></button></div><button>Login</button><small></small></form></div>';document.body.appendChild(x);const password=x.querySelector('[name=password]'),toggle=x.querySelector('.admin-password-toggle');const setEye=visible=>{toggle.innerHTML=visible?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 6.2A10.8 10.8 0 0 1 12 6c6 0 9.5 6 9.5 6a18 18 0 0 1-3.1 3.8M6.2 6.3C3.9 8 2.5 12 2.5 12s3.5 6 9.5 6c1.2 0 2.3-.2 3.3-.6"></path></svg>';toggle.setAttribute('aria-label',visible?'Hide password':'Show password');toggle.title=visible?'Hide password':'Show password'};setEye(false);toggle.onclick=()=>{const visible=password.type==='text';password.type=visible?'password':'text';setEye(!visible)};x.querySelector('form').onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));try{const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(f)});const j=await r.json();if(!r.ok)throw Error(j.message);localStorage.setItem('giftwala_admin_token',j.token);x.remove();loadLive()}catch(err){x.querySelector('small').textContent=err.message}}}
