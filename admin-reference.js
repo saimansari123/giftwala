@@ -67,3 +67,4 @@ document.addEventListener('DOMContentLoaded',()=>{const s=document.createElement
 // Category modal refresh is handled by the existing category loader after navigation.
 var loadCategories=()=>{};
 document.addEventListener('DOMContentLoaded',()=>{setInterval(()=>document.querySelectorAll('.edit-category-image').forEach(x=>x.remove()),300)});
+document.addEventListener('DOMContentLoaded',()=>{const s=document.createElement('style');s.textContent+='.edit-category-image{display:none!important}';document.head.appendChild(s)});
