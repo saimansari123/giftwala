@@ -1,7 +1,8 @@
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json;charset=UTF-8','access-control-allow-origin':'*','access-control-allow-headers':'Content-Type, Authorization'}});
 const body=async req=>{try{return await req.json()}catch{return {}}};
 const token=req=>String(req.headers.get('authorization')||'').replace(/^Bearer\s+/i,'');
-const productOut=p=>{if(!p)return p;let images=[],sizes=[];try{images=JSON.parse(p.images||'[]')}catch{images=p.images?[String(p.images)]:[]}try{sizes=JSON.parse(p.sizes||'[]')}catch{sizes=[]}return {...p,salePrice:p.sale_price,imageUrl:p.image_url,images,sizes,createdAt:p.created_at}};
+const cleanText=v=>String(v??'').replace(/â€“|â€”|â€œ|â€|Â|&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+const productOut=p=>{if(!p)return p;let images=[],sizes=[];try{images=JSON.parse(p.images||'[]')}catch{images=p.images?[String(p.images)]:[]}try{sizes=JSON.parse(p.sizes||'[]')}catch{sizes=[]}return {...p,name:cleanText(p.name),description:cleanText(p.description),salePrice:p.sale_price,imageUrl:p.image_url,images,sizes,createdAt:p.created_at}};
 async function admin(req,env){const t=token(req);if(!t||t!==env.ADMIN_TOKEN)return json({message:'Admin login required'},401);return null}
 export default {async fetch(req,env){const url=new URL(req.url);if(req.method==='OPTIONS')return new Response(null,{headers:{'access-control-allow-origin':'*','access-control-allow-methods':'GET,POST,PATCH,DELETE,OPTIONS','access-control-allow-headers':'Content-Type, Authorization'}});if(!url.pathname.startsWith('/api/'))return env.ASSETS.fetch(req);if(!env.DB)return json({message:'D1 database is not configured'},503);
 try{if(url.pathname==='/api/health')return json({ok:true,service:'GiftWALA API'});
