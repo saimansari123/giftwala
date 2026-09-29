@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
   imageName: String, imageUrl: String, images: { type: [String], default: [] }, name: { type: String, required: true }, sku: { type: String, unique: true },
   category: { type: String, required: true }, price: Number, salePrice: Number,
-  stock: { type: Number, default: 0 }, description: String, featured: Boolean
+  stock: { type: Number, default: 0 }, description: String, sizes: { type: [String], default: [] }, featured: Boolean
 }, { timestamps: true });
 
 const reviewSchema = new mongoose.Schema({

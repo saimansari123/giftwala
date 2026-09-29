@@ -39,9 +39,9 @@ router.get('/products', async (req,res) => {
   res.json(products);
 });
 router.post('/products', adminGuard, async (req,res) => {
-  const { name, sku, category, price, salePrice, stock=0, description='', imageName='', imageUrl='', images=[] }=req.body||{};
+  const { name, sku, category, price, salePrice, stock=0, description='', sizes=[], imageName='', imageUrl='', images=[] }=req.body||{};
   if(!name?.trim()||!sku?.trim()||!category?.trim()||Number(price)<0)return res.status(400).json({message:'Name, SKU, category and valid price are required'});
-  const product=await Product.create({name:name.trim(),sku:sku.trim(),category:category.trim(),price:Number(price),salePrice:Number(salePrice||price),stock:Math.max(0,Number(stock)),description,imageName,imageUrl,images:Array.isArray(images)?images:[],featured:false});
+  const product=await Product.create({name:name.trim(),sku:sku.trim(),category:category.trim(),price:Number(price),salePrice:Number(salePrice||price),stock:Math.max(0,Number(stock)),description,sizes:Array.isArray(sizes)?sizes.map(String):[],imageName,imageUrl,images:Array.isArray(images)?images:[],featured:false});
   res.status(201).json(product);
 });
 router.get('/products/:id', async (req,res) => {
@@ -61,6 +61,7 @@ router.patch('/products/:id', adminGuard, async (req,res) => {
   if (req.body.salePrice != null) allowed.salePrice=Math.max(0,Number(req.body.salePrice));
   if (req.body.stock != null) allowed.stock=Math.max(0,Math.floor(Number(req.body.stock)));
   if (req.body.featured != null) allowed.featured=Boolean(req.body.featured);
+  if (Array.isArray(req.body.sizes)) allowed.sizes=req.body.sizes.map(x=>String(x).trim()).filter(Boolean);
   if (Array.isArray(req.body.images)) { allowed.images=req.body.images; allowed.imageUrl=req.body.images[0]||''; }
   if (!Object.keys(allowed).length) return res.status(400).json({ message:'No editable fields supplied' });
   const product=await Product.findOneAndUpdate(query,allowed,{new:true,runValidators:true});
