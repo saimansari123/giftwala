@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.site-header>.brand').forEach(b=>{b.style.background="url('/assets/brand/giftwala-logo.png') center/116px auto no-repeat";b.style.minWidth='116px';b.style.height='58px';const i=b.querySelector('img');if(i)i.style.display='block'})});
