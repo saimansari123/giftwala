@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded',()=>{
+  if(!document.querySelector('link[rel="icon"]')){const f=document.createElement('link');f.rel='icon';f.type='image/png';f.sizes='512x512';f.href='/assets/giftwala-favicon-512.png';document.head.appendChild(f)}
   if(!document.querySelector('.whatsapp-float')){const w=document.createElement('a');w.className='whatsapp-float';w.href='https://wa.me/923010746622';w.target='_blank';w.rel='noopener';w.innerHTML='<span>Chat on WhatsApp</span>';document.body.appendChild(w)}
   const home=location.pathname==='/'||location.pathname.endsWith('/index.html');
   if(home)return;
@@ -14,3 +15,4 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(location.pathname.endsWith('/customize.html'))fetch('/api/builder-settings').then(r=>r.json()).then(s=>{const m=document.querySelector('.page-shell');if(!m)return;const e=m.querySelector('.eyebrow'),h=m.querySelector('h1'),d=m.querySelector(':scope>p:not(.eyebrow)'),c=[...m.querySelectorAll('.page-card')],b=m.querySelector('.btn');if(e)e.textContent=s.eyebrow||e.textContent;if(h&&s.title){const a=s.title.split(' '),z=a.pop();h.innerHTML=a.join(' ')+' <em>'+z+'</em>'}if(d)d.textContent=s.description||d.textContent;c.forEach((x,i)=>{const n=['small','classic','premium'][i];if(s[n+'Name'])x.innerHTML='<b>'+s[n+'Name']+'</b>'+(s[n+'Limit']||'')+' - Rs. '+(s[n+'Price']||'')});if(b)b.textContent=s.buttonText||b.textContent}).catch(()=>{});
 });
 document.querySelectorAll('.site-header .nav-dropdown>a').forEach(categoryToggle=>categoryToggle.addEventListener('click',e=>{if(innerWidth<=850){e.preventDefault();categoryToggle.parentElement.classList.toggle('category-open')}}));
+if(!location.pathname.endsWith('/index.html')&&location.pathname!=='/'){const s=document.createElement('script');s.src='/shared-cart.js';document.body.appendChild(s)}
