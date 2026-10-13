@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>GiftWALA Admin</title>
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0e0c;--panel:#171512;--panel-2:#1f1c17;--line:#2e2920;--fg:#f4ecdc;--muted:#a39a88;--accent:#dba83d;--accent-2:#f2bd55;--ok:#5fbf85;--warn:#e8a33d;--bad:#e46a5f;--info:#6aa7e8;--radius:12px;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 'DM Sans',system-ui,sans-serif}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh;align-content:start}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.brand{padding:4px 10px 18px;font-family:'Playfair Display',serif;font-size:20px}
+.brand span{color:var(--accent)}
+.nav button{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:9px 10px;border-radius:8px;color:var(--muted);text-align:left}
+.nav button:hover{background:var(--panel-2);color:var(--fg)}
+.nav button.on{background:#2a2315;color:var(--accent-2)}
+.nav .count{font-size:11px;background:var(--line);border-radius:999px;padding:1px 8px;color:var(--fg)}
+.side .foot{margin-top:auto;padding:12px 10px;border-top:1px solid var(--line)}
+.main{padding:26px 30px 60px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.top h1{font-size:30px}
+.top p{margin:4px 0 0;color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--panel-2);border:1px solid var(--line);border-radius:9px;padding:9px 14px;color:var(--fg)}
+.btn:hover{border-color:#4a4130}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.primary{background:linear-gradient(135deg,var(--accent-2),var(--accent));border-color:transparent;color:#17130a;font-weight:700}
+.btn.danger{color:var(--bad)}
+.btn.sm{padding:6px 10px;font-size:12px}
+.input{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-width:0;width:100%}
+.search{min-width:220px;width:auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;min-width:0}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:18px}
+.kpi .label{color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.kpi .value{font-family:'Playfair Display',serif;font-size:30px;margin-top:6px;font-variant-numeric:tabular-nums}
+.two{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);margin-bottom:18px}
+.card h3{font-size:18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card h3 a{font:500 12px 'DM Sans';color:var(--accent);cursor:pointer}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--panel-2)}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#1c1914}
+tbody tr.click{cursor:pointer}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.thumb{width:44px;height:44px;border-radius:8px;background:var(--panel-2) center/cover no-repeat;border:1px solid var(--line);flex:none}
+.sub{color:var(--muted);font-size:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-pending{color:var(--warn)}.s-confirmed{color:var(--info)}.s-shipped{color:#b29cf0}.s-delivered{color:var(--ok)}.s-cancelled{color:var(--bad)}
+.stars{color:var(--accent-2);letter-spacing:2px}
+.low{color:var(--bad);font-weight:700}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted)}
+.tabs button.on{background:var(--accent);border-color:var(--accent);color:#17130a;font-weight:700}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.scrim{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;width:min(680px,100%);max-height:90vh;overflow:auto;padding:22px}
+.modal header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.modal header h2{font-size:22px}
+.x{background:none;border:0;color:var(--muted);font-size:24px;line-height:1}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1/-1}
+.form label{display:grid;gap:6px;font-size:12px;color:var(--muted)}
+.form .input{color:var(--fg);background:var(--panel-2)}
+.form textarea.input{min-height:84px;resize:vertical}
+.hint{font-size:11px;color:var(--muted)}
+.imgs{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.imgs .thumb{width:72px;height:72px}
+.imgs .thumb button{position:relative;top:-6px;left:58px;background:var(--bad);border:0;border-radius:50%;width:20px;height:20px;color:#fff;font-size:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px}
+.foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-bottom:14px}
+.detail div span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.items{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.items div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.items div:last-child{border-bottom:0}
+.statusbtns{display:flex;gap:6px;flex-wrap:wrap}
+.statusbtns button{border:1px solid var(--line);background:var(--panel-2);border-radius:999px;padding:6px 12px;color:var(--muted);font-size:12px}
+.statusbtns button.on{border-color:currentColor;background:transparent;font-weight:700}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto;gap:8px;margin-bottom:8px}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login .card{width:min(380px,100%)}
+.err{color:var(--bad);font-size:12px;min-height:18px;margin-top:6px}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--panel-2);border:1px solid var(--accent);color:var(--fg);padding:12px 16px;border-radius:10px;z-index:60;box-shadow:0 12px 30px #000a;max-width:calc(100% - 44px)}
+.toast.bad{border-color:var(--bad)}
+@media(max-width:800px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:4px;border-right:0;border-bottom:1px solid var(--line)}
+  .brand{padding:0 8px 0 0;flex:none;font-size:17px}
+  .nav{display:flex;align-items:center;gap:4px;flex:none}
+  .nav button{width:auto;white-space:nowrap;padding:7px 10px}
+  .side .foot{display:none}
+  .main{padding:18px 16px 60px}
+  .top h1{font-size:24px}
+  .form{grid-template-columns:1fr}
+  .detail{grid-template-columns:1fr}
+  .kv{grid-template-columns:1fr auto}
+  .kv .input:nth-child(2){grid-column:1/-1}
+  .search{min-width:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div class="login" id="loginView" hidden>
+  <form class="card" id="loginForm">
+    <h2 style="margin-bottom:4px">GiftWALA Admin</h2>
+    <p class="sub" style="margin:0 0 16px">Sign in to manage products, orders and reviews.</p>
+    <div class="grid" style="gap:12px">
+      <input class="input" name="email" type="email" placeholder="Admin email" required autocomplete="username">
+      <input class="input" name="password" type="password" placeholder="Password" required autocomplete="current-password">
+      <button class="btn primary" type="submit" id="loginBtn">Sign in</button>
+      <div class="err" id="loginErr"></div>
+    </div>
+  </form>
+</div>
+
+<!-- Admin shell -->
+<div class="app" id="appView" hidden>
+  <aside class="side">
+    <div class="brand">Gift<span>WALA</span></div>
+    <nav class="nav" id="nav">
+      <button data-view="dashboard" class="on">Dashboard</button>
+      <button data-view="orders">Orders <span class="count" id="ordersCount">0</span></button>
+      <button data-view="products">Products <span class="count" id="productsCount">0</span></button>
+      <button data-view="categories">Categories <span class="count" id="categoriesCount">0</span></button>
+      <button data-view="reviews">Reviews <span class="count" id="reviewsCount">0</span></button>
+      <button data-view="homepage">Homepage settings</button>
+    </nav>
+    <div class="foot">
+      <button class="btn sm" id="logoutBtn" style="width:100%">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- Dashboard -->
+    <section data-section="dashboard">
+      <div class="top">
+        <div><h1>Dashboard</h1><p>Live figures from your store.</p></div>
+        <div class="row"><button class="btn primary" data-open="product">+ Add product</button></div>
+      </div>
+      <div class="grid kpis">
+        <div class="card kpi"><div class="label">Sales</div><div class="value" id="kSales">-</div></div>
+        <div class="card kpi"><div class="label">Orders</div><div class="value" id="kOrders">-</div></div>
+        <div class="card kpi"><div class="label">Products</div><div class="value" id="kProducts">-</div></div>
+        <div class="card kpi"><div class="label">Pending orders</div><div class="value" id="kPending">-</div></div>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <h3>Recent orders <a data-go="orders">View all</a></h3>
+          <div class="tablewrap" style="border:0"><table><thead><tr><th>Order</th><th>Customer</th><th class="num">Total</th><th>Status</th></tr></thead><tbody id="dashOrders"></tbody></table></div>
+        </div>
+        <div class="card">
+          <h3>Low stock <a data-go="products">Manage</a></h3>
+          <div id="dashLow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orders -->
+    <section data-section="orders" hidden>
+      <div class="top">
+        <div><h1>Orders</h1><p>Newest first. Click an order to see its details and change its status.</p></div>
+        <div class="row"><input class="input search" id="orderSearch" placeholder="Search order, name or phone"></div>
+      </div>
+      <div class="tabs" id="orderTabs">
+        <button class="on" data-status="all">All</button>
+        <button data-status="pending">Pending</button>
+        <button data-status="confirmed">Confirmed</button>
+        <button data-status="shipped">Shipped</button>
+        <button data-status="delivered">Delivered</button>
+        <button data-status="cancelled">Cancelled</button>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Items</th><th class="num">Total</th><th>Payment</th><th>Status</th></tr></thead>
+          <tbody id="orderRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section data-section="products" hidden>
+      <div class="top">
+        <div><h1>Products</h1><p>Edit prices, stock, sizes and images. Changes go live on save.</p></div>
+        <div class="row">
+          <input class="input search" id="productSearch" placeholder="Search name or SKU">
+          <select class="input search" id="productCat" style="min-width:160px"></select>
+          <button class="btn primary" data-open="product">+ Add product</button>
+        </div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Product</th><th>SKU</th><th>Category</th><th class="num">Price</th><th class="num">Sale</th><th class="num">Stock</th><th>Featured</th><th></th></tr></thead>
+          <tbody id="productRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section data-section="categories" hidden>
+      <div class="top">
+        <div><h1>Categories</h1><p>Each category has a card image and description on the storefront.</p></div>
+        <div class="row"><button class="btn primary" id="newCategoryBtn">+ New category</button></div>
+      </div>
+      <div class="grid" id="categoryCards" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))"></div>
+    </section>
+
+    <!-- Reviews -->
+    <section data-section="reviews" hidden>
+      <div class="top">
+        <div><h1>Reviews</h1><p>Reviews shown on the storefront. Delete spam or abusive ones.</p></div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Customer</th><th>Rating</th><th>Review</th><th>Date</th><th></th></tr></thead>
+          <tbody id="reviewRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Homepage settings (builder settings) -->
+    <section data-section="homepage" hidden>
+      <div class="top">
+        <div><h1>Homepage settings</h1><p>Key and value pairs stored in builder settings. Add a key to create a new setting.</p></div>
+        <div class="row">
+          <button class="btn" id="addSettingBtn">+ Add setting</button>
+          <button class="btn primary" id="saveSettingsBtn">Save changes</button>
+        </div>
+      </div>
+      <div class="card"><div id="settingsList"></div></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Product editor -->
+<div class="scrim" id="productModal" hidden>
+  <form class="modal" id="productForm" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <header><h2 id="pmTitle">Add product</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <div class="form">
+      <label>Product name<input class="input" name="name" required></label>
+      <label>SKU<input class="input" name="sku" required><span class="hint">Used in orders and stock</span></label>
+      <label>Category<select class="input" name="category" id="pCategory" required></select></label>
+      <label>Featured<select class="input" name="featured"><option value="0">No</option><option value="1">Yes</option></select></label>
+      <label>Price (Rs.)<input class="input" name="price" type="number" min="0" step="1" required></label>
+      <label>Sale price (Rs.)<input class="input" name="salePrice" type="number" min="0" step="1"><span class="hint">Leave empty for no discount</span></label>
+      <label>Stock<input class="input" name="stock" type="number" min="0" step="1" required></label>
+      <label>Sizes<input class="input" name="sizes" placeholder="S, M, L, XL"><span class="hint">Separate with commas. Leave empty if none.</span></label>
+      <label class="full">Description<textarea class="input" name="description"></textarea></label>
+      <label class="full">Images<input class="input" type="file" id="pImages" accept="image/png,image/jpeg,image/webp" multiple>
+        <span class="hint">PNG, JPG or WEBP, up to 7MB each. The first image is the main photo. Up to 5 images.</span>
+        <div class="imgs" id="pImgList"></div></label>
+    </div>
+    <div class="err" id="productErr"></div>
+    <div class="foot">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="submit" class="btn primary" id="productSave">Save product</button>
+    </div>
+  </form>
+</div>
+
+<!-- Category editor -->
+<div class="scrim" id="categoryModal" hidden>
+  <form class="modal" id="categoryForm" role="dialog" aria-modal="true">
+    <header><h2 id="cmTitle">New category</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <div class="form">
+      <label class="full">Name<input class="input" name="name" required><span class="hint">Renaming also moves every product in this category to the new name</span></label>
+      <label class="full">Description<textarea class="input" name="description"></textarea></label>
+      <label class="full">Card image<input class="input" type="file" id="cImage" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended 148 × 125 px. Up to 7MB.</span>
+        <div class="imgs" id="cImgList"></div></label>
+    </div>
+    <div class="err" id="categoryErr"></div>
+    <div class="foot">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="submit" class="btn primary" id="categorySave">Save category</button>
+    </div>
+  </form>
+</div>
+
+<!-- Order details -->
+<div class="scrim" id="orderModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="omTitle">
+    <header><h2 id="omTitle">Order</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <div class="detail" id="orderDetail"></div>
+    <div class="items" id="orderItems"></div>
+    <div class="sub" style="margin-bottom:8px">Status</div>
+    <div class="statusbtns" id="orderStatusBtns"></div>
+    <div class="err" id="orderErr"></div>
+    <div class="foot"><button type="button" class="btn" data-close>Close</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const TOKEN_KEY = 'giftwala_admin_token';
+const STATUSES = ['pending','confirmed','shipped','delivered','cancelled'];
+const state = { orders:[], products:[], categories:[], categoryDescriptions:{}, categoryImages:{}, reviews:[], settings:{}, orderFilter:'all', productImages:[], categoryImage:'', editingProduct:null, editingCategory:null };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => 'Rs. ' + Number(n || 0).toLocaleString('en-PK');
+const parse = (v, fallback) => { try { return JSON.parse(v) ?? fallback; } catch { return fallback; } };
+const pill = s => `<span class="pill s-${esc(s)}">${esc(s.charAt(0).toUpperCase() + s.slice(1))}</span>`;
+const dateOf = v => { const d = new Date(Number(v) || v); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', {day:'2-digit', month:'short'}); };
+
+function toast(msg, bad){
+  const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false;
+  clearTimeout(toast.timer); toast.timer = setTimeout(() => t.hidden = true, 2600);
+}
+
+async function api(path, opts = {}){
+  const headers = Object.assign({}, opts.body !== undefined ? {'Content-Type':'application/json'} : {});
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (opts.auth && token) headers.Authorization = 'Bearer ' + token;
+  const res = await fetch(path, { method: opts.method || 'GET', headers, body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined });
+  let data = null; try { data = await res.json(); } catch {}
+  if (res.status === 401 && opts.auth) { showLogin(); throw new Error('Please sign in again.'); }
+  if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
+  return data;
+}
+
+function showLogin(){
+  localStorage.removeItem(TOKEN_KEY);
+  $('appView').hidden = true; $('loginView').hidden = false;
+}
+function showApp(){
+  $('loginView').hidden = true; $('appView').hidden = false;
+}
+
+function setView(v){
+  document.querySelectorAll('[data-section]').forEach(s => s.hidden = s.dataset.section !== v);
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.view === v));
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Loading ---------- */
+async function loadAll(){
+  const [orders, products, categories, descriptions, images, reviews, settings] = await Promise.all([
+    api('/api/orders', {auth:true}),
+    api('/api/products'),
+    api('/api/categories'),
+    api('/api/category-descriptions'),
+    api('/api/category-settings'),
+    api('/api/reviews'),
+    api('/api/builder-settings'),
+  ]);
+  state.orders = orders; state.products = products; state.categories = categories;
+  state.categoryDescriptions = descriptions; state.categoryImages = images;
+  state.reviews = reviews; state.settings = settings;
+  renderAll();
+}
+
+function renderAll(){
+  $('ordersCount').textContent = state.orders.length;
+  $('productsCount').textContent = state.products.length;
+  $('categoriesCount').textContent = state.categories.length;
+  $('reviewsCount').textContent = state.reviews.length;
+  renderDashboard(); renderOrders(); renderProducts(); renderCategories(); renderReviews(); renderSettings();
+  fillCategorySelects();
+}
+
+/* ---------- Dashboard ---------- */
+function renderDashboard(){
+  const sales = state.orders.filter(o => o.status !== 'cancelled').reduce((a, o) => a + Number(o.total || 0), 0);
+  $('kSales').textContent = money(sales);
+  $('kOrders').textContent = state.orders.length;
+  $('kProducts').textContent = state.products.length;
+  $('kPending').textContent = state.orders.filter(o => o.status === 'pending').length;
+  $('dashOrders').innerHTML = state.orders.slice(0, 5).map(o => `
+    <tr class="click" data-order-id="${esc(o._id || o.id)}"><td>#${esc((o._id || o.id).slice(0, 8))}</td><td>${esc(o.customer_name)}</td><td class="num">${money(o.total)}</td><td>${pill(o.status)}</td></tr>`).join('')
+    || `<tr><td colspan="4" class="empty">No orders yet.</td></tr>`;
+  const low = state.products.filter(p => Number(p.stock) <= 2);
+  $('dashLow').innerHTML = low.length
+    ? low.map(p => `<div class="row" style="justify-content:space-between;margin:8px 0"><span>${esc(p.name)} <span class="sub">${esc(p.sku)}</span></span><span class="low">${p.stock} left</span></div>`).join('')
+    : '<div class="sub">All products have enough stock.</div>';
+}
+
+/* ---------- Orders ---------- */
+function orderId(o){ return o._id || o.id; }
+function renderOrders(){
+  const q = $('orderSearch').value.trim().toLowerCase();
+  const rows = state.orders.filter(o => (state.orderFilter === 'all' || o.status === state.orderFilter)
+    && (!q || [orderId(o), o.customer_name, o.phone].some(x => String(x || '').toLowerCase().includes(q))));
+  $('orderRows').innerHTML = rows.map(o => {
+    const items = parse(o.items, []);
+    return `<tr class="click" data-order-id="${esc(orderId(o))}">
+      <td><strong>#${esc(orderId(o).slice(0, 8))}</strong></td><td>${dateOf(o.created_at)}</td>
+      <td>${esc(o.customer_name)}<div class="sub">${esc(o.phone)}</div></td>
+      <td>${items.reduce((a, i) => a + Number(i.quantity || 0), 0)}</td>
+      <td class="num">${money(o.total)}</td><td>${esc(o.payment_method)}</td><td>${pill(o.status)}</td></tr>`;
+  }).join('') || `<tr><td colspan="7" class="empty">No orders match this filter.</td></tr>`;
+}
+function openOrder(id){
+  const o = state.orders.find(x => orderId(x) === id); if (!o) return;
+  const items = parse(o.items, []);
+  state.currentOrder = o;
+  $('omTitle').textContent = 'Order #' + orderId(o).slice(0, 8);
+  $('orderDetail').innerHTML = `
+    <div><span>Customer</span>${esc(o.customer_name)}</div><div><span>Phone</span>${esc(o.phone)}</div>
+    <div><span>Email</span>${esc(o.email || '-')}</div><div><span>Payment</span>${esc(o.payment_method)}</div>
+    <div><span>Address</span>${esc(o.address)}</div><div><span>Total</span><strong>${money(o.total)}</strong></div>`;
+  $('orderItems').innerHTML = items.map(i => `<div><span>${esc(i.name || i.sku)} × ${esc(i.quantity)}</span><span>${money(Number(i.price || 0) * Number(i.quantity || 0))}</span></div>`).join('') || '<div><span class="sub">No items</span></div>';
+  $('orderStatusBtns').innerHTML = STATUSES.map(s => `<button class="s-${s} ${s === o.status ? 'on' : ''}" data-status-set="${s}" ${s === o.status ? 'disabled' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</button>`).join('');
+  $('orderErr').textContent = '';
+  $('orderModal').hidden = false;
+}
+async function setOrderStatus(status){
+  const o = state.currentOrder; if (!o) return;
+  $('orderErr').textContent = '';
+  try {
+    await api(`/api/orders/${encodeURIComponent(orderId(o))}/status`, {method:'PATCH', body:{status}, auth:true});
+    o.status = status;
+    renderAll(); openOrder(orderId(o));
+    toast('Order status updated');
+  } catch (e) { $('orderErr').textContent = e.message; }
+}
+
+/* ---------- Products ---------- */
+function renderProducts(){
+  const q = $('productSearch').value.trim().toLowerCase();
+  const cat = $('productCat').value;
+  const rows = state.products.filter(p => (!cat || p.category === cat)
+    && (!q || p.name.toLowerCase().includes(q) || String(p.sku || '').toLowerCase().includes(q)));
+  $('productRows').innerHTML = rows.map(p => `
+    <tr>
+      <td><div class="row" style="flex-wrap:nowrap"><div class="thumb" style="background-image:url('${esc(p.imageUrl)}')"></div><div>${esc(p.name)}</div></div></td>
+      <td class="sub">${esc(p.sku)}</td><td>${esc(p.category)}</td>
+      <td class="num">${money(p.price)}</td>
+      <td class="num">${p.salePrice && p.salePrice < p.price ? `<span style="color:var(--warn)">${money(p.salePrice)}</span>` : '<span class="sub">-</span>'}</td>
+      <td class="num ${Number(p.stock) <= 2 ? 'low' : ''}">${p.stock}</td>
+      <td>${p.featured ? '<span style="color:var(--ok)">Yes</span>' : '<span class="sub">No</span>'}</td>
+      <td><button class="btn sm" data-edit-product="${esc(p.id)}">Edit</button></td>
+    </tr>`).join('') || `<tr><td colspan="8" class="empty">No products found.</td></tr>`;
+}
+function fillCategorySelects(){
+  const names = state.categories.length ? state.categories : [...new Set(state.products.map(p => p.category))];
+  $('productCat').innerHTML = '<option value="">All categories</option>' + names.map(c => `<option>${esc(c)}</option>`).join('');
+  $('pCategory').innerHTML = names.map(c => `<option>${esc(c)}</option>`).join('');
+}
+function renderProductImages(){
+  const el = $('pImgList');
+  el.innerHTML = state.productImages.map((src, i) => `<div class="thumb" style="background-image:url('${esc(src)}')"><button type="button" data-remove="${i}" aria-label="Remove image">×</button></div>`).join('');
+  el.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { state.productImages.splice(Number(b.dataset.remove), 1); renderProductImages(); });
+}
+function openProductModal(id){
+  const p = id ? state.products.find(x => x.id === id) : null;
+  state.editingProduct = p || null;
+  const f = $('productForm'); f.reset();
+  $('pmTitle').textContent = p ? 'Edit ' + p.name : 'Add product';
+  state.productImages = p ? (p.images && p.images.length ? p.images.slice(0, 5) : (p.imageUrl ? [p.imageUrl] : [])) : [];
+  if (p){
+    f.name.value = p.name; f.sku.value = p.sku; f.category.value = p.category;
+    f.featured.value = p.featured ? '1' : '0'; f.price.value = p.price;
+    f.salePrice.value = p.salePrice && p.salePrice < p.price ? p.salePrice : '';
+    f.stock.value = p.stock; f.sizes.value = (p.sizes || []).join(', '); f.description.value = p.description || '';
+  }
+  renderProductImages();
+  $('productErr').textContent = '';
+  $('productModal').hidden = false;
+}
+const readFile = file => new Promise((resolve, reject) => {
+  if (!/^image\/(png|jpeg|webp)$/.test(file.type)) return reject(new Error('Only PNG, JPG or WEBP images are allowed.'));
+  if (file.size > 7 * 1024 * 1024) return reject(new Error('Each image must be 7MB or smaller.'));
+  const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = () => reject(new Error('Could not read the file.')); r.readAsDataURL(file);
+});
+async function addFiles(input, list, max){
+  const files = [...input.files];
+  for (const file of files){
+    if (list.length >= max) { toast('You can add up to ' + max + ' images.', true); break; }
+    try { list.push(await readFile(file)); } catch (e) { toast(e.message, true); }
+  }
+  input.value = '';
+}
+async function saveProduct(e){
+  e.preventDefault();
+  const f = $('productForm'), btn = $('productSave');
+  const price = Number(f.price.value), salePrice = f.salePrice.value ? Number(f.salePrice.value) : price;
+  if (salePrice > price) { $('productErr').textContent = 'Sale price cannot be higher than the price.'; return; }
+  const body = {
+    name: f.name.value.trim(), sku: f.sku.value.trim(), category: f.category.value,
+    price, salePrice, stock: Number(f.stock.value), featured: f.featured.value === '1',
+    sizes: f.sizes.value.split(',').map(s => s.trim()).filter(Boolean),
+    description: f.description.value.trim(),
+    images: state.productImages, imageUrl: state.productImages[0] || '',
+  };
+  btn.disabled = true; $('productErr').textContent = '';
+  try {
+    if (state.editingProduct){
+      await api('/api/products/' + encodeURIComponent(state.editingProduct.id), {method:'PATCH', body, auth:true});
+    } else {
+      await api('/api/products', {method:'POST', body, auth:true});
+    }
+    $('productModal').hidden = true;
+    await loadAll();
+    toast('Product saved');
+  } catch (err) { $('productErr').textContent = err.message; }
+  finally { btn.disabled = false; }
+}
+
+/* ---------- Categories ---------- */
+function renderCategories(){
+  $('categoryCards').innerHTML = state.categories.map(name => {
+    const count = state.products.filter(p => p.category === name).length;
+    const img = state.categoryImages[name] || '';
+    return `<div class="card">
+      <div class="thumb" style="width:100%;height:120px;margin-bottom:12px;background-image:url('${esc(img)}')"></div>
+      <strong>${esc(name)}</strong>
+      <div class="sub">${esc(state.categoryDescriptions[name] || 'No description yet')} · ${count} products</div>
+      <div class="row" style="margin-top:12px"><button class="btn sm" data-edit-category="${esc(name)}">Edit</button></div>
+    </div>`;
+  }).join('') || '<div class="empty card">No categories yet.</div>';
+}
+function openCategoryModal(name){
+  state.editingCategory = name || null;
+  const f = $('categoryForm'); f.reset();
+  $('cmTitle').textContent = name ? 'Edit category' : 'New category';
+  f.name.value = name || '';
+  f.description.value = name ? (state.categoryDescriptions[name] || '') : '';
+  state.categoryImage = name ? (state.categoryImages[name] || '') : '';
+  renderCategoryImage();
+  $('categoryErr').textContent = '';
+  $('categoryModal').hidden = false;
+}
+function renderCategoryImage(){
+  $('cImgList').innerHTML = state.categoryImage
+    ? `<div class="thumb" style="width:120px;height:90px;background-image:url('${esc(state.categoryImage)}')"><button type="button" data-remove-cat aria-label="Remove image">×</button></div>` : '';
+  const b = document.querySelector('[data-remove-cat]'); if (b) b.onclick = () => { state.categoryImage = ''; renderCategoryImage(); };
+}
+async function saveCategory(e){
+  e.preventDefault();
+  const f = $('categoryForm'), btn = $('categorySave');
+  const name = f.name.value.trim(), description = f.description.value.trim();
+  if (!name) return;
+  btn.disabled = true; $('categoryErr').textContent = '';
+  try {
+    if (!state.editingCategory){
+      await api('/api/categories', {method:'POST', body:{name}, auth:true});
+    } else if (state.editingCategory !== name){
+      await api('/api/categories/by-name/' + encodeURIComponent(state.editingCategory), {method:'PATCH', body:{name}, auth:true});
+    }
+    await api('/api/admin/category-settings', {method:'PATCH', body:{name, description, image: state.categoryImage}, auth:true});
+    $('categoryModal').hidden = true;
+    await loadAll();
+    toast('Category saved');
+  } catch (err) { $('categoryErr').textContent = err.message; }
+  finally { btn.disabled = false; }
+}
+
+/* ---------- Reviews ---------- */
+function renderReviews(){
+  $('reviewRows').innerHTML = state.reviews.map(r => `
+    <tr><td>${esc(r.name)}</td>
+    <td><span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span></td>
+    <td>${esc(r.comment)}</td><td class="sub">${dateOf(r.createdAt)}</td>
+    <td><button class="btn sm danger" data-delete-review="${esc(r.id)}">Delete</button></td></tr>`).join('')
+    || `<tr><td colspan="5" class="empty">No reviews yet.</td></tr>`;
+}
+async function deleteReview(id){
+  if (!confirm('Delete this review?')) return;
+  try {
+    await api('/api/reviews/' + encodeURIComponent(id), {method:'DELETE', auth:true});
+    state.reviews = state.reviews.filter(r => r.id !== id);
+    renderAll(); toast('Review deleted');
+  } catch (e) { toast(e.message, true); }
+}
+
+/* ---------- Homepage settings ---------- */
+function renderSettings(){
+  const keys = Object.keys(state.settings).sort();
+  $('settingsList').innerHTML = keys.map(k => `
+    <div class="kv"><input class="input" value="${esc(k)}" readonly><input class="input" data-setting="${esc(k)}" value="${esc(state.settings[k])}"></div>`).join('')
+    || '<div class="empty">No settings yet. Use "Add setting" to create one.</div>';
+}
+function addSettingRow(){
+  const key = prompt('Name of the new setting (for example: heroHeadline)');
+  if (!key || !key.trim()) return;
+  const k = key.trim();
+  if (k in state.settings) { toast('That setting already exists.', true); return; }
+  state.settings[k] = '';
+  renderSettings();
+}
+async function saveSettings(){
+  const btn = $('saveSettingsBtn'); btn.disabled = true;
+  const changed = {};
+  document.querySelectorAll('[data-setting]').forEach(input => {
+    const k = input.dataset.setting;
+    if (input.value !== String(state.settings[k] ?? '')) changed[k] = input.value;
+  });
+  if (!Object.keys(changed).length){ btn.disabled = false; toast('Nothing to save'); return; }
+  try {
+    await api('/api/admin/builder-settings', {method:'PATCH', body:changed, auth:true});
+    Object.assign(state.settings, changed);
+    toast('Homepage settings saved');
+  } catch (e) { toast(e.message, true); }
+  finally { btn.disabled = false; }
+}
+
+/* ---------- Events ---------- */
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target, btn = $('loginBtn');
+  btn.disabled = true; $('loginErr').textContent = '';
+  try {
+    const data = await api('/api/admin/login', {method:'POST', body:{email:f.email.value, password:f.password.value}});
+    localStorage.setItem(TOKEN_KEY, data.token);
+    showApp(); await loadAll();
+  } catch (err) { $('loginErr').textContent = err.message; }
+  finally { btn.disabled = false; }
+});
+$('logoutBtn').addEventListener('click', () => { showLogin(); toast('Signed out'); });
+$('nav').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setView(b.dataset.view); });
+document.addEventListener('click', e => {
+  const t = e.target;
+  const go = t.closest('[data-go]'); if (go) return setView(go.dataset.go);
+  const open = t.closest('[data-open]'); if (open) return openProductModal(null);
+  const oTab = t.closest('#orderTabs button'); if (oTab){
+    state.orderFilter = oTab.dataset.status;
+    document.querySelectorAll('#orderTabs button').forEach(b => b.classList.toggle('on', b === oTab));
+    return renderOrders();
+  }
+  const row = t.closest('[data-order-id]'); if (row) return openOrder(row.dataset.orderId);
+  const st = t.closest('[data-status-set]'); if (st) return setOrderStatus(st.dataset.statusSet);
+  const ep = t.closest('[data-edit-product]'); if (ep) return openProductModal(ep.dataset.editProduct);
+  const ec = t.closest('[data-edit-category]'); if (ec) return openCategoryModal(ec.dataset.editCategory);
+  const dr = t.closest('[data-delete-review]'); if (dr) return deleteReview(dr.dataset.deleteReview);
+  if (t.closest('[data-close]') || t.classList.contains('scrim')){
+    document.querySelectorAll('.scrim').forEach(m => m.hidden = true);
+  }
+});
+$('orderSearch').addEventListener('input', renderOrders);
+$('productSearch').addEventListener('input', renderProducts);
+$('productCat').addEventListener('change', renderProducts);
+$('productForm').addEventListener('submit', saveProduct);
+$('categoryForm').addEventListener('submit', saveCategory);
+$('newCategoryBtn').addEventListener('click', () => openCategoryModal(null));
+$('addSettingBtn').addEventListener('click', addSettingRow);
+$('saveSettingsBtn').addEventListener('click', saveSettings);
+$('pImages').addEventListener('change', async e => {
+  await addFiles(e.target, state.productImages, 5);
+  renderProductImages();
+});
+$('cImage').addEventListener('change', async e => {
+  const list = [];
+  await addFiles(e.target, list, 1);
+  if (list[0]) { state.categoryImage = list[0]; renderCategoryImage(); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.scrim').forEach(m => m.hidden = true); });
+
+/* ---------- Start ---------- */
+(async function start(){
+  if (localStorage.getItem(TOKEN_KEY)){
+    showApp();
+    try { await loadAll(); }
+    catch (e) { if (!$('loginView').hidden) return; toast(e.message, true); }
+  } else {
+    $('loginView').hidden = false;
+  }
+})();
+</script>
+</body>
+</html>
