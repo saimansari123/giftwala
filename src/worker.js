@@ -219,7 +219,18 @@ export default {
           ).bind(item.quantity, item.sku, item.sku).run();
         }
 
-        const id = crypto.randomUUID();
+        // Generate sequential order ID (GW-0001, GW-0002, etc)
+        const lastOrder = await env.DB.prepare(
+          'SELECT id FROM orders ORDER BY created_at DESC LIMIT 1'
+        ).first();
+
+        let nextNum = 1;
+        if (lastOrder?.id) {
+          const match = lastOrder.id.match(/GW-(\d+)/);
+          if (match) nextNum = parseInt(match[1]) + 1;
+        }
+        const id = 'GW-' + String(nextNum).padStart(5, '0');
+
         await env.DB.prepare(
           'INSERT INTO orders (id,customer_name,phone,email,address,payment_method,items,total,status,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)'
         ).bind(
