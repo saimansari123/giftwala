@@ -1,0 +1,17 @@
+{
+  "customer": {
+    "name": "Test User",
+    "phone": "03001234567",
+    "email": "test@example.com",
+    "address": "Test Address, Karachi"
+  },
+  "paymentMethod": "Cash on Delivery",
+  "items": [
+    {
+      "sku": "GW-AC-001",
+      "name": "Accessory Item",
+      "quantity": 2,
+      "price": 500
+    }
+  ]
+}
