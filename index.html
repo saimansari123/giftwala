@@ -135,3 +135,36 @@
 <script>document.addEventListener('DOMContentLoaded',()=>{const b=document.getElementById('checkoutBtn');if(!b)return;const x=b.cloneNode(true);x.disabled=true;x.removeAttribute('id');x.classList.add('whatsapp-disabled');x.textContent='Checkout via WhatsApp';b.replaceWith(x)});</script><style>.cart-foot .whatsapp-disabled{opacity:.65!important;cursor:not-allowed!important;pointer-events:none!important}</style>
 <style>.cart-foot .whatsapp-disabled{display:none!important}</style>
 <script>document.addEventListener('DOMContentLoaded',()=>{const list=document.querySelector('.occasion-list');if(!list||list.dataset.dragScroll)return;list.dataset.dragScroll='1';let down=false,start=0,left=0;list.addEventListener('pointerdown',e=>{down=true;start=e.clientX;left=list.scrollLeft;list.setPointerCapture?.(e.pointerId)});list.addEventListener('pointermove',e=>{if(down)list.scrollLeft=left-(e.clientX-start)});['pointerup','pointercancel','pointerleave'].forEach(t=>list.addEventListener(t,()=>down=false))});</script>
+<style id="homepage-polish">
+/* 1. Headings: Playfair Display (already loaded in <head>) */
+.gw-hero h1{font-family:'Playfair Display',Georgia,serif!important;font-weight:600!important}
+h2{font-family:'Playfair Display',Georgia,serif!important;font-weight:600!important}
+
+/* 2. Header: visible search placeholder, gold cart badge, slightly larger nav */
+.header-search-bar::placeholder,.mobile-search-input::placeholder{color:#b8ad9c!important;opacity:1!important}
+.site-header .header-actions .cart-trigger em{background:linear-gradient(135deg,#f2bd55,#d69124)!important;color:#171513!important;box-shadow:0 0 0 2px #171513}
+.desktop-nav a{font-size:13px!important}
+
+/* 4. Trust strip under hero buttons */
+.gw-hero__notes{gap:10px!important;margin-top:32px!important}
+.gw-hero__notes span{padding:8px 14px;border:1px solid #dba83d55;border-radius:999px;background:#dba83d12;color:#f4e6c8}
+.gw-hero__notes span:before{content:'\2713'!important;margin-right:6px!important;color:#dba83d!important}
+
+/* 5. Categories as a grid of image cards */
+#categoryTiles.occasion-list{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;gap:18px!important;overflow:visible!important;padding-bottom:0!important}
+.occasion-list a{width:auto!important;min-width:0!important;flex:none!important;margin:0!important}
+.category-scroll-btn{display:none!important}
+@media(max-width:850px){#categoryTiles.occasion-list{grid-template-columns:repeat(2,1fr)!important;gap:12px!important}}
+
+/* 6. Gift box visual: gold glow and framed badge */
+.gw-hero__card{border:1px solid #dba83d66;box-shadow:0 0 0 10px #dba83d14,0 40px 80px #000c}
+.gw-hero__card img{filter:drop-shadow(0 0 28px #dba83d59)}
+.gw-hero__badge{display:inline-block;padding:8px 12px;border-radius:999px;background:#dba83d;color:#171513;font-weight:700}
+
+/* 7. Consistent section spacing */
+.featured-carousel,.category-strip,.shop-section,.custom-banner,.testimonial,.box-builder{padding-top:88px!important;padding-bottom:88px!important}
+@media(max-width:850px){.featured-carousel,.category-strip,.shop-section,.custom-banner,.testimonial,.box-builder{padding-top:56px!important;padding-bottom:56px!important}}
+
+/* 8. WhatsApp button: icon only on mobile */
+@media(max-width:850px){.whatsapp-float{width:50px!important;height:50px!important;padding:0!important;justify-content:center!important}.whatsapp-float span{display:none!important}}
+</style>
