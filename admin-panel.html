@@ -139,6 +139,7 @@ tbody tr.click{cursor:pointer}
       <button data-view="dashboard" class="on">Dashboard</button>
       <button data-view="orders">Orders <span class="count" id="ordersCount">0</span></button>
       <button data-view="products">Products <span class="count" id="productsCount">0</span></button>
+      <button data-view="media">Media</button>
       <button data-view="categories">Categories <span class="count" id="categoriesCount">0</span></button>
       <button data-view="reviews">Reviews <span class="count" id="reviewsCount">0</span></button>
       <button data-view="homepage">Homepage settings</button>
@@ -211,6 +212,16 @@ tbody tr.click{cursor:pointer}
           <thead><tr><th>Product</th><th>SKU</th><th>Category</th><th class="num">Price</th><th class="num">Sale</th><th class="num">Stock</th><th>Featured</th><th></th></tr></thead>
           <tbody id="productRows"></tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- Media -->
+    <section data-section="media" hidden>
+      <div class="top">
+        <div><h1>Product Media</h1><p>View and manage all product images and media files.</p></div>
+      </div>
+      <div class="media-gallery" id="mediaGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;padding:20px 0">
+        <p>Loading media...</p>
       </div>
     </section>
 
@@ -374,7 +385,7 @@ function renderAll(){
   $('productsCount').textContent = state.products.length;
   $('categoriesCount').textContent = state.categories.length;
   $('reviewsCount').textContent = state.reviews.length;
-  renderDashboard(); renderOrders(); renderProducts(); renderCategories(); renderReviews(); renderSettings();
+  renderDashboard(); renderOrders(); renderProducts(); renderMedia(); renderCategories(); renderReviews(); renderSettings();
   fillCategorySelects();
 }
 
@@ -581,6 +592,35 @@ async function deleteReview(id){
     state.reviews = state.reviews.filter(r => r.id !== id);
     renderAll(); toast('Review deleted');
   } catch (e) { toast(e.message, true); }
+}
+
+/* ---------- Media gallery ---------- */
+function renderMedia(){
+  const box = $('mediaGallery');
+  if (!state.products.length) {
+    box.innerHTML = '<p>No products found.</p>';
+    return;
+  }
+  const media = [];
+  state.products.forEach(p => {
+    if (p.sku) {
+      const ext = p.imageName && p.imageName.toLowerCase().endsWith('.jpg') ? '.jpg' : '.png';
+      const url = `/assets/products/${p.sku}${ext}`;
+      media.push({sku: p.sku, name: p.name || p.sku, url});
+    }
+  });
+  if (!media.length) {
+    box.innerHTML = '<p>No product media found.</p>';
+    return;
+  }
+  box.innerHTML = media.map(m => `
+    <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9">
+      <img src="${m.url}" alt="${m.name}" onerror="this.src='/assets/placeholder.png'" style="width:100%;height:180px;object-fit:cover;display:block">
+      <div style="padding:12px">
+        <div style="font-size:12px;font-weight:bold;color:#333;margin:0 0 4px;word-break:break-word">${esc(m.name)}</div>
+        <small style="color:#999;font-size:10px">${esc(m.sku)}</small>
+      </div>
+    </div>`).join('');
 }
 
 /* ---------- Homepage settings ---------- */
