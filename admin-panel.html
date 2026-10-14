@@ -686,11 +686,24 @@ function handleFileDrop(e){
 function handleFileSelect(input){
   if (input.files.length > 0) {
     $('fileName').textContent = '✓ ' + input.files[0].name;
+    // Extract filename (without extension) and suggest as SKU
+    const fileName = input.files[0].name;
+    const nameParts = fileName.split('.');
+    const nameWithoutExt = nameParts.slice(0, -1).join('.');
+    if (nameWithoutExt && !$('uploadSKU').value) {
+      $('uploadSKU').value = nameWithoutExt;
+    }
   }
 }
 function handleFolderSelect(input){
   if (input.files.length > 0) {
     $('fileName').textContent = '✓ Folder with ' + input.files.length + ' files';
+    // Extract folder name from file path and set as SKU
+    const firstFilePath = input.files[0].webkitRelativePath || input.files[0].name;
+    const folderName = firstFilePath.split('/')[0];
+    if (folderName && !$('uploadSKU').value) {
+      $('uploadSKU').value = folderName;
+    }
   }
 }
 function switchUploadMode(mode){
