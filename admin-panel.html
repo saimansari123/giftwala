@@ -410,7 +410,7 @@ function setView(v){
 async function loadAll(){
   const [orders, products, categories, descriptions, images, reviews, settings] = await Promise.all([
     api('/api/orders', {auth:true}),
-    api('/api/admin/products'),
+    api('/api/admin/products', {auth:true}),
     api('/api/categories'),
     api('/api/category-descriptions'),
     api('/api/category-settings'),
