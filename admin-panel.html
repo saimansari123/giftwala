@@ -410,7 +410,7 @@ function setView(v){
 async function loadAll(){
   const [orders, products, categories, descriptions, images, reviews, settings] = await Promise.all([
     api('/api/orders', {auth:true}),
-    api('/api/products'),
+    api('/api/admin/products'),
     api('/api/categories'),
     api('/api/category-descriptions'),
     api('/api/category-settings'),
@@ -502,7 +502,11 @@ function renderProducts(){
       <td class="num">${p.salePrice && p.salePrice < p.price ? `<span style="color:var(--warn)">${money(p.salePrice)}</span>` : '<span class="sub">-</span>'}</td>
       <td class="num ${Number(p.stock) <= 2 ? 'low' : ''}">${p.stock}</td>
       <td>${p.featured ? '<span style="color:var(--ok)">Yes</span>' : '<span class="sub">No</span>'}</td>
-      <td><button class="btn sm" data-edit-product="${esc(p.id)}">Edit</button></td>
+      <td style="display:flex;gap:6px">
+        <button class="btn sm" data-edit-product="${esc(p.id)}">Edit</button>
+        <button class="btn sm" style="color:var(--warn)" onclick="toggleHideProduct('${esc(p.id)}',${!p.hidden})" title="${p.hidden ? 'Show' : 'Hide'}">${p.hidden ? '👁️' : '👁️‍🗨️'}</button>
+        <button class="btn sm" style="color:var(--bad)" onclick="deleteProduct('${esc(p.id)}','${esc(p.name)}')" title="Delete">🗑️</button>
+      </td>
     </tr>`).join('') || `<tr><td colspan="8" class="empty">No products found.</td></tr>`;
 }
 function fillCategorySelects(){
@@ -514,6 +518,38 @@ function renderProductImages(){
   const el = $('pImgList');
   el.innerHTML = state.productImages.map((src, i) => `<div class="thumb" style="background-image:url('${esc(src)}')"><button type="button" data-remove="${i}" aria-label="Remove image">×</button></div>`).join('');
   el.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { state.productImages.splice(Number(b.dataset.remove), 1); renderProductImages(); });
+}
+function deleteProduct(id, name){
+  if (!confirm('Delete product "' + name + '"? Stock will be restored.')) return;
+  fetch('/api/products/' + encodeURIComponent(id), { method: 'DELETE' })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) {
+        toast('✓ Product deleted');
+        setTimeout(() => { loadState(); renderProducts(); }, 300);
+      } else {
+        toast('Failed: ' + (d.message || 'unknown error'), true);
+      }
+    })
+    .catch(e => toast('Error: ' + e.message, true));
+}
+function toggleHideProduct(id, hide){
+  const action = hide ? 'Hide' : 'Show';
+  fetch('/api/products/' + encodeURIComponent(id) + '/hidden', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ hidden: hide })
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) {
+        toast('✓ Product ' + action + 'den');
+        setTimeout(() => { loadState(); renderProducts(); }, 300);
+      } else {
+        toast('Failed: ' + (d.message || 'unknown error'), true);
+      }
+    })
+    .catch(e => toast('Error: ' + e.message, true));
 }
 function openProductModal(id){
   const p = id ? state.products.find(x => x.id === id) : null;

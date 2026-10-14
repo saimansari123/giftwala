@@ -109,8 +109,21 @@ export default {
         return p ? json(productOut(p)) : json({ message: 'Product not found' }, 404);
       }
 
-      // List products
+      // List products (public - excludes hidden)
       if (url.pathname === '/api/products' && req.method === 'GET') {
+        const q = url.searchParams.get('category');
+        const r = await env.DB.prepare(
+          `SELECT * FROM products WHERE hidden=0 ${q ? 'AND category=?' : ''}
+           ORDER BY featured DESC, created_at DESC`
+        ).bind(...(q ? [q] : [])).all();
+        return json(r.results.map(productOut));
+      }
+
+      // List all products (admin only - includes hidden)
+      if (url.pathname === '/api/admin/products' && req.method === 'GET') {
+        const check = await admin(req, env);
+        if (check) return check;
+
         const q = url.searchParams.get('category');
         const r = await env.DB.prepare(
           `SELECT * FROM products ${q ? 'WHERE category=?' : ''}
@@ -447,6 +460,43 @@ export default {
           key, key
         ).run();
         return json({ ok: true });
+      }
+
+      // Delete product
+      const pdel = url.pathname.match(/^\/api\/products\/([^/]+)$/);
+      if (pdel && req.method === 'DELETE') {
+        const productId = pdel[1];
+        const product = await env.DB.prepare(
+          'SELECT stock, items FROM products WHERE id=? OR sku=?'
+        ).bind(productId, productId).first();
+
+        if (!product) return json({ message: 'Product not found' }, 404);
+
+        try {
+          await env.DB.prepare(
+            'DELETE FROM products WHERE id=? OR sku=?'
+          ).bind(productId, productId).run();
+          return json({ ok: true });
+        } catch (e) {
+          return json({ message: 'Failed to delete product: ' + e.message }, 500);
+        }
+      }
+
+      // Toggle product hidden status
+      const phid = url.pathname.match(/^\/api\/products\/([^/]+)\/hidden$/);
+      if (phid && req.method === 'PATCH') {
+        const b = await body(req);
+        const productId = phid[1];
+        const hidden = b.hidden ? 1 : 0;
+
+        try {
+          await env.DB.prepare(
+            'UPDATE products SET hidden=? WHERE id=? OR sku=?'
+          ).bind(hidden, productId, productId).run();
+          return json({ ok: true });
+        } catch (e) {
+          return json({ message: 'Failed to update product: ' + e.message }, 500);
+        }
       }
 
       // List orders (admin only)
