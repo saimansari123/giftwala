@@ -136,7 +136,7 @@ export default {
       // List reviews
       if (url.pathname === '/api/reviews' && req.method === 'GET') {
         const r = await env.DB.prepare(
-          'SELECT id,name,comment,rating,created_at AS createdAt FROM reviews ORDER BY created_at DESC'
+          'SELECT id,name,comment,rating,created_at AS createdAt,product_id AS productId,product_name AS productName FROM reviews ORDER BY created_at DESC'
         ).all();
         return json(r.results);
       }
@@ -152,6 +152,8 @@ export default {
         const name = String(b.name || '').trim();
         const comment = String(b.comment || '').trim();
         const rating = Math.max(1, Math.min(5, Number(b.rating || 0)));
+        const productId = String(b.productId || '').trim();
+        const productName = String(b.productName || '').trim();
 
         if (!name || !comment || !rating) {
           return json({ message: 'Name, review and rating are required' }, 400);
@@ -159,10 +161,10 @@ export default {
 
         const id = crypto.randomUUID();
         await env.DB.prepare(
-          'INSERT INTO reviews (id,name,comment,rating,created_at) VALUES (?,?,?,?,?)'
-        ).bind(id, name, comment, rating, Date.now()).run();
+          'INSERT INTO reviews (id,name,comment,rating,created_at,product_id,product_name) VALUES (?,?,?,?,?,?,?)'
+        ).bind(id, name, comment, rating, Date.now(), productId || null, productName || null).run();
 
-        return json({ id, name, comment, rating }, 201);
+        return json({ id, name, comment, rating, productId, productName }, 201);
       }
 
       // Get category settings
