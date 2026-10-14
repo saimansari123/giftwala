@@ -221,7 +221,10 @@ tbody tr.click{cursor:pointer}
         <div><h1>Product Media</h1><p>View, upload, and manage product images.</p></div>
         <button class="btn primary" onclick="showMediaUpload()">+ Upload image</button>
       </div>
-      <div class="media-gallery" id="mediaGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;padding:20px 0">
+      <div class="row" style="margin-bottom:20px">
+        <input type="text" id="mediaSearch" placeholder="Search by product name or SKU..." style="flex:1;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:14px" onkeyup="filterMedia(this.value)">
+      </div>
+      <div id="mediaGallery">
         <p>Loading media...</p>
       </div>
       <div id="mediaUploadModal" hidden style="position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px">
@@ -635,36 +638,70 @@ async function deleteReview(id){
 }
 
 /* ---------- Media gallery ---------- */
+let allMedia = [];
 function renderMedia(){
   const box = $('mediaGallery');
   if (!state.products.length) {
     box.innerHTML = '<p>No products found.</p>';
     return;
   }
-  const media = [];
+  allMedia = [];
   state.products.forEach(p => {
     if (p.sku) {
       const ext = p.imageName && p.imageName.toLowerCase().endsWith('.jpg') ? '.jpg' : '.png';
       const url = `/assets/products/${p.sku}${ext}`;
-      media.push({sku: p.sku, name: p.name || p.sku, url});
+      allMedia.push({sku: p.sku, name: p.name || p.sku, url, category: p.category || 'Uncategorized'});
     }
   });
-  if (!media.length) {
+  if (!allMedia.length) {
     box.innerHTML = '<p>No product media found.</p>';
     return;
   }
-  box.innerHTML = media.map(m => `
-    <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9;position:relative;group">
-      <img src="${m.url}" alt="${m.name}" onerror="this.src='/assets/placeholder.png'" style="width:100%;height:180px;object-fit:cover;display:block">
-      <div style="position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
-        <button onclick="editProductImage('${m.sku}')" style="padding:6px 10px;background:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">✏️ Edit</button>
-        <button onclick="deleteProductImage('${m.sku}')" style="padding:6px 10px;background:#ff6b6b;color:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">🗑 Delete</button>
+  displayMediaByCategory(allMedia);
+}
+function displayMediaByCategory(media){
+  const box = $('mediaGallery');
+  const grouped = {};
+  media.forEach(m => {
+    if (!grouped[m.category]) grouped[m.category] = [];
+    grouped[m.category].push(m);
+  });
+  const categories = Object.keys(grouped).sort();
+  box.innerHTML = categories.map(cat => `
+    <div style="margin-bottom:32px">
+      <h3 style="margin:0 0 16px;color:#333;font-size:16px;font-weight:600;border-bottom:2px solid #ddd;padding-bottom:8px">${esc(cat)}</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
+        ${grouped[cat].map(m => `
+          <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9;position:relative;group">
+            <img src="${m.url}" alt="${m.name}" onerror="this.src='/assets/placeholder.png'" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
+              <button onclick="editProductImage('${m.sku}')" style="padding:6px 10px;background:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">✏️ Edit</button>
+              <button onclick="deleteProductImage('${m.sku}')" style="padding:6px 10px;background:#ff6b6b;color:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">🗑 Delete</button>
+            </div>
+            <div style="padding:12px">
+              <div style="font-size:12px;font-weight:bold;color:#333;margin:0 0 4px;word-break:break-word">${esc(m.name)}</div>
+              <small style="color:#999;font-size:10px">${esc(m.sku)}</small>
+            </div>
+          </div>
+        `).join('')}
       </div>
-      <div style="padding:12px">
-        <div style="font-size:12px;font-weight:bold;color:#333;margin:0 0 4px;word-break:break-word">${esc(m.name)}</div>
-        <small style="color:#999;font-size:10px">${esc(m.sku)}</small>
-      </div>
-    </div>`).join('');
+    </div>
+  `).join('');
+}
+function filterMedia(query){
+  const q = query.toLowerCase().trim();
+  if (!q) {
+    displayMediaByCategory(allMedia);
+    return;
+  }
+  const filtered = allMedia.filter(m =>
+    m.name.toLowerCase().includes(q) || m.sku.toLowerCase().includes(q)
+  );
+  if (!filtered.length) {
+    $('mediaGallery').innerHTML = '<p>No products found matching "' + esc(query) + '"</p>';
+    return;
+  }
+  displayMediaByCategory(filtered);
 }
 function showMediaUpload(){
   $('mediaUploadModal').hidden = false;
