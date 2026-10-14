@@ -112,11 +112,19 @@ export default {
       // List products (public - excludes hidden)
       if (url.pathname === '/api/products' && req.method === 'GET') {
         const q = url.searchParams.get('category');
-        const r = await env.DB.prepare(
-          `SELECT * FROM products WHERE hidden=0 ${q ? 'AND category=?' : ''}
-           ORDER BY featured DESC, created_at DESC`
-        ).bind(...(q ? [q] : [])).all();
-        return json(r.results.map(productOut));
+        try {
+          const r = await env.DB.prepare(
+            `SELECT * FROM products WHERE COALESCE(hidden,0)=0 ${q ? 'AND category=?' : ''}
+             ORDER BY featured DESC, created_at DESC`
+          ).bind(...(q ? [q] : [])).all();
+          return json(r.results.map(productOut));
+        } catch (e) {
+          const r = await env.DB.prepare(
+            `SELECT * FROM products ${q ? 'WHERE category=?' : ''}
+             ORDER BY featured DESC, created_at DESC`
+          ).bind(...(q ? [q] : [])).all();
+          return json(r.results.map(productOut));
+        }
       }
 
       // List all products (admin only - includes hidden)
