@@ -117,10 +117,10 @@ export default {
             ? 'SELECT * FROM products WHERE category=? ORDER BY featured DESC, created_at DESC'
             : 'SELECT * FROM products ORDER BY featured DESC, created_at DESC';
           const r = await env.DB.prepare(query).bind(...(q ? [q] : [])).all();
-          return json(r.results.map(productOut));
+          const results = r.results || [];
+          return json(results.length ? results.map(productOut) : []);
         } catch (e) {
-          console.error('Products API error:', e.message);
-          return json({ message: 'Error: ' + e.message, error: e.toString() }, 500);
+          return json({ ok: false, message: String(e.message || e) }, 500);
         }
       }
 
