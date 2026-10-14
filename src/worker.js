@@ -221,17 +221,18 @@ export default {
           ).bind(item.quantity, item.sku, item.sku).run();
         }
 
-        // Generate sequential order ID (GW-0001, GW-0002, etc)
-        const lastOrder = await env.DB.prepare(
-          'SELECT id FROM orders ORDER BY created_at DESC LIMIT 1'
-        ).first();
+        // Generate sequential order ID using sequence table
+        const seq = await env.DB.prepare(
+          'SELECT next_number FROM order_sequence WHERE key=?'
+        ).bind('order_id').first();
 
-        let nextNum = 1;
-        if (lastOrder?.id) {
-          const match = lastOrder.id.match(/GW-(\d+)/);
-          if (match) nextNum = parseInt(match[1]) + 1;
-        }
+        const nextNum = seq?.next_number || 1;
         const id = 'GW-' + String(nextNum).padStart(5, '0');
+
+        // Increment sequence for next order
+        await env.DB.prepare(
+          'UPDATE order_sequence SET next_number = next_number + 1 WHERE key=?'
+        ).bind('order_id').run();
 
         await env.DB.prepare(
           'INSERT INTO orders (id,customer_name,phone,email,address,payment_method,items,total,status,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)'
@@ -449,14 +450,46 @@ export default {
       if (om && req.method === 'PATCH') {
         const b = await body(req);
         const status = String(b.status || '').trim();
+        const orderId = om[1];
 
         if (!VALID_ORDER_STATUSES.includes(status)) {
           return json({ message: 'Invalid order status' }, 400);
         }
 
+        // If cancelling, restore stock and decrement order sequence
+        if (status === 'cancelled') {
+          const order = await env.DB.prepare(
+            'SELECT items FROM orders WHERE id=?'
+          ).bind(orderId).first();
+
+          if (order && order.items) {
+            try {
+              const items = JSON.parse(order.items || '[]');
+              for (const item of items) {
+                await env.DB.prepare(
+                  'UPDATE products SET stock = stock + ? WHERE sku=?'
+                ).bind(item.quantity, item.sku).run();
+              }
+
+              // Decrement order sequence so next order reuses this ID
+              const currentSeq = await env.DB.prepare(
+                'SELECT next_number FROM order_sequence WHERE key=?'
+              ).bind('order_id').first();
+
+              if (currentSeq && currentSeq.next_number > 1) {
+                await env.DB.prepare(
+                  'UPDATE order_sequence SET next_number = next_number - 1 WHERE key=?'
+                ).bind('order_id').run();
+              }
+            } catch (e) {
+              return json({ message: 'Failed to cancel order: ' + e.message }, 500);
+            }
+          }
+        }
+
         await env.DB.prepare(
           'UPDATE orders SET status=? WHERE id=?'
-        ).bind(status, om[1]).run();
+        ).bind(status, orderId).run();
         return json({ ok: true });
       }
 
