@@ -262,7 +262,7 @@ tbody tr.click{cursor:pointer}
 
           <div style="display:flex;gap:12px;justify-content:flex-end">
             <button onclick="closeMediaUpload()" style="padding:12px 20px;background:#f0f0f0;color:#333;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#e0e0e0'" onMouseOut="this.style.background='#f0f0f0'">Cancel</button>
-            <button onclick="uploadProductImage()" style="padding:12px 24px;background:#d4a574;color:#fff;border:0;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#c49564'" onMouseOut="this.style.background='#d4a574'">Upload</button>
+            <button onclick="uploadProductImage(this)" style="padding:12px 24px;background:#d4a574;color:#fff;border:0;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#c49564'" onMouseOut="this.style.background='#d4a574'">Upload</button>
           </div>
         </div>
       </div>
@@ -769,7 +769,7 @@ function switchUploadMode(mode){
     $('folderInput').click();
   }
 }
-function uploadProductImage(){
+function uploadProductImage(btn){
   const sku = $('uploadSKU').value.trim();
   const uploadType = document.querySelector('input[name="uploadType"]:checked').value;
   const input = uploadType === 'file' ? $('imageFile') : $('folderInput');
@@ -778,9 +778,9 @@ function uploadProductImage(){
   if (!input.files.length) { toast('Please select files to upload', true); return; }
 
   const files = Array.from(input.files);
-  const uploadBtn = event.target;
-  uploadBtn.disabled = true;
-  uploadBtn.textContent = 'Uploading...';
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'Uploading...';
 
   Promise.all(files.map(file => {
     return new Promise((resolve, reject) => {
@@ -810,15 +810,15 @@ function uploadProductImage(){
     });
   }))
   .then(results => {
-    uploadBtn.disabled = false;
-    uploadBtn.textContent = 'Upload';
+    btn.disabled = false;
+    btn.textContent = originalText;
     toast('✓ All ' + files.length + ' image(s) uploaded for ' + sku);
     closeMediaUpload();
     setTimeout(() => { loadState(); renderMedia(); }, 500);
   })
   .catch(err => {
-    uploadBtn.disabled = false;
-    uploadBtn.textContent = 'Upload';
+    btn.disabled = false;
+    btn.textContent = originalText;
     toast('Upload failed: ' + err.message, true);
   });
 }
