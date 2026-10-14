@@ -276,13 +276,56 @@ export default {
       if (url.pathname === '/api/uploads/image' && req.method === 'POST') {
         const b = await body(req);
         const data = String(b.data || '');
+        const filename = String(b.filename || 'image');
+        const sku = String(b.sku || '').trim();
+
+        if (!sku) return json({ message: 'SKU required' }, 400);
         if (!/^data:image\/(png|jpeg|jpg|webp);base64,/i.test(data)) {
           return json({ message: 'Send a PNG, JPG or WEBP image' }, 400);
         }
         if (data.length > 7 * 1024 * 1024) {
           return json({ message: 'Image must be 7MB or smaller' }, 413);
         }
-        return json({ url: data, filename: String(b.filename || 'image') }, 201);
+
+        const id = crypto.randomUUID();
+        try {
+          await env.DB.prepare(
+            'INSERT INTO media (id, sku, filename, image_data, created_at) VALUES (?, ?, ?, ?, datetime("now"))'
+          ).bind(id, sku, filename, data).run();
+
+          return json({ ok: true, id, sku, filename }, 201);
+        } catch (e) {
+          return json({ message: 'Failed to store image: ' + e.message }, 500);
+        }
+      }
+
+      // Get media by SKU
+      if (url.pathname.startsWith('/api/media/') && req.method === 'GET') {
+        const sku = url.pathname.replace('/api/media/', '').trim();
+        if (!sku) return json({ message: 'SKU required' }, 400);
+
+        try {
+          const r = await env.DB.prepare(
+            'SELECT * FROM media WHERE sku = ? ORDER BY created_at DESC'
+          ).bind(sku).all();
+
+          return json({ ok: true, images: r.results || [] });
+        } catch (e) {
+          return json({ message: 'Failed to retrieve media: ' + e.message }, 500);
+        }
+      }
+
+      // Delete media by ID
+      if (url.pathname.startsWith('/api/media/') && req.method === 'DELETE') {
+        const imgId = url.pathname.replace('/api/media/', '').trim();
+        if (!imgId) return json({ message: 'Image ID required' }, 400);
+
+        try {
+          await env.DB.prepare('DELETE FROM media WHERE id = ?').bind(imgId).run();
+          return json({ ok: true });
+        } catch (e) {
+          return json({ message: 'Failed to delete media: ' + e.message }, 500);
+        }
       }
 
       // Update builder settings

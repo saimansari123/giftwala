@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS media (
+  id TEXT PRIMARY KEY,
+  sku TEXT NOT NULL,
+  filename TEXT NOT NULL,
+  image_data TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_media_sku ON media(sku);

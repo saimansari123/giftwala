@@ -645,19 +645,37 @@ function renderMedia(){
     box.innerHTML = '<p>No products found.</p>';
     return;
   }
+
+  box.innerHTML = '<p>Loading media...</p>';
   allMedia = [];
-  state.products.forEach(p => {
-    if (p.sku) {
-      const ext = p.imageName && p.imageName.toLowerCase().endsWith('.jpg') ? '.jpg' : '.png';
-      const url = `/assets/products/${p.sku}${ext}`;
-      allMedia.push({sku: p.sku, name: p.name || p.sku, url, category: p.category || 'Uncategorized'});
+
+  Promise.all(state.products.filter(p => p.sku).map(p =>
+    fetch(`/api/media/${encodeURIComponent(p.sku)}`)
+      .then(r => r.json())
+      .then(data => ({
+        sku: p.sku,
+        name: p.name || p.sku,
+        category: p.category || 'Uncategorized',
+        images: (data.images || []).map(img => ({
+          id: img.id,
+          filename: img.filename,
+          data: img.image_data
+        }))
+      }))
+      .catch(() => ({
+        sku: p.sku,
+        name: p.name || p.sku,
+        category: p.category || 'Uncategorized',
+        images: []
+      }))
+  )).then(results => {
+    allMedia = results.filter(r => r.images.length > 0);
+    if (!allMedia.length) {
+      box.innerHTML = '<p>No product media found. <button class="btn primary" onclick="showMediaUpload()" style="margin-left:8px">Upload images</button></p>';
+      return;
     }
+    displayMediaByCategory(allMedia);
   });
-  if (!allMedia.length) {
-    box.innerHTML = '<p>No product media found.</p>';
-    return;
-  }
-  displayMediaByCategory(allMedia);
 }
 function displayMediaByCategory(media){
   const box = $('mediaGallery');
@@ -671,19 +689,18 @@ function displayMediaByCategory(media){
     <div style="margin-bottom:32px">
       <h3 style="margin:0 0 16px;color:#333;font-size:16px;font-weight:600;border-bottom:2px solid #ddd;padding-bottom:8px">${esc(cat)}</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
-        ${grouped[cat].map(m => `
+        ${grouped[cat].flatMap(m => (m.images || []).map(img => `
           <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9;position:relative;group">
-            <img src="${m.url}" alt="${m.name}" onerror="this.src='/assets/placeholder.png'" style="width:100%;height:180px;object-fit:cover;display:block">
+            <img src="${img.data}" alt="${m.name}" style="width:100%;height:180px;object-fit:cover;display:block">
             <div style="position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
-              <button onclick="editProductImage('${m.sku}')" style="padding:6px 10px;background:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">✏️ Edit</button>
-              <button onclick="deleteProductImage('${m.sku}')" style="padding:6px 10px;background:#ff6b6b;color:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">🗑 Delete</button>
+              <button onclick="deleteProductImage('${img.id}')" style="padding:6px 10px;background:#ff6b6b;color:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">🗑 Delete</button>
             </div>
             <div style="padding:12px">
               <div style="font-size:12px;font-weight:bold;color:#333;margin:0 0 4px;word-break:break-word">${esc(m.name)}</div>
-              <small style="color:#999;font-size:10px">${esc(m.sku)}</small>
+              <small style="color:#999;font-size:10px">${esc(img.filename)}</small>
             </div>
           </div>
-        `).join('')}
+        `))}
       </div>
     </div>
   `).join('');
@@ -760,17 +777,64 @@ function uploadProductImage(){
   if (!sku) { toast('Please enter a product SKU', true); return; }
   if (!input.files.length) { toast('Please select files to upload', true); return; }
 
-  const fileCount = input.files.length;
-  const fileNames = fileCount === 1 ? input.files[0].name : fileCount + ' files';
-  toast('Uploading ' + fileNames + ' for product ' + sku);
-  closeMediaUpload();
+  const files = Array.from(input.files);
+  const uploadBtn = event.target;
+  uploadBtn.disabled = true;
+  uploadBtn.textContent = 'Uploading...';
+
+  Promise.all(files.map(file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        fetch('/api/uploads/image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            data: reader.result,
+            filename: file.name,
+            sku: sku
+          })
+        })
+        .then(r => r.json())
+        .then(data => {
+          console.log('Uploaded:', file.name);
+          resolve(data);
+        })
+        .catch(err => {
+          console.error('Upload failed:', err);
+          reject(err);
+        });
+      };
+      reader.onerror = () => reject(new Error('File read failed'));
+      reader.readAsDataURL(file);
+    });
+  }))
+  .then(results => {
+    uploadBtn.disabled = false;
+    uploadBtn.textContent = 'Upload';
+    toast('✓ All ' + files.length + ' image(s) uploaded for ' + sku);
+    closeMediaUpload();
+    setTimeout(() => { loadState(); renderMedia(); }, 500);
+  })
+  .catch(err => {
+    uploadBtn.disabled = false;
+    uploadBtn.textContent = 'Upload';
+    toast('Upload failed: ' + err.message, true);
+  });
 }
-function editProductImage(sku){
-  toast('Edit image for ' + sku);
-}
-function deleteProductImage(sku){
-  if (!confirm('Delete image for ' + sku + '?')) return;
-  toast('Image deleted for ' + sku);
+function deleteProductImage(imgId){
+  if (!confirm('Delete this image?')) return;
+  fetch(`/api/media/${imgId}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) {
+        toast('✓ Image deleted');
+        setTimeout(() => { renderMedia(); }, 300);
+      } else {
+        toast('Failed to delete: ' + (d.message || 'unknown error'), true);
+      }
+    })
+    .catch(e => toast('Error: ' + e.message, true));
 }
 
 /* ---------- Homepage settings ---------- */
