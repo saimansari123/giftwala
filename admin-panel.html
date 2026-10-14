@@ -226,25 +226,40 @@ tbody tr.click{cursor:pointer}
       </div>
       <div id="mediaUploadModal" hidden style="position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px">
         <div style="background:#fff;padding:40px;border-radius:12px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.2)">
-          <h2 style="margin:0 0 24px;color:#333;font-size:24px;font-weight:600">Upload Product Image</h2>
+          <h2 style="margin:0 0 24px;color:#333;font-size:24px;font-weight:600">Upload Media</h2>
 
           <div style="margin-bottom:24px">
             <label style="display:block;margin-bottom:10px;font-weight:600;color:#333;font-size:14px">Product SKU</label>
             <input type="text" id="uploadSKU" placeholder="e.g., GW-GB-001" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:6px;font-size:14px;font-family:inherit;box-sizing:border-box;background:#fff;color:#333">
           </div>
 
+          <div style="margin-bottom:24px">
+            <label style="display:block;margin-bottom:10px;font-weight:600;color:#333;font-size:14px">Upload Type</label>
+            <div style="display:flex;gap:12px">
+              <label style="flex:1;display:flex;align-items:center;padding:10px;border:2px solid #ddd;border-radius:6px;cursor:pointer;background:#fafafa;transition:all 0.2s" onMouseOver="this.style.background='#f0f0f0'" onMouseOut="this.style.background='#fafafa'">
+                <input type="radio" name="uploadType" value="file" checked style="margin-right:8px" onchange="switchUploadMode('file')">
+                <span style="color:#333;font-weight:500">📄 Single File</span>
+              </label>
+              <label style="flex:1;display:flex;align-items:center;padding:10px;border:2px solid #ddd;border-radius:6px;cursor:pointer;background:#fafafa;transition:all 0.2s" onMouseOver="this.style.background='#f0f0f0'" onMouseOut="this.style.background='#fafafa'">
+                <input type="radio" name="uploadType" value="folder" style="margin-right:8px" onchange="switchUploadMode('folder')">
+                <span style="color:#333;font-weight:500">📁 Folder</span>
+              </label>
+            </div>
+          </div>
+
           <div style="margin-bottom:28px">
-            <label style="display:block;margin-bottom:10px;font-weight:600;color:#333;font-size:14px">Select Image</label>
+            <label style="display:block;margin-bottom:10px;font-weight:600;color:#333;font-size:14px" id="selectLabel">Select Image</label>
             <div style="padding:40px 20px;border:2px dashed #ccc;border-radius:8px;text-align:center;cursor:pointer;background:#fafafa;transition:all 0.2s" id="dropZone" onDragOver="event.preventDefault();this.style.borderColor='#999';this.style.background='#f0f0f0'" onDragLeave="event.preventDefault();this.style.borderColor='#ccc';this.style.background='#fafafa'" onDrop="handleFileDrop(event)">
               <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
-              <div style="color:#666;font-size:16px;margin-bottom:8px" onclick="document.getElementById('imageFile').click()">📁 Drag image here or click to browse</div>
+              <input type="file" id="folderInput" webkitdirectory mozdirectory style="display:none" onchange="handleFolderSelect(this)">
+              <div style="color:#666;font-size:16px;margin-bottom:8px" onclick="document.getElementById('imageFile').click()">📁 Drag files here or click to browse</div>
               <p id="fileName" style="margin:8px 0 0;font-size:13px;color:#999;min-height:20px"></p>
             </div>
           </div>
 
           <div style="display:flex;gap:12px;justify-content:flex-end">
             <button onclick="closeMediaUpload()" style="padding:12px 20px;background:#f0f0f0;color:#333;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#e0e0e0'" onMouseOut="this.style.background='#f0f0f0'">Cancel</button>
-            <button onclick="uploadProductImage()" style="padding:12px 24px;background:#d4a574;color:#fff;border:0;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#c49564'" onMouseOut="this.style.background='#d4a574'">Upload Image</button>
+            <button onclick="uploadProductImage()" style="padding:12px 24px;background:#d4a574;color:#fff;border:0;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#c49564'" onMouseOut="this.style.background='#d4a574'">Upload</button>
           </div>
         </div>
       </div>
@@ -673,12 +688,31 @@ function handleFileSelect(input){
     $('fileName').textContent = '✓ ' + input.files[0].name;
   }
 }
+function handleFolderSelect(input){
+  if (input.files.length > 0) {
+    $('fileName').textContent = '✓ Folder with ' + input.files.length + ' files';
+  }
+}
+function switchUploadMode(mode){
+  if (mode === 'file') {
+    $('selectLabel').textContent = 'Select Image';
+    $('imageFile').click();
+  } else {
+    $('selectLabel').textContent = 'Select Folder';
+    $('folderInput').click();
+  }
+}
 function uploadProductImage(){
   const sku = $('uploadSKU').value.trim();
-  const file = $('imageFile').files[0];
+  const uploadType = document.querySelector('input[name="uploadType"]:checked').value;
+  const input = uploadType === 'file' ? $('imageFile') : $('folderInput');
+
   if (!sku) { toast('Please enter a product SKU', true); return; }
-  if (!file) { toast('Please select an image file', true); return; }
-  toast('Image upload would be sent to: ' + sku);
+  if (!input.files.length) { toast('Please select files to upload', true); return; }
+
+  const fileCount = input.files.length;
+  const fileNames = fileCount === 1 ? input.files[0].name : fileCount + ' files';
+  toast('Uploading ' + fileNames + ' for product ' + sku);
   closeMediaUpload();
 }
 function editProductImage(sku){
