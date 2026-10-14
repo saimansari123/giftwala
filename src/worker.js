@@ -221,6 +221,23 @@ export default {
           ).bind(item.quantity, item.sku, item.sku).run();
         }
 
+        // Ensure order_sequence table exists
+        try {
+          await env.DB.exec(`
+            CREATE TABLE IF NOT EXISTS order_sequence (
+              key TEXT PRIMARY KEY,
+              next_number INTEGER DEFAULT 1
+            )
+          `);
+        } catch (e) {}
+
+        // Initialize sequence if not present
+        try {
+          await env.DB.prepare(
+            'INSERT OR IGNORE INTO order_sequence (key, next_number) VALUES (?, ?)'
+          ).bind('order_id', 1).run();
+        } catch (e) {}
+
         // Generate sequential order ID using sequence table
         const seq = await env.DB.prepare(
           'SELECT next_number FROM order_sequence WHERE key=?'
@@ -470,6 +487,23 @@ export default {
                   'UPDATE products SET stock = stock + ? WHERE sku=?'
                 ).bind(item.quantity, item.sku).run();
               }
+
+              // Ensure order_sequence table exists
+              try {
+                await env.DB.exec(`
+                  CREATE TABLE IF NOT EXISTS order_sequence (
+                    key TEXT PRIMARY KEY,
+                    next_number INTEGER DEFAULT 1
+                  )
+                `);
+              } catch (e) {}
+
+              // Initialize sequence if not present
+              try {
+                await env.DB.prepare(
+                  'INSERT OR IGNORE INTO order_sequence (key, next_number) VALUES (?, ?)'
+                ).bind('order_id', 1).run();
+              } catch (e) {}
 
               // Decrement order sequence so next order reuses this ID
               const currentSeq = await env.DB.prepare(
