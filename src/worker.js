@@ -109,25 +109,18 @@ export default {
         return p ? json(productOut(p)) : json({ message: 'Product not found' }, 404);
       }
 
-      // List products (public - excludes hidden)
+      // List products (public)
       if (url.pathname === '/api/products' && req.method === 'GET') {
-        const q = url.searchParams.get('category');
         try {
-          const r = await env.DB.prepare(
-            `SELECT * FROM products WHERE (hidden IS NULL OR hidden=0) ${q ? 'AND category=?' : ''}
-             ORDER BY featured DESC, created_at DESC`
-          ).bind(...(q ? [q] : [])).all();
+          const q = url.searchParams.get('category');
+          const query = q
+            ? 'SELECT * FROM products WHERE category=? ORDER BY featured DESC, created_at DESC'
+            : 'SELECT * FROM products ORDER BY featured DESC, created_at DESC';
+          const r = await env.DB.prepare(query).bind(...(q ? [q] : [])).all();
           return json(r.results.map(productOut));
         } catch (e) {
-          try {
-            const r = await env.DB.prepare(
-              `SELECT * FROM products ${q ? 'WHERE category=?' : ''}
-               ORDER BY featured DESC, created_at DESC`
-            ).bind(...(q ? [q] : [])).all();
-            return json(r.results.map(productOut));
-          } catch (err) {
-            return json({ message: 'Database error: ' + err.message }, 500);
-          }
+          console.error('Products API error:', e.message);
+          return json({ message: 'Error: ' + e.message, error: e.toString() }, 500);
         }
       }
 
