@@ -224,21 +224,27 @@ tbody tr.click{cursor:pointer}
       <div class="media-gallery" id="mediaGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;padding:20px 0">
         <p>Loading media...</p>
       </div>
-      <div id="mediaUploadModal" hidden style="position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px">
-        <div style="background:#fff;padding:30px;border-radius:8px;max-width:500px;width:100%">
-          <h2 style="margin:0 0 20px">Upload Product Image</h2>
-          <div style="margin-bottom:20px">
-            <label style="display:block;margin-bottom:8px;font-weight:bold">Product SKU</label>
-            <input type="text" id="uploadSKU" class="input" placeholder="e.g., GW-GB-001" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px">
+      <div id="mediaUploadModal" hidden style="position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px">
+        <div style="background:#fff;padding:40px;border-radius:12px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.2)">
+          <h2 style="margin:0 0 24px;color:#333;font-size:24px;font-weight:600">Upload Product Image</h2>
+
+          <div style="margin-bottom:24px">
+            <label style="display:block;margin-bottom:10px;font-weight:600;color:#333;font-size:14px">Product SKU</label>
+            <input type="text" id="uploadSKU" placeholder="e.g., GW-GB-001" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:6px;font-size:14px;font-family:inherit;box-sizing:border-box">
           </div>
-          <div style="margin-bottom:20px;padding:30px;border:2px dashed #ddd;border-radius:8px;text-align:center;cursor:pointer;background:#f9f9f9" id="dropZone" onDragOver="event.preventDefault();this.style.borderColor='#333'" onDragLeave="event.preventDefault();this.style.borderColor='#ddd'" onDrop="handleFileDrop(event)">
-            <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
-            <p style="margin:0;color:#666" onclick="document.getElementById('imageFile').click()">Drag image here or click to browse</p>
-            <p id="fileName" style="margin:10px 0 0;font-size:12px;color:#999"></p>
+
+          <div style="margin-bottom:28px">
+            <label style="display:block;margin-bottom:10px;font-weight:600;color:#333;font-size:14px">Select Image</label>
+            <div style="padding:40px 20px;border:2px dashed #ccc;border-radius:8px;text-align:center;cursor:pointer;background:#fafafa;transition:all 0.2s" id="dropZone" onDragOver="event.preventDefault();this.style.borderColor='#999';this.style.background='#f0f0f0'" onDragLeave="event.preventDefault();this.style.borderColor='#ccc';this.style.background='#fafafa'" onDrop="handleFileDrop(event)">
+              <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
+              <div style="color:#666;font-size:16px;margin-bottom:8px" onclick="document.getElementById('imageFile').click()">📁 Drag image here or click to browse</div>
+              <p id="fileName" style="margin:8px 0 0;font-size:13px;color:#999;min-height:20px"></p>
+            </div>
           </div>
-          <div style="display:flex;gap:10px;justify-content:flex-end">
-            <button class="btn" onclick="closeMediaUpload()" style="background:#ddd;color:#333">Cancel</button>
-            <button class="btn primary" onclick="uploadProductImage()">Upload</button>
+
+          <div style="display:flex;gap:12px;justify-content:flex-end">
+            <button onclick="closeMediaUpload()" style="padding:12px 20px;background:#f0f0f0;color:#333;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#e0e0e0'" onMouseOut="this.style.background='#f0f0f0'">Cancel</button>
+            <button onclick="uploadProductImage()" style="padding:12px 24px;background:#d4a574;color:#fff;border:0;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s" onMouseOver="this.style.background='#c49564'" onMouseOut="this.style.background='#d4a574'">Upload Image</button>
           </div>
         </div>
       </div>
