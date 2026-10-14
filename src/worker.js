@@ -109,6 +109,16 @@ export default {
         return p ? json(productOut(p)) : json({ message: 'Product not found' }, 404);
       }
 
+      // Health check
+      if (url.pathname === '/api/health' && req.method === 'GET') {
+        try {
+          const test = await env.DB.prepare('SELECT COUNT(*) count FROM products').first();
+          return json({ ok: true, products: test.count });
+        } catch (e) {
+          return json({ ok: false, error: String(e) }, 500);
+        }
+      }
+
       // List products (public)
       if (url.pathname === '/api/products' && req.method === 'GET') {
         try {
@@ -584,7 +594,11 @@ export default {
       return json({ message: 'API route not found' }, 404);
     } catch (e) {
       console.error('API Error:', e);
-      return json({ message: 'Server error' }, 500);
+      try {
+        return json({ ok: false, error: String(e.message || e) }, 500);
+      } catch {
+        return new Response(JSON.stringify({ ok: false }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+      }
     }
   }
 };
