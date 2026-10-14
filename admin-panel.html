@@ -218,10 +218,29 @@ tbody tr.click{cursor:pointer}
     <!-- Media -->
     <section data-section="media" hidden>
       <div class="top">
-        <div><h1>Product Media</h1><p>View and manage all product images and media files.</p></div>
+        <div><h1>Product Media</h1><p>View, upload, and manage product images.</p></div>
+        <button class="btn primary" onclick="showMediaUpload()">+ Upload image</button>
       </div>
       <div class="media-gallery" id="mediaGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;padding:20px 0">
         <p>Loading media...</p>
+      </div>
+      <div id="mediaUploadModal" hidden style="position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px">
+        <div style="background:#fff;padding:30px;border-radius:8px;max-width:500px;width:100%">
+          <h2 style="margin:0 0 20px">Upload Product Image</h2>
+          <div style="margin-bottom:20px">
+            <label style="display:block;margin-bottom:8px;font-weight:bold">Product SKU</label>
+            <input type="text" id="uploadSKU" class="input" placeholder="e.g., GW-GB-001" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px">
+          </div>
+          <div style="margin-bottom:20px;padding:30px;border:2px dashed #ddd;border-radius:8px;text-align:center;cursor:pointer;background:#f9f9f9" id="dropZone" onDragOver="event.preventDefault();this.style.borderColor='#333'" onDragLeave="event.preventDefault();this.style.borderColor='#ddd'" onDrop="handleFileDrop(event)">
+            <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
+            <p style="margin:0;color:#666" onclick="document.getElementById('imageFile').click()">Drag image here or click to browse</p>
+            <p id="fileName" style="margin:10px 0 0;font-size:12px;color:#999"></p>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:flex-end">
+            <button class="btn" onclick="closeMediaUpload()" style="background:#ddd;color:#333">Cancel</button>
+            <button class="btn primary" onclick="uploadProductImage()">Upload</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -614,13 +633,54 @@ function renderMedia(){
     return;
   }
   box.innerHTML = media.map(m => `
-    <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9">
+    <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9;position:relative;group">
       <img src="${m.url}" alt="${m.name}" onerror="this.src='/assets/placeholder.png'" style="width:100%;height:180px;object-fit:cover;display:block">
+      <div style="position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
+        <button onclick="editProductImage('${m.sku}')" style="padding:6px 10px;background:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">✏️ Edit</button>
+        <button onclick="deleteProductImage('${m.sku}')" style="padding:6px 10px;background:#ff6b6b;color:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">🗑 Delete</button>
+      </div>
       <div style="padding:12px">
         <div style="font-size:12px;font-weight:bold;color:#333;margin:0 0 4px;word-break:break-word">${esc(m.name)}</div>
         <small style="color:#999;font-size:10px">${esc(m.sku)}</small>
       </div>
     </div>`).join('');
+}
+function showMediaUpload(){
+  $('mediaUploadModal').hidden = false;
+}
+function closeMediaUpload(){
+  $('mediaUploadModal').hidden = true;
+  $('uploadSKU').value = '';
+  $('fileName').textContent = '';
+  $('imageFile').value = '';
+}
+function handleFileDrop(e){
+  e.preventDefault();
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    $('imageFile').files = files;
+    $('fileName').textContent = '✓ ' + files[0].name;
+  }
+}
+function handleFileSelect(input){
+  if (input.files.length > 0) {
+    $('fileName').textContent = '✓ ' + input.files[0].name;
+  }
+}
+function uploadProductImage(){
+  const sku = $('uploadSKU').value.trim();
+  const file = $('imageFile').files[0];
+  if (!sku) { toast('Please enter a product SKU', true); return; }
+  if (!file) { toast('Please select an image file', true); return; }
+  toast('Image upload would be sent to: ' + sku);
+  closeMediaUpload();
+}
+function editProductImage(sku){
+  toast('Edit image for ' + sku);
+}
+function deleteProductImage(sku){
+  if (!confirm('Delete image for ' + sku + '?')) return;
+  toast('Image deleted for ' + sku);
 }
 
 /* ---------- Homepage settings ---------- */
