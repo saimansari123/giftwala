@@ -521,7 +521,10 @@ function renderProductImages(){
 }
 function deleteProduct(id, name){
   if (!confirm('Delete product "' + name + '"? Stock will be restored.')) return;
-  fetch('/api/products/' + encodeURIComponent(id), { method: 'DELETE' })
+  const token = localStorage.getItem(TOKEN_KEY);
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers.Authorization = 'Bearer ' + token;
+  fetch('/api/products/' + encodeURIComponent(id), { method: 'DELETE', headers })
     .then(r => r.json())
     .then(d => {
       if (d.ok) {
@@ -535,9 +538,12 @@ function deleteProduct(id, name){
 }
 function toggleHideProduct(id, hide){
   const action = hide ? 'Hide' : 'Show';
+  const token = localStorage.getItem(TOKEN_KEY);
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers.Authorization = 'Bearer ' + token;
   fetch('/api/products/' + encodeURIComponent(id) + '/hidden', {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ hidden: hide })
   })
     .then(r => r.json())
