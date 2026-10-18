@@ -524,7 +524,11 @@ function deleteProduct(id, name){
   const token = localStorage.getItem(TOKEN_KEY);
   const headers = { 'Content-Type': 'application/json' };
   if (token) headers.Authorization = 'Bearer ' + token;
-  fetch('/api/products/' + encodeURIComponent(id), { method: 'DELETE', headers })
+  fetch('/api/products/' + encodeURIComponent(id), {
+    method: 'DELETE',
+    headers,
+    body: JSON.stringify({ action: 'delete' })
+  })
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
       return r.json().catch(() => ({ ok: true }));
