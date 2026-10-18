@@ -17,7 +17,7 @@
 .catalog-view-all{font-size:12px;font-weight:700;color:var(--gold-dark);border-bottom:1px solid var(--gold-dark);padding-bottom:5px;transition:.2s}
 .catalog-view-all span{font-size:17px;margin-left:8px}
 .catalog-view-all:hover{color:var(--ink);border-color:var(--ink);padding-right:5px}
-.catalog-section .product-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 18px}
+.catalog-section .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 18px}
 @media(max-width:850px){.catalog-section-head h3{font-size:25px}.catalog-section .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}.catalog-section{padding-bottom:42px}}
 @media(max-width:850px){.shop-section .filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;margin-bottom:28px}.shop-section .filter-row button{min-width:max-content;min-height:44px;padding:9px 14px}}
 
