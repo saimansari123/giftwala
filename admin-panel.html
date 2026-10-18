@@ -525,16 +525,22 @@ function deleteProduct(id, name){
   const headers = { 'Content-Type': 'application/json' };
   if (token) headers.Authorization = 'Bearer ' + token;
   fetch('/api/products/' + encodeURIComponent(id), { method: 'DELETE', headers })
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
+      return r.json().catch(() => ({ ok: true }));
+    })
     .then(d => {
-      if (d.ok) {
+      if (d.ok || d.success) {
         toast('✓ Product deleted');
         setTimeout(() => { loadState(); renderProducts(); }, 300);
       } else {
-        toast('Failed: ' + (d.message || 'unknown error'), true);
+        toast('Failed: ' + (d.message || d.error || 'Unknown error'), true);
       }
     })
-    .catch(e => toast('Error: ' + e.message, true));
+    .catch(e => {
+      console.error('Delete error:', e);
+      toast('Error: ' + e.message, true);
+    });
 }
 function toggleHideProduct(id, hide){
   const action = hide ? 'Hide' : 'Show';
@@ -546,13 +552,16 @@ function toggleHideProduct(id, hide){
     headers,
     body: JSON.stringify({ hidden: hide })
   })
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
+      return r.json().catch(() => ({ ok: true }));
+    })
     .then(d => {
-      if (d.ok) {
+      if (d.ok || d.success) {
         toast('✓ Product ' + action + 'den');
         setTimeout(() => { loadState(); renderProducts(); }, 300);
       } else {
-        toast('Failed: ' + (d.message || 'unknown error'), true);
+        toast('Failed: ' + (d.message || d.error || 'Unknown error'), true);
       }
     })
     .catch(e => toast('Error: ' + e.message, true));
