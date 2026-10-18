@@ -1,9 +1,101 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>All Shop | GiftWALA</title><link rel="stylesheet" href="styles.css"><style>.all-shop{padding:70px 10%}.all-shop h1{font:600 48px 'Playfair Display';margin:10px 0 30px}.all-shop .product-grid{margin-top:25px}.all-shop .product-image img{width:100%;height:100%;object-fit:cover}.all-shop .product-card{cursor:pointer}@media(max-width:850px){.all-shop{padding:45px 8%}.all-shop h1{font-size:36px}}</style></head><body><div class="announcement">Free delivery on orders above Rs. 2,500 <span>-</span> Made with love in Pakistan</div><header class="site-header"><a class="brand" href="/"><span class="brand-mark"><i></i><b>G</b></span><span><strong>Gift<span>WALA</span></strong><small>CUSTOMIZED GIFTS &amp; ACCESSORIES</small></span></a><nav class="desktop-nav"><a href="/">Home</a><a class="nav-highlight" href="/all-shop.html">All Shop</a><a href="/customize.html">Build your box</a><a href="/categories.html">Categories</a><a href="/how-it-works.html">How it works</a><a href="/reviews.html">Reviews</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav><a class="text-link" href="/">Home -></a></header><main class="all-shop"><p class="eyebrow">THE GIFTWALA COLLECTION</p><h1>All products</h1><div id="products" class="product-grid"><p>Loading products...</p></div></main><script>(()=>{const money=n=>'Rs. '+Number(n||0).toLocaleString('en-PK');const category=new URLSearchParams(location.search).get('category');const box=document.getElementById('products');const title=document.querySelector('.all-shop h1');const render=ps=>{const filtered=category&&category!=='All'?ps.filter(p=>String(p.category||'').trim().toLowerCase()===category.trim().toLowerCase()):ps;if(title)title.textContent=category&&category!=='All'?category:'All products';box.innerHTML=filtered.length?filtered.map(p=>{const sku=p.sku||'',ext=(p.imageName||'').toLowerCase().endsWith('.jpg')?'.jpg':'.png',sale=Number(p.salePrice||p.price||0),original=Number(p.price||0),old=original>sale?` <del class="old-price">Rs. ${original.toLocaleString('en-PK')}</del>`:'';return `<article class="product-card" onclick="location.href='/product.html?id=${encodeURIComponent(sku)}'"><div class="product-image"><img loading="lazy" src="/assets/products/${sku}${ext}" alt="${p.name}"></div><div class="product-info"><h3>${p.name}</h3><p>${p.description||'Thoughtfully selected for you.'}</p><b class="price">${money(sale)}${old}</b></div></article>`}).join(''):'<p>No products found in this category.</p>'};fetch('/api/products').then(r=>r.json()).then(render).catch(()=>{box.innerHTML='<p>Products could not be loaded.</p>'})})();</script><script src="/header-sync.js"></script></body></html>
-<script src="/all-shop-buttons.js"></script>
-<link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
-<style>.all-shop .product-grid{align-items:stretch!important}.all-shop .product-card{display:flex!important;flex-direction:column!important;height:100%!important}.all-shop .product-image{height:280px!important;flex:0 0 280px!important}.all-shop .product-info{display:flex!important;flex-direction:column!important;flex:1!important}.all-shop .product-info h3{min-height:44px!important}.all-shop .product-info p{min-height:34px!important}.all-shop .product-info .price{min-height:22px!important}.all-shop .mobile-add-cart{margin-top:auto!important}</style>
-<style>.all-shop .product-card{height:500px!important;display:flex!important;flex-direction:column!important}.all-shop .product-image{height:280px!important;flex:0 0 280px!important}.all-shop .product-info{height:220px!important;min-height:220px!important;display:flex!important;flex-direction:column!important}.all-shop .product-info h3{height:44px!important;min-height:44px!important;overflow:hidden!important}.all-shop .product-info p{height:40px!important;min-height:40px!important;overflow:hidden!important}.all-shop .product-info .mobile-add-cart{margin-top:auto!important}@media(max-width:850px){.all-shop .product-card{height:430px!important}.all-shop .product-image{height:180px!important;flex-basis:180px!important}.all-shop .product-info{height:250px!important;min-height:250px!important}}
-<script>document.addEventListener('DOMContentLoaded',()=>{const fix=()=>document.querySelectorAll('.all-shop .product-card').forEach(c=>{c.style.height='500px';c.style.display='flex';c.style.flexDirection='column';const i=c.querySelector('.product-image'),p=c.querySelector('.product-info');if(i){i.style.height='280px';i.style.flex='0 0 280px'}if(p){p.style.height='220px';p.style.minHeight='220px';p.style.display='flex';p.style.flexDirection='column'}const b=c.querySelector('.mobile-add-cart');if(b)b.style.marginTop='auto'});fix();new MutationObserver(fix).observe(document.getElementById('products'),{childList:true})});</script>
-<style id="page-manrope">body,body *{font-family:'Manrope',Arial,sans-serif!important}</style>
-<script>(()=>{const l=document.createElement('link');l.rel='icon';l.type='image/png';l.href='/assets/giftwala-favicon-512.png';document.head.appendChild(l)})();</script>
-<script>(()=>{const q=new URLSearchParams(location.search).get('search');if(!q)return;setTimeout(()=>fetch('/api/products').then(r=>r.json()).then(ps=>{const term=q.toLowerCase(),list=ps.filter(p=>(p.name+' '+(p.category||'')+' '+(p.description||'')).toLowerCase().includes(term)),box=document.getElementById('products'),title=document.querySelector('.all-shop h1');if(title)title.textContent='Search results';if(box)box.innerHTML=list.map(p=>{const sku=p.sku||'',ext=(p.imageName||'').toLowerCase().endsWith('.jpg')?'.jpg':'.png';return `<article class="product-card" onclick="location.href='/product.html?id=${encodeURIComponent(sku)}'"><div class="product-image"><img loading="lazy" src="/assets/products/${sku}${ext}" alt="${p.name}"></div><div class="product-info"><h3>${p.name}</h3><p>${p.description||''}</p><b class="price">Rs. ${Number(p.salePrice||p.price||0).toLocaleString('en-PK')}</b></div></article>`}).join('')||'<p>No gifts found. Try another search.</p>'}),900)})();</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>All Shop | GiftWALA</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .all-shop { padding: 70px 10%; max-width: 1400px; margin: 0 auto; }
+    .all-shop h1 { font: 600 48px 'Playfair Display'; margin: 10px 0 30px; }
+    .all-shop .product-grid { margin-top: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .all-shop .product-card { cursor: pointer; }
+    .all-shop .product-image { width: 100%; height: 280px; overflow: hidden; background: #f5f1eb; }
+    .all-shop .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+    .all-shop .product-card:hover .product-image img { transform: scale(1.05); }
+    @media(max-width:1000px) { .all-shop .product-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
+    @media(max-width:850px) {
+      .all-shop { padding: 45px 8%; }
+      .all-shop h1 { font-size: 36px; }
+      .all-shop .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .all-shop .product-image { height: 200px; }
+    }
+    @media(max-width:520px) {
+      .all-shop { padding: 30px 5%; }
+      .all-shop h1 { font-size: 28px; }
+      .all-shop .product-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">Free delivery on orders above Rs. 3,000 • Made with love in Pakistan</div>
+  <header class="site-header"></header>
+
+  <main class="all-shop">
+    <p class="eyebrow">THE GIFTWALA COLLECTION</p>
+    <h1 id="page-title">All products</h1>
+    <div id="products" class="product-grid">
+      <p>Loading products...</p>
+    </div>
+  </main>
+
+  <script src="/header-sync.js"></script>
+  <script>
+    const money = n => 'Rs. ' + Number(n || 0).toLocaleString('en-PK');
+    const category = new URLSearchParams(location.search).get('category');
+    const search = new URLSearchParams(location.search).get('search');
+    const box = document.getElementById('products');
+    const title = document.getElementById('page-title');
+
+    function renderProducts(ps) {
+      let filtered = ps;
+
+      if (search) {
+        const term = search.toLowerCase();
+        filtered = ps.filter(p =>
+          (p.name + ' ' + (p.category || '') + ' ' + (p.description || '')).toLowerCase().includes(term)
+        );
+        title.textContent = 'Search: ' + search;
+      } else if (category && category !== 'All') {
+        filtered = ps.filter(p => String(p.category || '').trim().toLowerCase() === category.trim().toLowerCase());
+        title.textContent = category;
+      }
+
+      if (!filtered.length) {
+        box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No products found.</p>';
+        return;
+      }
+
+      box.innerHTML = filtered.map(p => {
+        const sku = p.sku || '';
+        const ext = (p.imageName || '').toLowerCase().endsWith('.jpg') ? '.jpg' : '.png';
+        const mainImg = `/assets/products/${sku}${ext}`;
+        const cardImg = p.cardImage || '';
+        const imageUrl = cardImg || mainImg;
+        const sale = Number(p.salePrice || p.price || 0);
+        const original = Number(p.price || 0);
+        const oldPrice = original > sale ? ` <del class="old-price">${money(original)}</del>` : '';
+
+        return `<article class="product-card" onclick="location.href='/product.html?id=${encodeURIComponent(sku)}'">
+          <div class="product-image">
+            <img loading="lazy" src="${imageUrl}" alt="${p.name}" onerror="this.src='${mainImg}'">
+          </div>
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <p>${p.description || 'Thoughtfully selected for you.'}</p>
+            <b class="price">${money(sale)}${oldPrice}</b>
+          </div>
+        </article>`;
+      }).join('');
+    }
+
+    fetch('/api/products')
+      .then(r => r.json())
+      .then(renderProducts)
+      .catch(() => {
+        box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Could not load products.</p>';
+      });
+  </script>
+</body>
+</html>
