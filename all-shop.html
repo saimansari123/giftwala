@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="/styles.css">
   <style>
     .all-shop { padding: 70px 10%; max-width: 1400px; margin: 0 auto; }
+    .category-header { margin-bottom: 40px; }
+    .category-header h1 { font: 600 48px 'Playfair Display'; margin: 20px 0 15px; }
+    .category-header p { color: #817970; font-size: 15px; line-height: 1.6; max-width: 700px; margin: 0 0 12px; }
+    .category-info { color: #aaa095; font-size: 13px; font-weight: 500; }
     .all-shop h1 { font: 600 48px 'Playfair Display'; margin: 10px 0 30px; }
     .all-shop .product-grid { margin-top: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     .all-shop .product-card { cursor: pointer; }
@@ -34,6 +38,11 @@
 
   <main class="all-shop">
     <p class="eyebrow">THE GIFTWALA COLLECTION</p>
+    <div class="category-header" id="category-header" style="display:none;">
+      <h1 id="category-name"></h1>
+      <p id="category-desc"></p>
+      <div class="category-info"><span id="product-count"></span> products</div>
+    </div>
     <h1 id="page-title">All products</h1>
     <div id="products" class="product-grid">
       <p>Loading products...</p>
@@ -47,6 +56,10 @@
     const search = new URLSearchParams(location.search).get('search');
     const box = document.getElementById('products');
     const title = document.getElementById('page-title');
+    const catHeader = document.getElementById('category-header');
+    const catName = document.getElementById('category-name');
+    const catDesc = document.getElementById('category-desc');
+    const catCount = document.getElementById('product-count');
 
     function renderProducts(ps) {
       let filtered = ps;
@@ -57,9 +70,16 @@
           (p.name + ' ' + (p.category || '') + ' ' + (p.description || '')).toLowerCase().includes(term)
         );
         title.textContent = 'Search: ' + search;
+        catHeader.style.display = 'none';
       } else if (category && category !== 'All') {
         filtered = ps.filter(p => String(p.category || '').trim().toLowerCase() === category.trim().toLowerCase());
-        title.textContent = category;
+        title.style.display = 'none';
+        catHeader.style.display = 'block';
+        catName.textContent = category;
+        catDesc.textContent = 'Premium personalised gifts and thoughtful accessories from GiftWALA collection.';
+        catCount.textContent = filtered.length;
+      } else {
+        catHeader.style.display = 'none';
       }
 
       if (!filtered.length) {
