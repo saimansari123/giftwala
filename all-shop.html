@@ -18,6 +18,14 @@
     .all-shop .product-image { width: 100%; height: 280px; overflow: hidden; background: #f5f1eb; }
     .all-shop .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
     .all-shop .product-card:hover .product-image img { transform: scale(1.05); }
+    .skeleton { background: linear-gradient(90deg, #f5f1eb 25%, #e8e1d8 50%, #f5f1eb 75%); background-size: 200% 100%; animation: load 1.5s infinite; }
+    @keyframes load { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-card { display: flex; flex-direction: column; height: 100%; }
+    .skeleton-img { width: 100%; height: 280px; border-radius: 8px; }
+    .skeleton-text { flex: 1; padding: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+    .skeleton-title { height: 20px; border-radius: 4px; }
+    .skeleton-desc { height: 40px; border-radius: 4px; }
+    .skeleton-price { height: 18px; width: 60%; border-radius: 4px; }
     @media(max-width:1000px) { .all-shop .product-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
     @media(max-width:850px) {
       .all-shop { padding: 45px 8%; }
@@ -60,6 +68,23 @@
     const catName = document.getElementById('category-name');
     const catDesc = document.getElementById('category-desc');
     const catCount = document.getElementById('product-count');
+
+    // Show skeleton loaders immediately
+    function showSkeletons(count = 8) {
+      box.innerHTML = Array(count).fill(0).map(() => `
+        <div class="skeleton-card">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton-text">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-desc"></div>
+            <div class="skeleton skeleton-price"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Show skeletons immediately on page load
+    showSkeletons();
 
     function renderProducts(ps) {
       let filtered = ps;
@@ -110,12 +135,35 @@
       }).join('');
     }
 
-    fetch('/api/products')
-      .then(r => r.json())
-      .then(renderProducts)
-      .catch(() => {
+    // Try to get from cache first
+    let productsCache = localStorage.getItem('giftwala_products_cache');
+    let cacheTime = localStorage.getItem('giftwala_cache_time');
+    let now = Date.now();
+
+    if (productsCache && cacheTime && (now - parseInt(cacheTime)) < 300000) {
+      // Cache is fresh (5 minutes), use it
+      try {
+        renderProducts(JSON.parse(productsCache));
+      } catch (e) {
+        // Cache invalid, fetch fresh
+        fetch('/api/products').then(r => r.json()).then(data => {
+          localStorage.setItem('giftwala_products_cache', JSON.stringify(data));
+          localStorage.setItem('giftwala_cache_time', now.toString());
+          renderProducts(data);
+        }).catch(() => {
+          box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Could not load products.</p>';
+        });
+      }
+    } else {
+      // Fetch fresh data
+      fetch('/api/products').then(r => r.json()).then(data => {
+        localStorage.setItem('giftwala_products_cache', JSON.stringify(data));
+        localStorage.setItem('giftwala_cache_time', now.toString());
+        renderProducts(data);
+      }).catch(() => {
         box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Could not load products.</p>';
       });
+    }
   </script>
 </body>
 </html>
