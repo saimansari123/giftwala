@@ -676,6 +676,9 @@ async function saveCategory(e){
     $('categoryModal').hidden = true;
     await loadAll();
     toast('Category saved');
+    // Sync with website - notify all open tabs
+    localStorage.setItem('giftwala_sync_categories', Date.now().toString());
+    window.dispatchEvent(new Event('giftwala:categories-updated'));
   } catch (err) { $('categoryErr').textContent = err.message; }
   finally { btn.disabled = false; }
 }
