@@ -97,7 +97,7 @@
         const ext = (p.imageName || '').toLowerCase().endsWith('.jpg') ? '.jpg' : '.png';
         const mainImg = `/assets/products/${sku}${ext}`;
         const cardImg = p.cardImage || '';
-        const imageUrl = cardImg || mainImg;
+        const imageUrl = cardImg || p.imageUrl || mainImg;
         const sale = Number(p.salePrice || p.price || 0);
         const original = Number(p.price || 0);
         const oldPrice = original > sale ? ` <del class="old-price">${money(original)}</del>` : '';
