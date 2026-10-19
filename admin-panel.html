@@ -713,8 +713,7 @@ function renderMedia(){
   allMedia = [];
 
   Promise.all(state.products.filter(p => p.sku).map(p =>
-    fetch(`/api/media/${encodeURIComponent(p.sku)}`)
-      .then(r => r.json())
+    api(`/api/media/${encodeURIComponent(p.sku)}`, {auth:true})
       .then(data => ({
         sku: p.sku,
         name: p.name || p.sku,
@@ -887,8 +886,7 @@ function uploadProductImage(btn){
 }
 function deleteProductImage(imgId){
   if (!confirm('Delete this image?')) return;
-  fetch(`/api/media/${imgId}`, { method: 'DELETE' })
-    .then(r => r.json())
+  api(`/api/media/${imgId}`, { method: 'DELETE', auth:true })
     .then(d => {
       if (d.ok) {
         toast('✓ Image deleted');
