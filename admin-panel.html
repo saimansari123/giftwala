@@ -370,7 +370,7 @@ tbody tr.click{cursor:pointer}
 <script>
 const TOKEN_KEY = 'giftwala_admin_token';
 const STATUSES = ['pending','confirmed','shipped','delivered','cancelled'];
-const state = { orders:[], products:[], categories:[], categoryDescriptions:{}, categoryImages:{}, reviews:[], settings:{}, orderFilter:'all', productImages:[], categoryImage:'', editingProduct:null, editingCategory:null };
+const state = { orders:[], products:[], categories:[], categoryDescriptions:{}, categoryImages:{}, reviews:[], settings:{}, orderFilter:'all', productImages:[], productImagesDirty:false, categoryImage:'', editingProduct:null, editingCategory:null };
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -520,7 +520,7 @@ function fillCategorySelects(){
 function renderProductImages(){
   const el = $('pImgList');
   el.innerHTML = state.productImages.map((src, i) => `<div class="thumb" style="background-image:url('${esc(src)}')"><button type="button" data-remove="${i}" aria-label="Remove image">×</button></div>`).join('');
-  el.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { state.productImages.splice(Number(b.dataset.remove), 1); renderProductImages(); });
+  el.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { state.productImages.splice(Number(b.dataset.remove), 1); state.productImagesDirty = true; renderProductImages(); });
 }
 function deleteProduct(id, name){
   if (!confirm('Delete product "' + name + '"? Stock will be restored.')) return;
@@ -578,6 +578,7 @@ function openProductModal(id){
   const f = $('productForm'); f.reset();
   $('pmTitle').textContent = p ? 'Edit ' + p.name : 'Add product';
   state.productImages = p ? (p.images && p.images.length ? p.images.slice(0, 20) : (p.imageUrl ? [p.imageUrl] : [])) : [];
+  state.productImagesDirty = false;
   state.productCardImage = p && p.cardImage ? p.cardImage : '';
   if (p){
     f.name.value = p.name; f.sku.value = p.sku; f.category.value = p.category;
@@ -613,7 +614,7 @@ async function saveProduct(e){
     price, salePrice, stock: Number(f.stock.value), featured: f.featured.value === '1',
     sizes: f.sizes.value.split(',').map(s => s.trim()).filter(Boolean),
     description: f.description.value.trim(),
-    images: state.productImages, imageUrl: state.productImages[0] || '',
+    ...(state.productImagesDirty || !state.editingProduct ? {images: state.productImages, imageUrl: state.productImages[0] || ''} : {}),
     cardImage: state.productCardImage || '',
   };
   btn.disabled = true; $('productErr').textContent = '';
@@ -971,6 +972,7 @@ $('addSettingBtn').addEventListener('click', addSettingRow);
 $('saveSettingsBtn').addEventListener('click', saveSettings);
 $('pImages').addEventListener('change', async e => {
   await addFiles(e.target, state.productImages, 20);
+  state.productImagesDirty = true;
   renderProductImages();
 });
 $('pCardImage').addEventListener('change', async e => {

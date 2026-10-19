@@ -462,18 +462,19 @@ export default {
       if (pm && req.method === 'PATCH') {
         const b = await body(req);
         const key = pm[1];
-        await env.DB.prepare(
-          'UPDATE products SET name=?,sku=?,category=?,price=?,sale_price=?,stock=?,description=?,featured=?,images=?,image_url=?,sizes=? WHERE id=? OR sku=?'
-        ).bind(
+        const hasImages = Array.isArray(b.images);
+        const sql = hasImages
+          ? 'UPDATE products SET name=?,sku=?,category=?,price=?,sale_price=?,stock=?,description=?,featured=?,images=?,image_url=?,sizes=? WHERE id=? OR sku=?'
+          : 'UPDATE products SET name=?,sku=?,category=?,price=?,sale_price=?,stock=?,description=?,featured=?,sizes=? WHERE id=? OR sku=?';
+        const values = [
           String(b.name ?? ''), String(b.sku ?? key), String(b.category ?? ''),
           Number(b.price ?? 0), Number(b.salePrice ?? b.price ?? 0),
           Number(b.stock ?? 0), String(b.description ?? ''),
-          b.featured ? 1 : 0,
-          JSON.stringify(Array.isArray(b.images) ? b.images : []),
-          Array.isArray(b.images) && b.images[0] ? String(b.images[0]) : String(b.imageUrl ?? ''),
-          JSON.stringify(Array.isArray(b.sizes) ? b.sizes : []),
-          key, key
-        ).run();
+          b.featured ? 1 : 0
+        ];
+        if (hasImages) values.push(JSON.stringify(b.images), b.images[0] ? String(b.images[0]) : String(b.imageUrl ?? ''));
+        values.push(JSON.stringify(Array.isArray(b.sizes) ? b.sizes : []), key, key);
+        await env.DB.prepare(sql).bind(...values).run();
         return json({ ok: true });
       }
 
