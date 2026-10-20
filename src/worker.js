@@ -141,7 +141,8 @@ export default {
 
         const q = url.searchParams.get('category');
         const r = await env.DB.prepare(
-          `SELECT * FROM products ${q ? 'WHERE category=?' : ''}
+          `SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes
+           FROM products ${q ? 'WHERE category=?' : ''}
            ORDER BY featured DESC, created_at DESC`
         ).bind(...(q ? [q] : [])).all();
         return json(r.results.map(productOut));
