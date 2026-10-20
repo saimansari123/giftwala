@@ -123,9 +123,13 @@ export default {
       if (url.pathname === '/api/products' && req.method === 'GET') {
         try {
           const q = url.searchParams.get('category');
+          const home = url.searchParams.get('home') === '1';
+          const fields = 'id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes';
           const query = q
-            ? 'SELECT * FROM products WHERE category=? ORDER BY featured DESC, created_at DESC'
-            : 'SELECT * FROM products ORDER BY featured DESC, created_at DESC';
+            ? `SELECT ${fields} FROM products WHERE category=? ORDER BY featured DESC, created_at DESC`
+            : home
+              ? `SELECT ${fields} FROM (SELECT ${fields}, ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products) WHERE category_rank <= 4 ORDER BY featured DESC, created_at DESC`
+              : `SELECT ${fields} FROM products ORDER BY featured DESC, created_at DESC`;
           const r = await env.DB.prepare(query).bind(...(q ? [q] : [])).all();
           const results = r.results || [];
           return json(results.length ? results.map(productOut) : []);

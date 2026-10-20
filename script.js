@@ -1,3 +1,15 @@
+// Keep the homepage product request small enough to load reliably; full catalog routes remain unchanged.
+if (location.pathname === '/' || location.pathname === '/index.html') {
+  const originalFetch = window.fetch.bind(window);
+  window.fetch = (input, init) => {
+    const url = typeof input === 'string' ? input : input?.url;
+    if (url && url.includes('/api/products') && !url.includes('home=1')) {
+      const separator = url.includes('?') ? '&' : '?';
+      input = url + separator + 'home=1';
+    }
+    return originalFetch(input, init);
+  };
+}
 let products=[
  {id:1,name:'The Memory Box',desc:'Personalised keepsake box',price:2850,cat:'Anniversary',art:'',tag:'Bestseller',bg:'#eee5d4'},
  {id:2,name:'Initials & Ink Mug',desc:'Your everyday, made special',price:1250,cat:'Just because',art:'',tag:'New',bg:'#dedfd4'},
