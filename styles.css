@@ -354,3 +354,4 @@ body{font-family:'DM Sans',sans-serif}.brand strong,.hero h1,.section-label h2,.
 .floating-cart{left:28px!important;right:auto!important}@media(max-width:850px){.floating-cart{left:18px!important;right:auto!important}}
 .reference-footer .footer-bottom{border-top:0!important}
 .floating-cart{background:#171513!important;color:#dba83d!important}
+@media(max-width:850px){.product .hero{height:auto!important;min-height:0!important;aspect-ratio:auto!important}.product .hero img{width:100%!important;height:auto!important;min-height:0!important;object-fit:contain!important;display:block!important}}
