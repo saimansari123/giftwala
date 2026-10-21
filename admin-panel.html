@@ -322,8 +322,9 @@ tbody tr.click{cursor:pointer}
       <label class="full">Product Card Image<input class="input" type="file" id="pCardImage" accept="image/png,image/jpeg,image/webp">
         <span class="hint">This image shows on product cards. Recommended 300 × 300 px. PNG, JPG or WEBP, up to 7MB.</span>
         <div class="imgs" id="pCardImgList"></div></label>
-      <label class="full">Product Images<input class="input" type="file" id="pImages" accept="image/png,image/jpeg,image/webp" multiple>
-        <span class="hint">PNG, JPG or WEBP, up to 7MB each. The first image is the main photo. Multiple images supported (up to 20).</span>
+      <label class="full">Product Images (multiple)<input class="input" type="file" id="pImages" accept="image/png,image/jpeg,image/webp" multiple>
+        <span class="hint">Select multiple PNG, JPG or WEBP images at once, up to 7MB each. The first image is the main photo. Maximum 20 images.</span>
+        <span class="hint" id="pImageCount">No images selected</span>
         <div class="imgs" id="pImgList"></div></label>
     </div>
     <div class="err" id="productErr"></div>
@@ -519,6 +520,8 @@ function fillCategorySelects(){
 }
 function renderProductImages(){
   const el = $('pImgList');
+  const count = $('pImageCount');
+  if (count) count.textContent = state.productImages.length ? state.productImages.length + ' image' + (state.productImages.length === 1 ? '' : 's') + ' selected' : 'No images selected';
   el.innerHTML = state.productImages.map((src, i) => `<div class="thumb" style="background-image:url('${esc(src)}')"><button type="button" data-remove="${i}" aria-label="Remove image">×</button></div>`).join('');
   el.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { state.productImages.splice(Number(b.dataset.remove), 1); state.productImagesDirty = true; renderProductImages(); });
 }
@@ -973,6 +976,7 @@ $('saveSettingsBtn').addEventListener('click', saveSettings);
 $('pImages').addEventListener('change', async e => {
   await addFiles(e.target, state.productImages, 20);
   state.productImagesDirty = true;
+  $('pImageCount').textContent = state.productImages.length + ' image' + (state.productImages.length === 1 ? '' : 's') + ' selected';
   renderProductImages();
 });
 $('pCardImage').addEventListener('change', async e => {
