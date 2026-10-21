@@ -575,8 +575,14 @@ function toggleHideProduct(id, hide){
     })
     .catch(e => toast('Error: ' + e.message, true));
 }
-function openProductModal(id){
-  const p = id ? state.products.find(x => x.id === id) : null;
+async function openProductModal(id){
+  let p = id ? state.products.find(x => x.id === id) : null;
+  if (p && (!Array.isArray(p.images) || !p.images.length)) {
+    try {
+      const full = await api('/api/products/' + encodeURIComponent(p.sku || p.id));
+      if (full && full.id) { p = Object.assign({}, p, full); }
+    } catch (e) { /* keep the lightweight product data available */ }
+  }
   state.editingProduct = p || null;
   const f = $('productForm'); f.reset();
   $('pmTitle').textContent = p ? 'Edit ' + p.name : 'Add product';
