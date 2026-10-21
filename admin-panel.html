@@ -597,7 +597,22 @@ function openProductModal(id){
 const readFile = file => new Promise((resolve, reject) => {
   if (!/^image\/(png|jpeg|webp)$/.test(file.type)) return reject(new Error('Only PNG, JPG or WEBP images are allowed.'));
   if (file.size > 7 * 1024 * 1024) return reject(new Error('Each image must be 7MB or smaller.'));
-  const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = () => reject(new Error('Could not read the file.')); r.readAsDataURL(file);
+  const r = new FileReader();
+  r.onerror = () => reject(new Error('Could not read the file.'));
+  r.onload = () => {
+    const img = new Image();
+    img.onerror = () => reject(new Error('Could not process the image.'));
+    img.onload = () => {
+      const scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/webp', 0.84));
+    };
+    img.src = r.result;
+  };
+  r.readAsDataURL(file);
 });
 async function addFiles(input, list, max){
   const files = [...input.files];
