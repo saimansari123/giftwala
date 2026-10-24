@@ -500,7 +500,7 @@ function renderProducts(){
     && (!q || p.name.toLowerCase().includes(q) || String(p.sku || '').toLowerCase().includes(q)));
   $('productRows').innerHTML = rows.map(p => `
     <tr>
-      <td><div class="row" style="flex-wrap:nowrap"><div class="thumb" style="background-image:url('${esc(p.imageUrl)}')"></div><div>${esc(p.name)}</div></div></td>
+      <td><div class="row" style="flex-wrap:nowrap"><div class="thumb" style="background-image:url('${esc(p.imageUrl || ('/assets/products/' + encodeURIComponent(p.sku || '') + '.png'))}')"></div><div>${esc(p.name)}</div></div></td>
       <td class="sub">${esc(p.sku)}</td><td>${esc(p.category)}</td>
       <td class="num">${money(p.price)}</td>
       <td class="num">${p.salePrice && p.salePrice < p.price ? `<span style="color:var(--warn)">${money(p.salePrice)}</span>` : '<span class="sub">-</span>'}</td>

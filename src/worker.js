@@ -160,7 +160,9 @@ export default {
 
         const q = url.searchParams.get('category');
         const r = await env.DB.prepare(
-          `SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes
+          `SELECT id,name,sku,category,price,sale_price,stock,description,
+                  CASE WHEN image_url LIKE 'data:%' THEN '' ELSE image_url END AS image_url,
+                  featured,created_at,sizes
            FROM products ${q ? 'WHERE category=?' : ''}
            ORDER BY featured DESC, created_at DESC`
         ).bind(...(q ? [q] : [])).all();
