@@ -116,7 +116,7 @@
     }
 
     // Load products
-    fetch('/api/products')
+    fetch(category && category !== 'All' ? '/api/products?category=' + encodeURIComponent(category) : '/api/products?home=1')
       .then(r => r.json())
       .then(data => {
         if (Array.isArray(data)) {
