@@ -77,6 +77,14 @@ export default {
       });
     }
 
+    // Legacy builder data endpoint used by the homepage.
+    if (url.pathname === '/server/sheet-products.json' && req.method === 'GET') {
+      const r = await env.DB.prepare(
+        'SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes FROM (SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes,ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products) WHERE category_rank=1 ORDER BY featured DESC, created_at DESC'
+      ).all();
+      return json((r.results || []).map(productOut));
+    }
+
     // Static files
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
 
