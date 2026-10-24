@@ -131,6 +131,13 @@ export default {
       if (url.pathname === '/api/products' && req.method === 'GET') {
         try {
           const q = url.searchParams.get('category');
+          const search = url.searchParams.get('search') === '1';
+          if (search) {
+            const r = await env.DB.prepare(
+              'SELECT id,name,sku,category,price,sale_price FROM products ORDER BY featured DESC, created_at DESC'
+            ).all();
+            return json((r.results || []).map(p => ({ id:p.id, name:p.name, sku:p.sku, category:p.category, price:p.price, salePrice:p.sale_price })));
+          }
           const home = url.searchParams.get('home') === '1';
           const fields = 'id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes';
           const query = q
