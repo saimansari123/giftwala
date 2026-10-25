@@ -139,7 +139,7 @@ export default {
             return json((r.results || []).map(p => ({ id:p.id, name:p.name, sku:p.sku, category:p.category, price:p.price, salePrice:p.sale_price })));
           }
           const home = url.searchParams.get('home') === '1';
-          const fields = 'id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes';
+          const fields = "id,name,sku,category,price,sale_price,stock,description,CASE WHEN image_url LIKE 'data:image/webp%' THEN '/assets/products/' || sku || '.webp' WHEN image_url LIKE 'data:image/%' THEN '/assets/products/' || sku || '.png' ELSE image_url END AS image_url,featured,created_at,sizes";
           const query = q
             ? `SELECT ${fields} FROM products WHERE category=? ORDER BY featured DESC, created_at DESC`
             : home
