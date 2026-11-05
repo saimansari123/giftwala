@@ -127,10 +127,8 @@
   const startCartSync = () => {
     window.updateCart();
     enforceCartTotals();
-    let runs = 0;
-    const timer = setInterval(() => {
+    setInterval(() => {
       enforceCartTotals();
-      if (++runs >= 40) clearInterval(timer);
     }, 100);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startCartSync, { once: true });
