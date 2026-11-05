@@ -30,6 +30,18 @@
   new MutationObserver(records => records.forEach(record => record.addedNodes.forEach(node => {
     if (node.nodeType === 1) prepareImages(node);
   }))).observe(document.documentElement, { childList: true, subtree: true });
+
+  /* Do not show category sections that have no products. */
+  const hideEmptyCatalogSections = () => document.querySelectorAll('.catalog-section').forEach(section => {
+    const hasProducts = section.querySelector('.product-card');
+    section.hidden = !hasProducts;
+  });
+  hideEmptyCatalogSections();
+  new MutationObserver(hideEmptyCatalogSections).observe(document.body, { childList: true, subtree: true });
+
+  /* Stock labels must come from product data; disable the old hard-coded fallback. */
+  window.addStockLabels = function () {};
+  document.querySelectorAll('.stock-label').forEach(label => label.remove());
   const format = value => typeof window.money === 'function' ? window.money(value) : 'Rs. ' + Number(value || 0).toLocaleString('en-PK');
   window.updateCart = function () {
     const items = Array.isArray(window.cart) ? window.cart : [];
