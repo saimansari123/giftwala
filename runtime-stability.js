@@ -95,8 +95,8 @@
       grand.innerHTML = '<span>Total</span><strong id="cartGrandTotal">Rs. 0</strong>';
       row.after(grand);
     }
-    text('cartDelivery', items.length ? format(300) : format(0));
-    text('cartGrandTotal', format(items.length ? total + 300 : 0));
+    text('cartDelivery', format(totals.delivery));
+    text('cartGrandTotal', format(totals.total));
     document.querySelectorAll('#checkoutBtn, .direct-checkout').forEach(button => {
       button.disabled = !items.length;
       button.setAttribute('aria-disabled', String(!items.length));
