@@ -43,8 +43,30 @@
   window.addStockLabels = function () {};
   document.querySelectorAll('.stock-label').forEach(label => label.remove());
   const format = value => typeof window.money === 'function' ? window.money(value) : 'Rs. ' + Number(value || 0).toLocaleString('en-PK');
+  const getCart = () => {
+    try {
+      if (Array.isArray(window.cart)) return window.cart;
+      if (typeof cart !== 'undefined' && Array.isArray(cart)) return cart;
+    } catch (_) {}
+    return [];
+  };
+  const syncCartTotals = () => {
+    const items = getCart();
+    const subtotalValue = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
+    const deliveryValue = items.length ? 300 : 0;
+    const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+    text('cartCount', items.reduce((sum, item) => sum + Number(item.qty || 0), 0));
+    text('cartTotalItems', '(' + items.reduce((sum, item) => sum + Number(item.qty || 0), 0) + ')');
+    text('cartTotal', format(subtotalValue));
+    text('cartDelivery', format(deliveryValue));
+    text('cartGrandTotal', format(subtotalValue + deliveryValue));
+    document.querySelectorAll('#checkoutBtn, .direct-checkout').forEach(button => {
+      button.disabled = !items.length;
+      button.setAttribute('aria-disabled', String(!items.length));
+    });
+  };
   window.updateCart = function () {
-    const items = Array.isArray(window.cart) ? window.cart : [];
+    const items = getCart();
     const count = items.reduce((sum, item) => sum + Number(item.qty || 0), 0);
     const total = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
     const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
@@ -73,6 +95,32 @@
       const id = JSON.stringify(item.id), image = item.imageUrl || (item.sku ? '/assets/products/' + item.sku + '.webp' : '');
       return '<div class="cart-line"><div class="thumb">' + (image ? '<img src="' + image + '" alt="Product" loading="lazy" decoding="async">' : (item.art || '')) + '</div><div><h4>' + (item.name || 'Product') + '</h4><p>' + format(item.price) + ' - Qty ' + Number(item.qty || 0) + '</p><div class="cart-controls"><button type="button" onclick="changeCartQty(' + id + ',-1)" aria-label="Decrease quantity">−</button><span class="qty">' + Number(item.qty || 0) + '</span><button type="button" onclick="changeCartQty(' + id + ',1)" aria-label="Increase quantity">+</button><button type="button" class="cart-trash" aria-label="Remove item" onclick="removeFromCart(' + id + ')">×</button></div></div></div>';
     }).join('') : '<div class="empty-cart">Your bag is waiting for something lovely</div>';
+    syncCartTotals();
   };
-  document.addEventListener('DOMContentLoaded', () => window.updateCart(), { once: true });
+  const enforceCartTotals = () => {
+    const foot = document.querySelector('.cart-foot');
+    if (foot && !document.getElementById('cartDeliveryRow')) {
+      const row = document.createElement('div');
+      row.id = 'cartDeliveryRow';
+      row.innerHTML = '<span>Delivery charges</span><strong id="cartDelivery">Rs. 0</strong>';
+      const subtotal = document.getElementById('cartTotal')?.closest('div');
+      if (subtotal) subtotal.after(row);
+      const grand = document.createElement('div');
+      grand.id = 'cartGrandTotalRow';
+      grand.innerHTML = '<span>Total</span><strong id="cartGrandTotal">Rs. 0</strong>';
+      row.after(grand);
+    }
+    syncCartTotals();
+  };
+  const startCartSync = () => {
+    window.updateCart();
+    enforceCartTotals();
+    let runs = 0;
+    const timer = setInterval(() => {
+      enforceCartTotals();
+      if (++runs >= 40) clearInterval(timer);
+    }, 100);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startCartSync, { once: true });
+  else startCartSync();
 })();
