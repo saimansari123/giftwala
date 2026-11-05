@@ -50,27 +50,39 @@
     } catch (_) {}
     return [];
   };
+  const calculateCart = items => {
+    const safeItems = Array.isArray(items) ? items : [];
+    const subtotal = safeItems.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
+    const delivery = safeItems.length ? 300 : 0;
+    return { items: safeItems, subtotal, delivery, discount: 0, total: subtotal + delivery };
+  };
+  window.giftwalaCartTotals = calculateCart;
   const syncCartTotals = () => {
-    const items = getCart();
-    const subtotalValue = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
-    const deliveryValue = items.length ? 300 : 0;
+    const totals = calculateCart(getCart());
+    const items = totals.items;
     const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
     text('cartCount', items.reduce((sum, item) => sum + Number(item.qty || 0), 0));
     text('cartTotalItems', '(' + items.reduce((sum, item) => sum + Number(item.qty || 0), 0) + ')');
-    text('cartTotal', format(subtotalValue));
-    text('cartDelivery', format(deliveryValue));
-    text('cartGrandTotal', format(subtotalValue + deliveryValue));
+    text('cartTotal', format(totals.subtotal));
+    text('cartDiscount', format(totals.discount));
+    text('cartDelivery', format(totals.delivery));
+    text('cartGrandTotal', format(totals.total));
+    try {
+      const saved = JSON.stringify(items);
+      localStorage.setItem('giftwalaCart', saved);
+      localStorage.setItem('giftwala_checkout_cart', saved);
+    } catch (_) {}
     document.querySelectorAll('#checkoutBtn, .direct-checkout').forEach(button => {
       button.disabled = !items.length;
       button.setAttribute('aria-disabled', String(!items.length));
     });
   };
   window.updateCart = function () {
-    const items = getCart();
+    const totals = calculateCart(getCart());
+    const items = totals.items;
     const count = items.reduce((sum, item) => sum + Number(item.qty || 0), 0);
-    const total = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
     const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
-    text('cartCount', count); text('cartTotalItems', '(' + count + ')'); text('cartTotal', format(total));
+    text('cartCount', count); text('cartTotalItems', '(' + count + ')'); text('cartTotal', format(totals.subtotal));
     const foot = document.querySelector('.cart-foot');
     if (foot && !document.getElementById('cartDeliveryRow')) {
       const row = document.createElement('div');
