@@ -49,6 +49,24 @@
     const total = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
     const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
     text('cartCount', count); text('cartTotalItems', '(' + count + ')'); text('cartTotal', format(total));
+    const foot = document.querySelector('.cart-foot');
+    if (foot && !document.getElementById('cartDeliveryRow')) {
+      const row = document.createElement('div');
+      row.id = 'cartDeliveryRow';
+      row.innerHTML = '<span>Delivery charges</span><strong id="cartDelivery">Rs. 0</strong>';
+      const subtotal = document.getElementById('cartTotal')?.closest('div');
+      if (subtotal) subtotal.after(row);
+      const grand = document.createElement('div');
+      grand.id = 'cartGrandTotalRow';
+      grand.innerHTML = '<span>Total</span><strong id="cartGrandTotal">Rs. 0</strong>';
+      row.after(grand);
+    }
+    text('cartDelivery', items.length ? format(300) : format(0));
+    text('cartGrandTotal', format(items.length ? total + 300 : 0));
+    document.querySelectorAll('#checkoutBtn, .direct-checkout').forEach(button => {
+      button.disabled = !items.length;
+      button.setAttribute('aria-disabled', String(!items.length));
+    });
     const box = document.getElementById('cartItems');
     if (!box) return;
     box.innerHTML = items.length ? items.map(item => {
