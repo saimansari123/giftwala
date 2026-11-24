@@ -147,7 +147,13 @@ export default {
               : `SELECT ${fields} FROM (SELECT ${fields}, ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products) WHERE category_rank <= 4 ORDER BY featured DESC, created_at DESC`;
           const r = await env.DB.prepare(query).bind(...(q ? [q] : [])).all();
           const results = r.results || [];
-          return json(results.length ? results.map(productOut) : []);
+          return json(results.map(product => {
+            // These catalog photos are published as PNG files only.
+            if (/^\/assets\/products\/GW-CS-02[2-7]\.webp$/.test(product.image_url)) {
+              product.image_url = product.image_url.replace(/\.webp$/, '.png');
+            }
+            return productOut(product);
+          }));
         } catch (e) {
           return json({ ok: false, message: String(e.message || e) }, 500);
         }
@@ -501,23 +507,13 @@ export default {
       }
 
       // Delete product
-      const pdel = url.pathname.match(/^\/api\/products\/([^/]+)$/);
-      if (pdel && req.method === 'DELETE') {
-        const productId = pdel[1];
-        const product = await env.DB.prepare(
-          'SELECT stock, items FROM products WHERE id=? OR sku=?'
-        ).bind(productId, productId).first();
-
-        if (!product) return json({ message: 'Product not found' }, 404);
-
-        try {
-          await env.DB.prepare(
-            'DELETE FROM products WHERE id=? OR sku=?'
-          ).bind(productId, productId).run();
-          return json({ ok: true });
-        } catch (e) {
-          return json({ message: 'Failed to delete product: ' + e.message }, 500);
-        }
+      if (pm && req.method === 'DELETE') {
+        const key = decodeURIComponent(pm[1]);
+        const result = await env.DB.prepare(
+          'DELETE FROM products WHERE id=COALESCE((SELECT id FROM products WHERE id=?), (SELECT id FROM products WHERE sku=?))'
+        ).bind(key, key).run();
+        if (!result.meta.changes) return json({ message: 'Product not found' }, 404);
+        return json({ ok: true });
       }
 
       // Toggle product hidden status
