@@ -8,11 +8,25 @@ const json = (data, status = 200) => new Response(JSON.stringify(data), {
 });
 
 const body = async req => {
-  try { return await req.json(); }
+  try {
+    const value = await req.json();
+    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  }
   catch { return {}; }
 };
 
 const token = req => String(req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
+const imageDataPattern = /^data:(image\/(?:png|jpe?g|webp));base64,([A-Za-z0-9+/]+={0,2})$/i;
+function imageResponse(data) {
+  const match = imageDataPattern.exec(data || '');
+  if (!match) return json({ message: 'Image not found' }, 404);
+  let bytes;
+  try { bytes = Uint8Array.from(atob(match[2]), char => char.charCodeAt(0)); }
+  catch { return json({ message: 'Invalid image data' }, 422); }
+  return new Response(bytes, {
+    headers: { 'content-type': match[1], 'cache-control': 'no-cache' }
+  });
+}
 
 const cleanText = v => String(v ?? '').replace(/â€"|â€"|â€œ|â€|Â|&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -27,6 +41,7 @@ const productOut = p => {
     description: cleanText(p.description),
     salePrice: p.sale_price,
     imageUrl: p.image_url,
+    cardImage: p.card_image_url || '',
     images,
     sizes,
     createdAt: p.created_at
@@ -34,6 +49,7 @@ const productOut = p => {
 };
 
 const VALID_ORDER_STATUSES = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
+const productIdLookup = 'COALESCE((SELECT id FROM products WHERE id=?), (SELECT id FROM products WHERE sku=?))';
 const REVIEW_RATE_LIMIT = 5; // reviews per IP per 24h
 const reviewStore = new Map(); // in-memory store (reset on worker restart)
 
@@ -80,7 +96,7 @@ export default {
     // Legacy builder data endpoint used by the homepage.
     if (url.pathname === '/server/sheet-products.json' && req.method === 'GET') {
       const r = await env.DB.prepare(
-        'SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes FROM (SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes,ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products) WHERE category_rank=1 ORDER BY featured DESC, created_at DESC'
+        'SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes FROM (SELECT id,name,sku,category,price,sale_price,stock,description,image_url,featured,created_at,sizes,ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products WHERE COALESCE(hidden,0)=0) WHERE category_rank=1 ORDER BY featured DESC, created_at DESC'
       ).all();
       return json((r.results || []).map(productOut));
     }
@@ -100,8 +116,10 @@ export default {
       // Admin login
       if (url.pathname === '/api/admin/login' && req.method === 'POST') {
         const b = await body(req);
-        if (String(b.email) !== String(env.ADMIN_EMAIL) ||
-            String(b.password) !== String(env.ADMIN_PASSWORD)) {
+        if (!env.ADMIN_EMAIL || !env.ADMIN_PASSWORD || !env.ADMIN_TOKEN) {
+          return json({ message: 'Admin sign-in is not configured' }, 503);
+        }
+        if (b.email !== env.ADMIN_EMAIL || b.password !== env.ADMIN_PASSWORD) {
           return json({ message: 'Invalid credentials' }, 401);
         }
         return json({ token: env.ADMIN_TOKEN, email: env.ADMIN_EMAIL });
@@ -112,7 +130,7 @@ export default {
       if (singleProduct && req.method === 'GET') {
         const key = decodeURIComponent(singleProduct[1]);
         const p = await env.DB.prepare(
-          'SELECT * FROM products WHERE id=? OR sku=? LIMIT 1'
+          `SELECT * FROM products WHERE id=${productIdLookup} AND COALESCE(hidden,0)=0`
         ).bind(key, key).first();
         return p ? json(productOut(p)) : json({ message: 'Product not found' }, 404);
       }
@@ -134,26 +152,17 @@ export default {
           const search = url.searchParams.get('search') === '1';
           if (search) {
             const r = await env.DB.prepare(
-              'SELECT id,name,sku,category,price,sale_price FROM products ORDER BY featured DESC, created_at DESC'
+              'SELECT id,name,sku,category,price,sale_price FROM products WHERE COALESCE(hidden,0)=0 ORDER BY featured DESC, created_at DESC'
             ).all();
             return json((r.results || []).map(p => ({ id:p.id, name:p.name, sku:p.sku, category:p.category, price:p.price, salePrice:p.sale_price })));
           }
-          const home = url.searchParams.get('home') === '1';
-          const fields = "id,name,sku,category,price,sale_price,stock,description,CASE WHEN image_url LIKE 'data:image/webp%' THEN '/assets/products/' || sku || '.webp' WHEN image_url LIKE 'data:image/%' THEN '/assets/products/' || sku || '.png' ELSE image_url END AS image_url,featured,created_at,sizes";
+          const fields = "id,name,sku,category,price,sale_price,stock,description,CASE WHEN image_url LIKE 'data:image/%' THEN '/api/product-images/' || id ELSE image_url END AS image_url,CASE WHEN card_image_url <> '' THEN '/api/product-images/' || id || '/card' ELSE '' END AS card_image_url,featured,created_at,sizes";
           const query = q
-            ? `SELECT ${fields} FROM products WHERE category=? ORDER BY featured DESC, created_at DESC`
-            : home
-              ? `SELECT ${fields} FROM (SELECT ${fields}, ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products) WHERE category_rank <= 4 ORDER BY featured DESC, created_at DESC`
-              : `SELECT ${fields} FROM (SELECT ${fields}, ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products) WHERE category_rank <= 4 ORDER BY featured DESC, created_at DESC`;
+            ? `SELECT ${fields} FROM products WHERE category=? AND COALESCE(hidden,0)=0 ORDER BY featured DESC, created_at DESC`
+          : `SELECT * FROM (SELECT ${fields}, ROW_NUMBER() OVER (PARTITION BY category ORDER BY featured DESC, created_at DESC) AS category_rank FROM products WHERE COALESCE(hidden,0)=0) WHERE category_rank <= 4 ORDER BY featured DESC, created_at DESC`;
           const r = await env.DB.prepare(query).bind(...(q ? [q] : [])).all();
           const results = r.results || [];
-          return json(results.map(product => {
-            // These catalog photos are published as PNG files only.
-            if (/^\/assets\/products\/GW-CS-02[2-7]\.webp$/.test(product.image_url)) {
-              product.image_url = product.image_url.replace(/\.webp$/, '.png');
-            }
-            return productOut(product);
-          }));
+          return json(results.map(productOut));
         } catch (e) {
           return json({ ok: false, message: String(e.message || e) }, 500);
         }
@@ -167,18 +176,26 @@ export default {
         const q = url.searchParams.get('category');
         const r = await env.DB.prepare(
           `SELECT id,name,sku,category,price,sale_price,stock,description,
-                  CASE WHEN image_url LIKE 'data:%' THEN '' ELSE image_url END AS image_url,
-                  featured,created_at,sizes
+                  CASE WHEN image_url LIKE 'data:image/%' THEN '/api/product-images/' || id ELSE image_url END AS image_url,
+                  featured,created_at,sizes,hidden
            FROM products ${q ? 'WHERE category=?' : ''}
            ORDER BY featured DESC, created_at DESC`
         ).bind(...(q ? [q] : [])).all();
         return json(r.results.map(productOut));
       }
 
+      const productImage = url.pathname.match(/^\/api\/product-images\/([^/]+)(\/card)?$/);
+      if (productImage && req.method === 'GET') {
+        const column = productImage[2] ? 'card_image_url' : 'image_url';
+        const row = await env.DB.prepare(`SELECT ${column} AS image FROM products WHERE id=?`)
+          .bind(decodeURIComponent(productImage[1])).first();
+        return imageResponse(row?.image);
+      }
+
       // List categories
       if (url.pathname === '/api/categories' && req.method === 'GET') {
         const r = await env.DB.prepare(
-          'SELECT name FROM categories UNION SELECT DISTINCT category AS name FROM products ORDER BY name'
+          'SELECT name FROM categories UNION SELECT DISTINCT category AS name FROM products WHERE COALESCE(hidden,0)=0 ORDER BY name'
         ).all();
         return json(r.results.map(x => x.name));
       }
@@ -246,77 +263,50 @@ export default {
           return json({ message: 'Customer and order details required' }, 400);
         }
 
-        // Validate items against products in DB
+        if (!Array.isArray(b.items) || b.items.some(item =>
+          !item || typeof item.sku !== 'string' || !Number.isSafeInteger(Number(item.quantity)) || Number(item.quantity) < 1
+        )) return json({ message: 'Invalid order items' }, 400);
+
+        const items = [], quantities = new Map();
         let total = 0;
         for (const item of b.items) {
-          if (!item.sku || !item.quantity || item.quantity <= 0) {
-            return json({ message: 'Invalid item quantity' }, 400);
-          }
-
           const product = await env.DB.prepare(
-            'SELECT price, sale_price, stock FROM products WHERE id=? OR sku=?'
+            `SELECT id, sku, name, price, sale_price, stock FROM products WHERE id=${productIdLookup} AND COALESCE(hidden,0)=0`
           ).bind(item.sku, item.sku).first();
-
-          if (!product) {
-            return json({ message: `Product ${item.sku} not found` }, 404);
-          }
-
-          if (product.stock < item.quantity) {
-            return json({ message: `Insufficient stock for ${item.sku}` }, 400);
-          }
-
-          // Use DB price, not client price
+          if (!product) return json({ message: 'Product unavailable' }, 404);
+          const quantity = Number(item.quantity);
+          const reserved = (quantities.get(product.id) || 0) + quantity;
+          if (reserved > product.stock) return json({ message: 'Insufficient stock for ' + product.sku }, 409);
+          quantities.set(product.id, reserved);
           const price = product.sale_price || product.price;
-          total += price * item.quantity;
+          total += price * quantity;
+          items.push({ ...item, productId: product.id, sku: product.sku, name: product.name, quantity, price });
         }
 
-        // Reduce stock for all items
-        for (const item of b.items) {
-          await env.DB.prepare(
-            'UPDATE products SET stock = stock - ? WHERE id=? OR sku=?'
-          ).bind(item.quantity, item.sku, item.sku).run();
-        }
-
-        // Ensure order_sequence table exists and initialize
-        try {
-          await env.DB.prepare(
-            'CREATE TABLE IF NOT EXISTS order_sequence (key TEXT PRIMARY KEY, next_number INTEGER DEFAULT 1)'
-          ).run();
-          await env.DB.prepare(
-            'INSERT OR IGNORE INTO order_sequence (key, next_number) VALUES (?, ?)'
-          ).bind('order_id', 1).run();
-        } catch (e) {
-          console.error('Sequence init error:', e);
-        }
-
-        // Generate sequential order ID using sequence table
-        const seq = await env.DB.prepare(
-          'SELECT next_number FROM order_sequence WHERE key=?'
-        ).bind('order_id').first();
-
-        const nextNum = seq?.next_number || 1;
-        const id = 'GW-' + String(nextNum).padStart(5, '0');
-
-        // Increment sequence for next order
-        await env.DB.prepare(
-          'UPDATE order_sequence SET next_number = next_number + 1 WHERE key=?'
-        ).bind('order_id').run();
-
-        await env.DB.prepare(
-          'INSERT INTO orders (id,customer_name,phone,email,address,payment_method,items,total,status,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)'
-        ).bind(
-          id,
-          b.customer.name,
-          b.customer.phone,
-          b.customer.email || '',
-          b.customer.address,
-          b.paymentMethod || 'Cash on Delivery',
-          JSON.stringify(b.items),
-          total,
-          'pending',
-          Date.now()
-        ).run();
-
+        const inventory = JSON.stringify(Array.from(quantities, ([id, quantity]) => ({ id, quantity })));
+        const saved = await env.DB.batch([
+          env.DB.prepare("INSERT OR IGNORE INTO order_sequence (key,next_number) VALUES ('order_id',1)"),
+          env.DB.prepare(`
+            INSERT INTO orders (id,customer_name,phone,email,address,payment_method,items,total,status,created_at)
+            SELECT printf('GW-%05d', MAX(next_number,
+              COALESCE((SELECT MAX(CAST(substr(id,4) AS INTEGER)) + 1 FROM orders WHERE id GLOB 'GW-[0-9]*'),1)
+            )), ?,?,?,?,?,?,?, 'pending', ?
+            FROM order_sequence WHERE key='order_id'
+            AND NOT EXISTS (
+              SELECT 1 FROM json_each(?) requested LEFT JOIN products p ON p.id=json_extract(requested.value,'$.id')
+              WHERE p.id IS NULL OR COALESCE(p.hidden,0)<>0 OR p.stock IS NULL OR p.stock<json_extract(requested.value,'$.quantity')
+            )
+            RETURNING id
+          `).bind(b.customer.name,b.customer.phone,b.customer.email || '',b.customer.address,
+            b.paymentMethod || 'Cash on Delivery',JSON.stringify(items),total,Date.now(),inventory),
+          env.DB.prepare(`
+            UPDATE products SET stock=stock-json_extract(requested.value,'$.quantity')
+            FROM json_each(?) requested WHERE changes()>0 AND products.id=json_extract(requested.value,'$.id')
+          `).bind(inventory),
+          env.DB.prepare("UPDATE order_sequence SET next_number=(SELECT MAX(CAST(substr(id,4) AS INTEGER))+1 FROM orders WHERE id GLOB 'GW-[0-9]*') WHERE key='order_id' AND changes()>0")
+        ]);
+        const id = saved[1].results[0]?.id;
+        if (!id) return json({ message: 'Stock changed. Please review the cart and try again.' }, 409);
         return json({ _id: id, total, status: 'pending' }, 201);
       }
 
@@ -325,7 +315,7 @@ export default {
       if (orderById && req.method === 'GET') {
         const orderId = decodeURIComponent(orderById[1]);
         const order = await env.DB.prepare(
-          'SELECT * FROM orders WHERE id=?'
+          'SELECT id AS _id, id, status, total FROM orders WHERE id=?'
         ).bind(orderId).first();
         return order ? json(order) : json({ message: 'Order not found' }, 404);
       }
@@ -333,6 +323,13 @@ export default {
       // Admin routes
       const guard = await admin(req, env);
       if (guard) return guard;
+
+      const adminProduct = url.pathname.match(/^\/api\/admin\/products\/([^/]+)$/);
+      if (adminProduct && req.method === 'GET') {
+        const key = decodeURIComponent(adminProduct[1]);
+        const product = await env.DB.prepare(`SELECT * FROM products WHERE id=${productIdLookup}`).bind(key,key).first();
+        return product ? json(productOut(product)) : json({ message: 'Product not found' }, 404);
+      }
 
       // Delete review
       const rm = url.pathname.match(/^\/api\/reviews\/([^/]+)$/);
@@ -349,11 +346,11 @@ export default {
         const sku = String(b.sku || '').trim();
 
         if (!sku) return json({ message: 'SKU required' }, 400);
-        if (!/^data:image\/(png|jpeg|jpg|webp);base64,/i.test(data)) {
+        if (!imageDataPattern.test(data)) {
           return json({ message: 'Send a PNG, JPG or WEBP image' }, 400);
         }
-        if (data.length > 7 * 1024 * 1024) {
-          return json({ message: 'Image must be 7MB or smaller' }, 413);
+        if (data.length > 1_500_000) {
+          return json({ message: 'Encoded image is too large. Resize it and try again.' }, 413);
         }
 
         const id = crypto.randomUUID();
@@ -368,9 +365,23 @@ export default {
         }
       }
 
+      if (url.pathname === '/api/media' && req.method === 'GET') {
+        const result = await env.DB.prepare(
+          'SELECT id,sku,filename FROM media ORDER BY created_at DESC'
+        ).all();
+        return json(result.results);
+      }
+
+      const mediaImage = url.pathname.match(/^\/api\/media\/([^/]+)\/image$/);
+      if (mediaImage && req.method === 'GET') {
+        const row = await env.DB.prepare('SELECT image_data FROM media WHERE id=?')
+          .bind(decodeURIComponent(mediaImage[1])).first();
+        return imageResponse(row?.image_data);
+      }
+
       // Get media by SKU
       if (url.pathname.startsWith('/api/media/') && req.method === 'GET') {
-        const sku = url.pathname.replace('/api/media/', '').trim();
+        const sku = decodeURIComponent(url.pathname.slice('/api/media/'.length)).trim();
         if (!sku) return json({ message: 'SKU required' }, 400);
 
         try {
@@ -386,11 +397,12 @@ export default {
 
       // Delete media by ID
       if (url.pathname.startsWith('/api/media/') && req.method === 'DELETE') {
-        const imgId = url.pathname.replace('/api/media/', '').trim();
+        const imgId = decodeURIComponent(url.pathname.slice('/api/media/'.length)).trim();
         if (!imgId) return json({ message: 'Image ID required' }, 400);
 
         try {
-          await env.DB.prepare('DELETE FROM media WHERE id = ?').bind(imgId).run();
+          const result = await env.DB.prepare('DELETE FROM media WHERE id = ?').bind(imgId).run();
+          if (!result.meta.changes) return json({ message: 'Image not found' }, 404);
           return json({ ok: true });
         } catch (e) {
           return json({ message: 'Failed to delete media: ' + e.message }, 500);
@@ -400,11 +412,12 @@ export default {
       // Update builder settings
       if (url.pathname === '/api/admin/builder-settings' && req.method === 'PATCH') {
         const b = await body(req);
-        for (const [key, value] of Object.entries(b)) {
-          await env.DB.prepare(
+        const statements = Object.entries(b).map(([key, value]) =>
+          env.DB.prepare(
             'INSERT INTO builder_settings (key,value) VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value'
-          ).bind(key, String(value ?? '')).run();
-        }
+          ).bind(key, String(value ?? ''))
+        );
+        if (statements.length) await env.DB.batch(statements);
         return json({ ok: true });
       }
 
@@ -414,35 +427,14 @@ export default {
         const name = String(b.name || '').trim();
         if (!name) return json({ message: 'Category name required' }, 400);
 
-        if (Object.prototype.hasOwnProperty.call(b, 'image')) {
-          await env.DB.prepare(
+        const statements = [['image','categoryImage:'],['description','categoryDescription:']]
+          .filter(([field]) => Object.hasOwn(b, field))
+          .map(([field,prefix]) => env.DB.prepare(
             'INSERT INTO builder_settings (key,value) VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value'
-          ).bind('categoryImage:' + name, String(b.image || '')).run();
-        }
-
-        if (Object.prototype.hasOwnProperty.call(b, 'description')) {
-          await env.DB.prepare(
-            'INSERT INTO builder_settings (key,value) VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value'
-          ).bind('categoryDescription:' + name, String(b.description || '')).run();
-        }
+          ).bind(prefix + name, String(b[field] ?? '')));
+        if (statements.length) await env.DB.batch(statements);
 
         return json({ ok: true });
-      }
-
-      // Create product
-      if (url.pathname === '/api/products' && req.method === 'POST') {
-        const b = await body(req);
-        const id = crypto.randomUUID();
-        await env.DB.prepare(
-          'INSERT INTO products (id,name,sku,category,price,sale_price,stock,description,image_url,images,featured,created_at,sizes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
-        ).bind(
-          id, b.name, b.sku, b.category,
-          Number(b.price || 0), Number(b.salePrice || b.price || 0),
-          Number(b.stock || 0), b.description || '',
-          b.imageUrl || '', JSON.stringify(b.images || []),
-          0, Date.now(), JSON.stringify(Array.isArray(b.sizes) ? b.sizes : [])
-        ).run();
-        return json({ ...b, _id: id }, 201);
       }
 
       // Create category
@@ -470,47 +462,89 @@ export default {
         const name = String(b.name || '').trim();
         if (!name) return json({ message: 'Category name required' }, 400);
 
+        if (old === name) return json({ name });
         try {
-          const result = await env.DB.prepare(
-            'UPDATE categories SET name=? WHERE name=?'
-          ).bind(name, old).run();
-          if (!result.meta?.changes) return json({ message: 'Category not found' }, 404);
-
-          await env.DB.prepare(
-            'UPDATE products SET category=? WHERE category=?'
-          ).bind(name, old).run();
+          const [updated, created] = await env.DB.batch([
+            env.DB.prepare('UPDATE categories SET name=? WHERE name=?').bind(name,old),
+            env.DB.prepare('INSERT INTO categories (id,name,created_at) SELECT ?,?,? WHERE changes()=0 AND EXISTS (SELECT 1 FROM products WHERE category=?)')
+              .bind(crypto.randomUUID(),name,Date.now(),old),
+            env.DB.prepare('UPDATE products SET category=? WHERE category=?').bind(name,old),
+            ...['categoryImage:', 'categoryDescription:'].map(prefix =>
+              env.DB.prepare('UPDATE OR REPLACE builder_settings SET key=? WHERE key=?').bind(prefix + name,prefix + old)
+            )
+          ]);
+          if (!updated.meta.changes && !created.meta.changes) return json({ message: 'Category not found' }, 404);
           return json({ name });
         } catch (e) {
-          return json({ message: 'Category already exists' }, 409);
+          if (String(e.message).includes('UNIQUE constraint failed: categories.name')) return json({ message: 'Category already exists' }, 409);
+          throw e;
         }
       }
 
-      // Update product
       const pm = url.pathname.match(/^\/api\/products\/([^/]+)$/);
-      if (pm && req.method === 'PATCH') {
+      const creatingProduct = url.pathname === '/api/products' && req.method === 'POST';
+      if (creatingProduct || (pm && req.method === 'PATCH')) {
         const b = await body(req);
-        const key = pm[1];
-        const hasImages = Array.isArray(b.images);
-        const sql = hasImages
-          ? 'UPDATE products SET name=?,sku=?,category=?,price=?,sale_price=?,stock=?,description=?,featured=?,images=?,image_url=?,sizes=? WHERE id=? OR sku=?'
-          : 'UPDATE products SET name=?,sku=?,category=?,price=?,sale_price=?,stock=?,description=?,featured=?,sizes=? WHERE id=? OR sku=?';
-        const values = [
-          String(b.name ?? ''), String(b.sku ?? key), String(b.category ?? ''),
-          Number(b.price ?? 0), Number(b.salePrice ?? b.price ?? 0),
-          Number(b.stock ?? 0), String(b.description ?? ''),
-          b.featured ? 1 : 0
-        ];
-        if (hasImages) values.push(JSON.stringify(b.images), b.images[0] ? String(b.images[0]) : String(b.imageUrl ?? ''));
-        values.push(JSON.stringify(Array.isArray(b.sizes) ? b.sizes : []), key, key);
-        await env.DB.prepare(sql).bind(...values).run();
-        return json({ ok: true });
+        const key = creatingProduct ? '' : decodeURIComponent(pm[1]);
+        const existing = creatingProduct ? null : await env.DB.prepare(
+          `SELECT id,name,sku,category,price,sale_price,stock,description,featured,sizes FROM products WHERE id=${productIdLookup}`
+        ).bind(key,key).first();
+        if (!creatingProduct && !existing) return json({ message: 'Product not found' }, 404);
+        const name = String(b.name ?? existing?.name ?? '').trim();
+        const sku = String(b.sku ?? existing?.sku ?? '').trim();
+        const category = String(b.category ?? existing?.category ?? '').trim();
+        const price = Number(b.price ?? existing?.price ?? 0);
+        const salePrice = Number(b.salePrice ?? existing?.sale_price ?? price);
+        const stock = Number(b.stock ?? existing?.stock ?? 0);
+        if (!name || !sku || !category) return json({ message: 'Name, SKU and category are required' }, 400);
+        if (!Number.isFinite(price) || price < 0 || !Number.isFinite(salePrice) || salePrice < 0 || salePrice > price ||
+            !Number.isSafeInteger(stock) || stock < 0) {
+          return json({ message: 'Check the price, sale price and stock' }, 400);
+        }
+
+        const fields = {
+          name, sku, category, price, sale_price:salePrice, stock,
+          description:String(b.description ?? existing?.description ?? ''),
+          featured:Number(Boolean(b.featured ?? existing?.featured)),
+          sizes:Array.isArray(b.sizes) ? JSON.stringify(b.sizes) : (existing?.sizes || '[]')
+        };
+        if (Array.isArray(b.images) || creatingProduct) {
+          fields.images = JSON.stringify(Array.isArray(b.images) ? b.images : []);
+          fields.image_url = String(b.images?.[0] || b.imageUrl || '');
+        }
+        if (typeof b.cardImage === 'string') {
+          if (b.cardImage && !imageDataPattern.test(b.cardImage)) return json({ message: 'Invalid card image' }, 400);
+          fields.card_image_url = b.cardImage;
+        }
+        if (Object.values(fields).some(value => typeof value === 'string' && value.length > 1_500_000)) {
+          return json({ message: 'Product data is too large. Resize the images and try again.' }, 413);
+        }
+
+        const id = existing?.id || crypto.randomUUID();
+        try {
+          if (creatingProduct) {
+            const record = { ...fields, id, created_at:Date.now() };
+            const columns = Object.keys(record);
+            await env.DB.prepare(`INSERT INTO products (${columns.join(',')}) VALUES (${columns.map(() => '?').join(',')})`)
+              .bind(...Object.values(record)).run();
+          } else {
+            const assignments = Object.keys(fields).map(column => column + '=?');
+            const result = await env.DB.prepare(`UPDATE products SET ${assignments.join(',')} WHERE id=?`)
+              .bind(...Object.values(fields), id).run();
+            if (!result.meta.changes) return json({ message: 'Product not found' }, 404);
+          }
+        } catch (e) {
+          if (String(e.message).includes('UNIQUE constraint failed: products.sku')) return json({ message: 'SKU already exists' }, 409);
+          throw e;
+        }
+        return creatingProduct ? json({ ...b, id, _id:id }, 201) : json({ ok:true });
       }
 
       // Delete product
       if (pm && req.method === 'DELETE') {
         const key = decodeURIComponent(pm[1]);
         const result = await env.DB.prepare(
-          'DELETE FROM products WHERE id=COALESCE((SELECT id FROM products WHERE id=?), (SELECT id FROM products WHERE sku=?))'
+          `DELETE FROM products WHERE id=${productIdLookup}`
         ).bind(key, key).run();
         if (!result.meta.changes) return json({ message: 'Product not found' }, 404);
         return json({ ok: true });
@@ -520,13 +554,15 @@ export default {
       const phid = url.pathname.match(/^\/api\/products\/([^/]+)\/hidden$/);
       if (phid && req.method === 'PATCH') {
         const b = await body(req);
-        const productId = phid[1];
+        const productId = decodeURIComponent(phid[1]);
+        if (typeof b.hidden !== 'boolean') return json({ message: 'Hidden must be true or false' }, 400);
         const hidden = b.hidden ? 1 : 0;
 
         try {
-          await env.DB.prepare(
-            'UPDATE products SET hidden=? WHERE id=? OR sku=?'
+          const result = await env.DB.prepare(
+            `UPDATE products SET hidden=? WHERE id=${productIdLookup}`
           ).bind(hidden, productId, productId).run();
+          if (!result.meta.changes) return json({ message: 'Product not found' }, 404);
           return json({ ok: true });
         } catch (e) {
           return json({ message: 'Failed to update product: ' + e.message }, 500);
@@ -546,58 +582,55 @@ export default {
       if (om && req.method === 'PATCH') {
         const b = await body(req);
         const status = String(b.status || '').trim();
-        const orderId = om[1];
+        const orderId = decodeURIComponent(om[1]);
 
         if (!VALID_ORDER_STATUSES.includes(status)) {
           return json({ message: 'Invalid order status' }, 400);
         }
 
-        // If cancelling, restore stock and decrement order sequence
-        if (status === 'cancelled') {
-          const order = await env.DB.prepare(
-            'SELECT items FROM orders WHERE id=?'
-          ).bind(orderId).first();
-
-          if (order && order.items) {
-            try {
-              const items = JSON.parse(order.items || '[]');
-              for (const item of items) {
-                await env.DB.prepare(
-                  'UPDATE products SET stock = stock + ? WHERE sku=?'
-                ).bind(item.quantity, item.sku).run();
-              }
-
-              // Ensure order_sequence table exists and initialize
-              try {
-                await env.DB.prepare(
-                  'CREATE TABLE IF NOT EXISTS order_sequence (key TEXT PRIMARY KEY, next_number INTEGER DEFAULT 1)'
-                ).run();
-                await env.DB.prepare(
-                  'INSERT OR IGNORE INTO order_sequence (key, next_number) VALUES (?, ?)'
-                ).bind('order_id', 1).run();
-              } catch (e) {
-                console.error('Sequence init error:', e);
-              }
-
-              // Decrement order sequence so next order reuses this ID
-              const currentSeq = await env.DB.prepare(
-                'SELECT next_number FROM order_sequence WHERE key=?'
-              ).bind('order_id').first();
-
-              if (currentSeq && currentSeq.next_number > 1) {
-                await env.DB.prepare(
-                  'UPDATE order_sequence SET next_number = next_number - 1 WHERE key=?'
-                ).bind('order_id').run();
-              }
-            } catch (e) {
-              return json({ message: 'Failed to cancel order: ' + e.message }, 500);
+        const order = await env.DB.prepare('SELECT status,items FROM orders WHERE id=?').bind(orderId).first();
+        if (!order) return json({ message: 'Order not found' }, 404);
+        if (order.status === status) return json({ ok: true });
+        const cancelling = status === 'cancelled';
+        const reopening = order.status === 'cancelled';
+        const statements = [];
+        if (cancelling || reopening) {
+          const inventory = new Map();
+          const items = JSON.parse(order.items || '[]');
+          for (const item of items) {
+            const key = item.productId || item.sku;
+            const quantity = Number(item.quantity);
+            if (!key || !Number.isSafeInteger(quantity) || quantity < 1) {
+              return json({ message: 'Order inventory must be corrected before changing this status' }, 409);
             }
+            inventory.set(key, (inventory.get(key) || 0) + quantity);
           }
+          const requested = JSON.stringify(Array.from(inventory, ([key, quantity]) => ({ key, quantity })));
+          if (reopening) {
+            statements.push(env.DB.prepare(`
+              UPDATE orders SET status=? WHERE id=? AND status=? AND NOT EXISTS (
+                SELECT 1 FROM json_each(?) item
+                LEFT JOIN products p ON p.id=COALESCE(
+                  (SELECT id FROM products WHERE id=json_extract(item.value,'$.key')),
+                  (SELECT id FROM products WHERE sku=json_extract(item.value,'$.key'))
+                ) WHERE p.id IS NULL OR p.stock IS NULL OR p.stock<json_extract(item.value,'$.quantity')
+              )
+            `).bind(status,orderId,order.status,requested));
+          } else {
+            statements.push(env.DB.prepare('UPDATE orders SET status=? WHERE id=? AND status=?').bind(status,orderId,order.status));
+          }
+          statements.push(env.DB.prepare(`
+            UPDATE products SET stock=stock + ? * json_extract(item.value,'$.quantity')
+            FROM json_each(?) item WHERE changes()>0 AND products.id=COALESCE(
+              (SELECT id FROM products WHERE id=json_extract(item.value,'$.key')),
+              (SELECT id FROM products WHERE sku=json_extract(item.value,'$.key'))
+            )
+          `).bind(cancelling ? 1 : -1,requested));
+        } else {
+          statements.push(env.DB.prepare('UPDATE orders SET status=? WHERE id=? AND status=?').bind(status,orderId,order.status));
         }
-
-        await env.DB.prepare(
-          'UPDATE orders SET status=? WHERE id=?'
-        ).bind(status, orderId).run();
+        const [result] = await env.DB.batch(statements);
+        if (!result.meta.changes) return json({ message: 'Order status or available stock changed. Refresh and try again.' }, 409);
         return json({ ok: true });
       }
 

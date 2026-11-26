@@ -407,13 +407,16 @@ async function api(path, opts = {}){
   const res = await fetch(path, { method: opts.method || 'GET', headers, body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined });
   let data = null; try { data = await res.json(); } catch {}
   if (res.status === 401 && opts.auth) { showLogin(); throw new Error('Please sign in again.'); }
-  if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
+  if (!res.ok) throw new Error((data && (data.message || data.error)) || ('Request failed (' + res.status + ')'));
   return data;
 }
 
 function showLogin(){
   localStorage.removeItem(TOKEN_KEY);
   $('appView').hidden = true; $('loginView').hidden = false;
+  $('loginPassword').type = 'password';
+  $('toggleLoginPassword').setAttribute('aria-pressed', 'false');
+  document.querySelectorAll('.scrim, #mediaUploadModal').forEach(modal => modal.hidden = true);
 }
 function showApp(){
   $('loginView').hidden = true; $('appView').hidden = false;
@@ -422,6 +425,7 @@ function showApp(){
 function setView(v){
   document.querySelectorAll('[data-section]').forEach(s => s.hidden = s.dataset.section !== v);
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.view === v));
+  if (v === 'media') renderMedia();
   window.scrollTo(0, 0);
 }
 
@@ -443,12 +447,12 @@ async function loadAll(){
 }
 
 function renderAll(){
+  fillCategorySelects();
   $('ordersCount').textContent = state.orders.length;
   $('productsCount').textContent = state.products.length;
   $('categoriesCount').textContent = state.categories.length;
   $('reviewsCount').textContent = state.reviews.length;
-  renderDashboard(); renderOrders(); renderProducts(); renderMedia(); renderCategories(); renderReviews(); renderSettings();
-  fillCategorySelects();
+  renderDashboard(); renderOrders(); renderProducts(); renderCategories(); renderReviews(); renderSettings();
 }
 
 /* ---------- Dashboard ---------- */
@@ -499,12 +503,16 @@ function openOrder(id){
 async function setOrderStatus(status){
   const o = state.currentOrder; if (!o) return;
   $('orderErr').textContent = '';
+  const enabled = [...$('orderStatusBtns').querySelectorAll('button:not(:disabled)')];
+  enabled.forEach(button => button.disabled = true);
   try {
     await api(`/api/orders/${encodeURIComponent(orderId(o))}/status`, {method:'PATCH', body:{status}, auth:true});
     o.status = status;
-    renderAll(); openOrder(orderId(o));
+    await loadAll();
+    if (!$('orderModal').hidden && state.currentOrder === o) openOrder(orderId(o));
     toast('Order status updated');
   } catch (e) { $('orderErr').textContent = e.message; }
+  finally { enabled.forEach(button => button.disabled = false); }
 }
 
 /* ---------- Products ---------- */
@@ -523,14 +531,16 @@ function renderProducts(){
       <td>${p.featured ? '<span style="color:var(--ok)">Yes</span>' : '<span class="sub">No</span>'}</td>
       <td style="display:flex;gap:6px">
         <button class="btn sm" data-edit-product="${esc(p.id)}">Edit</button>
-        <button class="btn sm" style="color:var(--warn)" onclick="toggleHideProduct('${esc(p.id)}',${!p.hidden})" title="${p.hidden ? 'Show' : 'Hide'}">${p.hidden ? '👁️' : '👁️‍🗨️'}</button>
-        <button class="btn sm" style="color:var(--bad)" onclick="deleteProduct('${esc(p.id)}','${esc(p.name)}')" title="Delete">🗑️</button>
+        <button class="btn sm" style="color:var(--warn)" data-hide-product="${esc(p.id)}" title="${p.hidden ? 'Show' : 'Hide'}">${p.hidden ? '👁️' : '👁️‍🗨️'}</button>
+        <button class="btn sm" style="color:var(--bad)" data-delete-product="${esc(p.id)}" title="Delete">🗑️</button>
       </td>
     </tr>`).join('') || `<tr><td colspan="8" class="empty">No products found.</td></tr>`;
 }
 function fillCategorySelects(){
   const names = state.categories.length ? state.categories : [...new Set(state.products.map(p => p.category))];
+  const selected = $('productCat').value;
   $('productCat').innerHTML = '<option value="">All categories</option>' + names.map(c => `<option>${esc(c)}</option>`).join('');
+  if (names.includes(selected)) $('productCat').value = selected;
   $('pCategory').innerHTML = names.map(c => `<option>${esc(c)}</option>`).join('');
 }
 function renderProductImages(){
@@ -554,37 +564,25 @@ async function deleteProduct(id, name){
   renderDashboard();
   toast('Product deleted');
 }
-function toggleHideProduct(id, hide){
-  const action = hide ? 'Hide' : 'Show';
-  const token = localStorage.getItem(TOKEN_KEY);
-  const headers = { 'Content-Type': 'application/json' };
-  if (token) headers.Authorization = 'Bearer ' + token;
-  fetch('/api/products/' + encodeURIComponent(id) + '/hidden', {
-    method: 'PATCH',
-    headers,
-    body: JSON.stringify({ hidden: hide })
-  })
-    .then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
-      return r.json().catch(() => ({ ok: true }));
-    })
-    .then(d => {
-      if (d.ok || d.success) {
-        toast('✓ Product ' + action + 'den');
-        setTimeout(() => { loadState(); renderProducts(); }, 300);
-      } else {
-        toast('Failed: ' + (d.message || d.error || 'Unknown error'), true);
-      }
-    })
-    .catch(e => toast('Error: ' + e.message, true));
+async function toggleHideProduct(id, button){
+  const product = state.products.find(p => p.id === id);
+  if (!product) return;
+  const hidden = !product.hidden;
+  button.disabled = true;
+  try {
+    await api('/api/products/' + encodeURIComponent(id) + '/hidden', {method:'PATCH', body:{hidden}, auth:true});
+    product.hidden = hidden;
+    renderProducts();
+    toast(hidden ? 'Product hidden' : 'Product visible');
+  } catch (e) { toast(e.message, true); }
+  finally { button.disabled = false; }
 }
 async function openProductModal(id){
   let p = id ? state.products.find(x => x.id === id) : null;
-  if (p && (!Array.isArray(p.images) || !p.images.length)) {
+  if (p) {
     try {
-      const full = await api('/api/products/' + encodeURIComponent(p.sku || p.id));
-      if (full && full.id) { p = Object.assign({}, p, full); }
-    } catch (e) { /* keep the lightweight product data available */ }
+      p = await api('/api/admin/products/' + encodeURIComponent(p.id), {auth:true});
+    } catch (e) { toast(e.message, true); return; }
   }
   state.editingProduct = p || null;
   const f = $('productForm'); f.reset();
@@ -699,6 +697,7 @@ async function saveCategory(e){
     } else if (state.editingCategory !== name){
       await api('/api/categories/by-name/' + encodeURIComponent(state.editingCategory), {method:'PATCH', body:{name}, auth:true});
     }
+    state.editingCategory = name;
     await api('/api/admin/category-settings', {method:'PATCH', body:{name, description, image: state.categoryImage}, auth:true});
     $('categoryModal').hidden = true;
     await loadAll();
@@ -730,60 +729,60 @@ async function deleteReview(id){
 
 /* ---------- Media gallery ---------- */
 let allMedia = [];
-function renderMedia(){
+async function renderMedia(){
   const box = $('mediaGallery');
-  if (!state.products.length) {
-    box.innerHTML = '<p>No products found.</p>';
-    return;
-  }
-
-  box.innerHTML = '<p>Loading media...</p>';
-  allMedia = [];
-
-  Promise.all(state.products.filter(p => p.sku).map(p =>
-    api(`/api/media/${encodeURIComponent(p.sku)}`, {auth:true})
-      .then(data => ({
-        sku: p.sku,
-        name: p.name || p.sku,
-        category: p.category || 'Uncategorized',
-        images: (data.images || []).map(img => ({
-          id: img.id,
-          filename: img.filename,
-          data: img.image_data
-        }))
-      }))
-      .catch(() => ({
-        sku: p.sku,
-        name: p.name || p.sku,
-        category: p.category || 'Uncategorized',
-        images: []
-      }))
-  )).then(results => {
-    allMedia = results.filter(r => r.images.length > 0);
-    if (!allMedia.length) {
-      box.innerHTML = '<p>No product media found. <button class="btn primary" onclick="showMediaUpload()" style="margin-left:8px">Upload images</button></p>';
-      return;
+  box.querySelectorAll('[data-media-image]').forEach(img => mediaObserver.unobserve(img));
+  box.textContent = 'Loading media...';
+  try {
+    const images = await api('/api/media', {auth:true});
+    const products = new Map(state.products.map(p => [p.sku,p]));
+    const groups = new Map();
+    for (const image of images) {
+      const product = products.get(image.sku);
+      if (!groups.has(image.sku)) groups.set(image.sku, {
+        sku:image.sku, name:product?.name || image.sku,
+        category:product?.category || 'Uncategorized', images:[]
+      });
+      groups.get(image.sku).images.push(image);
     }
-    displayMediaByCategory(allMedia);
-  });
+    allMedia = [...groups.values()];
+    filterMedia($('mediaSearch').value);
+  } catch (e) { box.textContent = e.message; }
 }
+const mediaObserver = new IntersectionObserver(entries => {
+  for (const {target,isIntersecting} of entries) {
+    if (!isIntersecting) continue;
+    mediaObserver.unobserve(target);
+    fetch('/api/media/' + encodeURIComponent(target.dataset.mediaImage) + '/image', {
+      headers:{Authorization:'Bearer ' + localStorage.getItem(TOKEN_KEY)}
+    }).then(response => {
+      if (!response.ok) throw new Error('Image could not load');
+      return response.blob();
+    }).then(blob => {
+      const source = URL.createObjectURL(blob);
+      target.onload = target.onerror = () => URL.revokeObjectURL(source);
+      target.src = source;
+    }).catch(() => target.alt = 'Image could not load');
+  }
+});
 function displayMediaByCategory(media){
   const box = $('mediaGallery');
-  const grouped = {};
+  const grouped = Object.create(null);
   media.forEach(m => {
     if (!grouped[m.category]) grouped[m.category] = [];
     grouped[m.category].push(m);
   });
   const categories = Object.keys(grouped).sort();
+  box.querySelectorAll('[data-media-image]').forEach(img => mediaObserver.unobserve(img));
   box.innerHTML = categories.map(cat => `
     <div style="margin-bottom:32px">
       <h3 style="margin:0 0 16px;color:#333;font-size:16px;font-weight:600;border-bottom:2px solid #ddd;padding-bottom:8px">${esc(cat)}</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
         ${grouped[cat].flatMap(m => (m.images || []).map(img => `
           <div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#f9f9f9;position:relative;group">
-            <img src="${img.data}" alt="${m.name}" style="width:100%;height:180px;object-fit:cover;display:block">
-            <div style="position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
-              <button onclick="deleteProductImage('${img.id}')" style="padding:6px 10px;background:#ff6b6b;color:#fff;border:0;border-radius:4px;cursor:pointer;font-size:12px">🗑 Delete</button>
+            <img data-media-image="${esc(img.id)}" alt="${esc(m.name)}" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;top:8px;right:8px">
+              <button class="btn sm" data-delete-media="${esc(img.id)}">Delete</button>
             </div>
             <div style="padding:12px">
               <div style="font-size:12px;font-weight:bold;color:#333;margin:0 0 4px;word-break:break-word">${esc(m.name)}</div>
@@ -793,9 +792,11 @@ function displayMediaByCategory(media){
         `))}
       </div>
     </div>
-  `).join('');
+  `).join('') || '<p>No product media found.</p>';
+  box.querySelectorAll('[data-media-image]').forEach(img => mediaObserver.observe(img));
 }
 function filterMedia(query){
+  $('mediaGallery').querySelectorAll('[data-media-image]').forEach(img => mediaObserver.unobserve(img));
   const q = query.toLowerCase().trim();
   if (!q) {
     displayMediaByCategory(allMedia);
@@ -818,13 +819,16 @@ function closeMediaUpload(){
   $('uploadSKU').value = '';
   $('fileName').textContent = '';
   $('imageFile').value = '';
+  $('folderInput').value = '';
 }
 function handleFileDrop(e){
   e.preventDefault();
   const files = e.dataTransfer.files;
   if (files.length > 0) {
+    document.querySelector('input[name="uploadType"][value="file"]').checked = true;
+    $('selectLabel').textContent = 'Select Image';
     $('imageFile').files = files;
-    $('fileName').textContent = '✓ ' + files[0].name;
+    handleFileSelect($('imageFile'));
   }
 }
 function handleFileSelect(input){
@@ -859,71 +863,44 @@ function switchUploadMode(mode){
     $('folderInput').click();
   }
 }
-function uploadProductImage(btn){
+async function uploadProductImage(btn){
   const sku = $('uploadSKU').value.trim();
   const uploadType = document.querySelector('input[name="uploadType"]:checked').value;
   const input = uploadType === 'file' ? $('imageFile') : $('folderInput');
+  const files = Array.from(input.files).filter(file => /^image\/(png|jpeg|webp)$/.test(file.type));
+  if (!sku || !files.length) { toast('Enter a SKU and select PNG, JPG or WEBP images.', true); return; }
 
-  if (!sku) { toast('Please enter a product SKU', true); return; }
-  if (!input.files.length) { toast('Please select files to upload', true); return; }
-
-  const files = Array.from(input.files);
   btn.disabled = true;
   const originalText = btn.textContent;
   btn.textContent = 'Uploading...';
-
-  Promise.all(files.map(file => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        fetch('/api/uploads/image', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            data: reader.result,
-            filename: file.name,
-            sku: sku
-          })
-        })
-        .then(r => r.json())
-        .then(data => {
-          console.log('Uploaded:', file.name);
-          resolve(data);
-        })
-        .catch(err => {
-          console.error('Upload failed:', err);
-          reject(err);
-        });
-      };
-      reader.onerror = () => reject(new Error('File read failed'));
-      reader.readAsDataURL(file);
-    });
-  }))
-  .then(results => {
-    btn.disabled = false;
-    btn.textContent = originalText;
-    toast('✓ All ' + files.length + ' image(s) uploaded for ' + sku);
-    closeMediaUpload();
-    setTimeout(() => { loadState(); renderMedia(); }, 500);
-  })
-  .catch(err => {
-    btn.disabled = false;
-    btn.textContent = originalText;
-    toast('Upload failed: ' + err.message, true);
-  });
-}
-function deleteProductImage(imgId){
-  if (!confirm('Delete this image?')) return;
-  api(`/api/media/${imgId}`, { method: 'DELETE', auth:true })
-    .then(d => {
-      if (d.ok) {
-        toast('✓ Image deleted');
-        setTimeout(() => { renderMedia(); }, 300);
-      } else {
-        toast('Failed to delete: ' + (d.message || 'unknown error'), true);
+  let uploaded = 0;
+  const failures = [];
+  try {
+    for (const file of files) {
+      try {
+        const data = await readFile(file);
+        await api('/api/uploads/image', {method:'POST', body:{data,filename:file.name,sku}, auth:true});
+        uploaded++;
+      } catch (e) {
+        failures.push(file.name + ': ' + e.message);
+        if (!$('loginView').hidden) break;
       }
-    })
-    .catch(e => toast('Error: ' + e.message, true));
+    }
+    closeMediaUpload();
+    if (uploaded && $('loginView').hidden) await renderMedia();
+    toast(uploaded + ' image(s) uploaded.' + (failures.length ? ' ' + failures.join(' | ') : ''), failures.length > 0);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+async function deleteProductImage(imgId){
+  if (!confirm('Delete this image?')) return;
+  try {
+    await api('/api/media/' + encodeURIComponent(imgId), {method:'DELETE', auth:true});
+    await renderMedia();
+    toast('Image deleted');
+  } catch (e) { toast(e.message, true); }
 }
 
 /* ---------- Homepage settings ---------- */
@@ -937,16 +914,16 @@ function addSettingRow(){
   const key = prompt('Name of the new setting (for example: heroHeadline)');
   if (!key || !key.trim()) return;
   const k = key.trim();
-  if (k in state.settings) { toast('That setting already exists.', true); return; }
-  state.settings[k] = '';
-  renderSettings();
+  if ([...document.querySelectorAll('[data-setting]')].some(input => input.dataset.setting === k)) { toast('That setting already exists.', true); return; }
+  $('settingsList').querySelector('.empty')?.remove();
+  $('settingsList').insertAdjacentHTML('beforeend', `<div class="kv"><input class="input" value="${esc(k)}" readonly><input class="input" data-setting="${esc(k)}"></div>`);
 }
 async function saveSettings(){
   const btn = $('saveSettingsBtn'); btn.disabled = true;
-  const changed = {};
+  const changed = Object.create(null);
   document.querySelectorAll('[data-setting]').forEach(input => {
     const k = input.dataset.setting;
-    if (input.value !== String(state.settings[k] ?? '')) changed[k] = input.value;
+    if (!Object.hasOwn(state.settings,k) || input.value !== String(state.settings[k] ?? '')) changed[k] = input.value;
   });
   if (!Object.keys(changed).length){ btn.disabled = false; toast('Nothing to save'); return; }
   try {
@@ -972,8 +949,9 @@ $('loginForm').addEventListener('submit', async e => {
   try {
     const data = await api('/api/admin/login', {method:'POST', body:{email:f.email.value, password:f.password.value}});
     localStorage.setItem(TOKEN_KEY, data.token);
-    showApp(); await loadAll();
-  } catch (err) { $('loginErr').textContent = err.message; }
+    await loadAll();
+    showApp();
+  } catch (err) { showLogin(); $('loginErr').textContent = err.message; }
   finally { btn.disabled = false; }
 });
 $('logoutBtn').addEventListener('click', () => { showLogin(); toast('Signed out'); });
@@ -990,6 +968,13 @@ document.addEventListener('click', e => {
   const row = t.closest('[data-order-id]'); if (row) return openOrder(row.dataset.orderId);
   const st = t.closest('[data-status-set]'); if (st) return setOrderStatus(st.dataset.statusSet);
   const ep = t.closest('[data-edit-product]'); if (ep) return openProductModal(ep.dataset.editProduct);
+  const hp = t.closest('[data-hide-product]'); if (hp) return toggleHideProduct(hp.dataset.hideProduct, hp);
+  const dp = t.closest('[data-delete-product]');
+  if (dp) {
+    const product = state.products.find(p => p.id === dp.dataset.deleteProduct);
+    if (product) return deleteProduct(product.id, product.name);
+  }
+  const dm = t.closest('[data-delete-media]'); if (dm) return deleteProductImage(dm.dataset.deleteMedia);
   const ec = t.closest('[data-edit-category]'); if (ec) return openCategoryModal(ec.dataset.editCategory);
   const dr = t.closest('[data-delete-review]'); if (dr) return deleteReview(dr.dataset.deleteReview);
   if (t.closest('[data-close]') || t.classList.contains('scrim')){
@@ -1017,7 +1002,7 @@ $('pCardImage').addEventListener('change', async e => {
 });
 function renderProductCardImage(){
   const list = $('pCardImgList');
-  list.innerHTML = state.productCardImage ? `<div class="thumb" style="background-image:url('${state.productCardImage}')"><button type="button" onclick="state.productCardImage='';renderProductCardImage()" aria-label="Remove">×</button></div>` : '';
+  list.innerHTML = state.productCardImage ? `<div class="thumb" style="background-image:url('${esc(state.productCardImage)}')"><button type="button" onclick="state.productCardImage='';renderProductCardImage()" aria-label="Remove">×</button></div>` : '';
 }
 $('cImage').addEventListener('change', async e => {
   const list = [];
