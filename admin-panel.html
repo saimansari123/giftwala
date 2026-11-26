@@ -39,6 +39,12 @@ button{cursor:pointer}
 .btn.danger{color:var(--bad)}
 .btn.sm{padding:6px 10px;font-size:12px}
 .input{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-width:0;width:100%}
+#loginForm .password-field{position:relative}
+#loginForm .password-field .input{padding-inline-end:50px}
+.password-toggle{position:absolute;inset:0 2px 0 auto;display:grid;place-items:center;width:44px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer}
+.password-toggle:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+.password-toggle .eye-slash{visibility:hidden}
+.password-toggle[aria-pressed="true"] .eye-slash{visibility:visible}
 .search{min-width:220px;width:auto}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;min-width:0}
 .grid{display:grid;gap:16px}
@@ -124,7 +130,16 @@ tbody tr.click{cursor:pointer}
     <p class="sub" style="margin:0 0 16px">Sign in to manage products, orders and reviews.</p>
     <div class="grid" style="gap:12px">
       <input class="input" name="email" type="email" placeholder="Admin email" required autocomplete="username">
-      <input class="input" name="password" type="password" placeholder="Password" required autocomplete="current-password">
+      <div class="password-field">
+        <input class="input" id="loginPassword" name="password" type="password" placeholder="Password" required autocomplete="current-password">
+        <button class="password-toggle" id="toggleLoginPassword" type="button" aria-label="Show password" aria-controls="loginPassword" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"/>
+            <circle cx="12" cy="12" r="2.5"/>
+            <path class="eye-slash" d="m4 4 16 16"/>
+          </svg>
+        </button>
+      </div>
       <button class="btn primary" type="submit" id="loginBtn">Sign in</button>
       <div class="err" id="loginErr"></div>
     </div>
@@ -943,6 +958,13 @@ async function saveSettings(){
 }
 
 /* ---------- Events ---------- */
+$('toggleLoginPassword').addEventListener('click', e => {
+  const password = $('loginPassword');
+  const visible = password.type === 'password';
+  password.type = visible ? 'text' : 'password';
+  e.currentTarget.setAttribute('aria-pressed', String(visible));
+});
+
 $('loginForm').addEventListener('submit', async e => {
   e.preventDefault();
   const f = e.target, btn = $('loginBtn');
