@@ -3,6 +3,7 @@ server/
 src/
 migrations/
 .git/
+.wrangler/
 .codex/
 .agents/
 .env
