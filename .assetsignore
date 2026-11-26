@@ -11,4 +11,6 @@ migrations/
 package.json
 package-lock.json
 wrangler.jsonc
+header-search-fix.css
+mobile-navigation.js
 *.log
