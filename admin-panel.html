@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head><script>try{var __gwT=localStorage.getItem('giftwala-theme');document.documentElement.setAttribute('data-theme',__gwT||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))}catch(__gwE){document.documentElement.setAttribute('data-theme','dark')}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
@@ -8,25 +8,26 @@
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f0e0c;--panel:#171512;--panel-2:#1f1c17;--line:#2e2920;--fg:#f4ecdc;--muted:#a39a88;--accent:#dba83d;--accent-2:#f2bd55;--ok:#5fbf85;--warn:#e8a33d;--bad:#e46a5f;--info:#6aa7e8;--radius:12px;color-scheme:dark}
+html[data-theme="light"]{--bg:#f8f6f1;--panel:#ffffff;--panel-2:#eceae6;--line:#e3ddd2;--fg:#171513;--muted:#6f6a63;--accent:#9a7414;--accent-2:#dba83d;--ok:#2f6b45;--warn:#9a7414;--bad:#8f2f1e;--info:#2f6ba3;color-scheme:light}/* THEME (2026-11-25): admin is dark by default; light remaps the variables above. */html[data-theme="light"] .side .brand img{content:url('/assets/brand/giftwala-logo-light.png')}#themeToggleAdmin{display:flex;align-items:center;gap:8px;width:100%;margin:2px 0 12px;padding:9px 10px;background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:600 12px 'Archivo',system-ui,sans-serif;cursor:pointer}#themeToggleAdmin:hover{border-color:var(--accent)}#themeToggleAdmin svg{width:18px;height:18px;flex:none}#themeToggleAdmin .icon-moon{display:none}html[data-theme="light"] #themeToggleAdmin .icon-sun{display:none}html[data-theme="light"] #themeToggleAdmin .icon-moon{display:block}:root{--bg:#0f0e0c;--panel:#171512;--panel-2:#1f1c17;--line:#2e2920;--fg:#f4ecdc;--muted:#a39a88;--accent:#dba83d;--accent-2:#f2bd55;--ok:#5fbf85;--warn:#e8a33d;--bad:#e46a5f;--info:#6aa7e8;--radius:12px;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{min-height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 'DM Sans',system-ui,sans-serif}
-h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;margin:0}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 'Archivo',system-ui,sans-serif}
+h1,h2,h3{font-family:'Archivo',Arial,sans-serif;font-weight:600;margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 [hidden]{display:none!important}
 .app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh;align-content:start}
 .side{background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
-.brand{padding:4px 10px 18px;font-family:'Playfair Display',serif;font-size:20px}
-.brand span{color:var(--accent)}
+.brand{padding:4px 10px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.brand img{height:54px;width:auto;max-width:196px;object-fit:contain}
+.brand small{color:var(--accent);font:700 10px 'Archivo',system-ui,sans-serif;letter-spacing:.28em;text-transform:uppercase}
 .nav button{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:9px 10px;border-radius:8px;color:var(--muted);text-align:left}
 .nav button:hover{background:var(--panel-2);color:var(--fg)}
 .nav button.on{background:#2a2315;color:var(--accent-2)}
 .nav .count{font-size:11px;background:var(--line);border-radius:999px;padding:1px 8px;color:var(--fg)}
-.side .foot{margin-top:auto;padding:12px 10px;border-top:1px solid var(--line)}
+.side .foot{margin-top:10px;padding:12px 10px;border-top:1px solid var(--line)}
 .main{padding:26px 30px 60px;min-width:0}
 .top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
 .top h1{font-size:30px}
@@ -37,23 +38,23 @@ button{cursor:pointer}
 .btn:disabled{opacity:.5;cursor:default}
 .btn.primary{background:linear-gradient(135deg,var(--accent-2),var(--accent));border-color:transparent;color:#17130a;font-weight:700}
 .btn.danger{color:var(--bad)}
+/* Logout, directly under the sidebar menu (2026-11-25): red-tinted in both
+   themes — --bad is light red on dark (#e46a5f) and dark red on light
+   (#8f2f1e) — with a red border so it reads as a sign-out action. */
+.logout-btn{width:100%;margin:12px 0 4px;padding:9px 12px;font-weight:700;color:var(--bad);border:1px solid var(--bad);background:transparent}
+.logout-btn:hover{border-color:var(--bad);background:rgba(228,106,95,.10)}
+html[data-theme="light"] .logout-btn:hover{background:rgba(143,47,30,.08)}
 .btn.sm{padding:6px 10px;font-size:12px}
 .input{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-width:0;width:100%}
-#loginForm .password-field{position:relative}
-#loginForm .password-field .input{padding-inline-end:50px}
-.password-toggle{position:absolute;inset:0 2px 0 auto;display:grid;place-items:center;width:44px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer}
-.password-toggle:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
-.password-toggle .eye-slash{visibility:hidden}
-.password-toggle[aria-pressed="true"] .eye-slash{visibility:visible}
 .search{min-width:220px;width:auto}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;min-width:0}
 .grid{display:grid;gap:16px}
 .kpis{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:18px}
 .kpi .label{color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
-.kpi .value{font-family:'Playfair Display',serif;font-size:30px;margin-top:6px;font-variant-numeric:tabular-nums}
+.kpi .value{font-family:'Archivo',Arial,sans-serif;font-size:30px;margin-top:6px;font-variant-numeric:tabular-nums}
 .two{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);margin-bottom:18px}
 .card h3{font-size:18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.card h3 a{font:500 12px 'DM Sans';color:var(--accent);cursor:pointer}
+.card h3 a{font:500 12px 'Archivo';color:var(--accent);cursor:pointer}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
 table{width:100%;border-collapse:collapse;min-width:760px}
 th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
@@ -67,8 +68,11 @@ tbody tr.click{cursor:pointer}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
 .pill::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
 .s-pending{color:var(--warn)}.s-confirmed{color:var(--info)}.s-shipped{color:#b29cf0}.s-delivered{color:var(--ok)}.s-cancelled{color:var(--bad)}
-.stars{color:var(--accent-2);letter-spacing:2px}
+.stars{color:var(--accent-2)}
 .low{color:var(--bad);font-weight:700}
+html[data-theme="light"] .low{color:#8f2f1e;background:rgba(143,47,30,.10);padding:2px 8px;border-radius:999px;display:inline-block}
+html[data-theme="light"] .note{background:#ffffff;border-color:var(--warn)}
+html[data-theme="light"] .note b{color:#7d5c0d}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
 .tabs button{background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted)}
 .tabs button.on{background:var(--accent);border-color:var(--accent);color:#17130a;font-weight:700}
@@ -104,13 +108,73 @@ tbody tr.click{cursor:pointer}
 .err{color:var(--bad);font-size:12px;min-height:18px;margin-top:6px}
 .toast{position:fixed;bottom:22px;right:22px;background:var(--panel-2);border:1px solid var(--accent);color:var(--fg);padding:12px 16px;border-radius:10px;z-index:60;box-shadow:0 12px 30px #000a;max-width:calc(100% - 44px)}
 .toast.bad{border-color:var(--bad)}
+.note{border:1px solid var(--warn);background:#2a2113;border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.note b{color:var(--accent-2)}
+.timeline{display:flex;gap:0;margin-bottom:6px;flex-wrap:wrap}
+.timeline span{flex:1;min-width:90px;padding:8px 6px;border-top:3px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+.timeline span.done{border-color:var(--ok);color:var(--fg)}
+.timeline span.now{border-color:var(--accent);color:var(--accent-2);font-weight:700}
+.timeline span.cancelled{border-color:var(--bad);color:var(--bad)}
+/* ---- ADMIN SHELL, REDESIGNED (2026-11-25, round 4) ----
+   The admin no longer shares the storefront look: it has its own top bar,
+   a deeper sidebar with a gold-gradient active state, a Store Owner card,
+   icon chips on the stat cards, shaded table headers and row hover.
+   Everything is variable-driven, so the dark/light toggle keeps working. */
+.admin-topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:-26px -30px 22px;padding:12px 30px;background:linear-gradient(135deg,#211a10,#14110d);border-bottom:1px solid #3a2f1c}
+html[data-theme="light"] .admin-topbar{background:linear-gradient(135deg,#ffffff,#eceae6);border-bottom-color:#e3ddd2}
+.admin-topbar__brand{display:flex;align-items:center;gap:12px;min-width:0}
+.admin-topbar__brand img{height:40px;width:auto;max-width:150px;object-fit:contain}
+html[data-theme="light"] .admin-topbar__brand img{content:url('/assets/brand/giftwala-logo-light.png')}
+.admin-topbar__brand strong{display:block;font:600 17px 'Archivo',Arial,sans-serif}
+.admin-topbar__brand span{display:block;font:700 10px 'Archivo',system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.admin-topbar__actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.admin-pill{display:inline-flex;align-items:center;gap:6px;font:700 11px 'Archivo',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#17130a;background:linear-gradient(135deg,var(--accent-2),var(--accent));border-radius:999px;padding:5px 12px}
+.admin-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:#17130a}
+.side{background:linear-gradient(180deg,#1b1610,#14110d)}
+html[data-theme="light"] .side{background:linear-gradient(180deg,#ffffff,#eceae6)}
+.side-label{margin:10px 10px 6px;font:700 10px 'Archivo',system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.nav button.on{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#17130a;font-weight:700;box-shadow:0 6px 16px rgba(219,168,61,.35)}
+.nav button.on .count{background:rgba(23,19,10,.18);color:#17130a}
+.owner-card{display:flex;gap:10px;align-items:center;margin-top:auto;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2)}
+.owner-card .avatar{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#17130a;font:700 13px 'Archivo',system-ui,sans-serif}
+.owner-card strong{display:block;font-size:13px}
+.owner-card span{display:block;font-size:11px;color:var(--muted)}
+.owner-card small{display:block;font-size:11px;color:var(--accent);font-weight:700}
+.kpi{display:flex;gap:12px;align-items:flex-start}
+.kpi-ic{flex:none;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(219,168,61,.28),rgba(219,168,61,.08));border:1px solid rgba(219,168,61,.4);color:var(--accent-2)}
+.kpi-ic svg{width:20px;height:20px}
+.kpi .value{margin-top:2px}
+thead th{background:linear-gradient(180deg,var(--panel-2),var(--panel))}
+tbody tr{transition:background .15s ease}
+tbody tr:hover{background:var(--panel-2)}
+/* Icon system: one set of inline SVGs, 24x24 viewBox, stroke 1.8, round
+   caps/joins, currentColor. Nav icons 18px, section headings 26px gold,
+   inline action icons 16px. No emoji or font glyphs anywhere. */
+.nav button{justify-content:flex-start;gap:10px}
+.nav svg{width:18px;height:18px;flex:none}
+.nav .count{margin-left:auto}
+.top h1 svg{width:26px;height:26px;vertical-align:-5px;margin-right:10px;color:var(--accent)}
+.btn svg{width:16px;height:16px;vertical-align:-3px}
+.x{display:grid;place-items:center;width:32px;height:32px;padding:0}
+.x svg{width:18px;height:18px}
+.ic{width:16px;height:16px;vertical-align:-3px;flex:none}
+.stars svg{width:15px;height:15px;vertical-align:-2px;margin-right:2px}
+.stars svg.star-off{color:var(--muted)}
+.login .brand-logo{height:56px;width:auto;max-width:240px;object-fit:contain;margin-bottom:14px}
 @media(max-width:800px){
   .app{grid-template-columns:1fr}
-  .side{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:4px;border-right:0;border-bottom:1px solid var(--line)}
-  .brand{padding:0 8px 0 0;flex:none;font-size:17px}
-  .nav{display:flex;align-items:center;gap:4px;flex:none}
-  .nav button{width:auto;white-space:nowrap;padding:7px 10px}
+  .side{position:static;height:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;border-right:0;border-bottom:1px solid var(--line)}
+  .brand{grid-column:1/-1;padding:0 0 4px;flex:none;font-size:17px}
+  .side-label{grid-column:1/-1;margin:2px 2px 0}
+  #themeToggleAdmin{grid-column:1/-1;margin:0}
+  .nav{display:contents}
+  .nav button{width:auto;white-space:nowrap;padding:9px 10px}
+  .owner-card{grid-column:1/-1;margin-top:0}
+  .logout-btn{grid-column:1/-1;margin:4px 0 0}
   .side .foot{display:none}
+  .admin-topbar{margin:-18px -16px 18px;padding:10px 16px}
+  .admin-topbar__brand img{height:34px}
+  .admin-topbar__brand strong{font-size:15px}
   .main{padding:18px 16px 60px}
   .top h1{font-size:24px}
   .form{grid-template-columns:1fr}
@@ -119,6 +183,21 @@ tbody tr.click{cursor:pointer}
   .kv .input:nth-child(2){grid-column:1/-1}
   .search{min-width:0;width:100%}
 }
+#loginForm .password-field{position:relative}
+#loginForm .password-field .input{padding-inline-end:50px}
+.password-toggle{position:absolute;inset:0 2px 0 auto;display:grid;place-items:center;width:44px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer}
+.password-toggle:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+.password-toggle .eye-slash{visibility:hidden}
+.password-toggle[aria-pressed="true"] .eye-slash{visibility:visible}
+</style>
+<style>
+/* ROUND 12 (2026-11-26): light-theme bright-gold buttons — the light
+   --accent (#9a7414) made the sidebar active button, tab buttons and
+   primary buttons muddy olive-brown. Bright gold scale + #241a05 text. */
+html[data-theme="light"] .nav button.on{background:linear-gradient(135deg,#F2CE68,#DFAF37 55%,#C79A28)!important;color:#241a05!important;border:1px solid #B98A1E!important;box-shadow:0 6px 16px rgba(199,154,40,.35)!important}
+html[data-theme="light"] .nav button.on .count{background:rgba(36,26,5,.16)!important;color:#241a05!important}
+html[data-theme="light"] .tabs button.on{background:linear-gradient(135deg,#F2CE68,#DFAF37 55%,#C79A28)!important;border-color:#B98A1E!important;color:#241a05!important}
+html[data-theme="light"] .btn.primary{background:linear-gradient(135deg,#F2CE68,#DFAF37 55%,#C79A28)!important;border-color:#B98A1E!important;color:#241a05!important;box-shadow:0 6px 16px rgba(199,154,40,.35)!important}
 </style>
 </head>
 <body>
@@ -126,6 +205,7 @@ tbody tr.click{cursor:pointer}
 <!-- Login -->
 <div class="login" id="loginView" hidden>
   <form class="card" id="loginForm">
+    <img class="brand-logo" src="/assets/brand/giftwala-logo-dark.png" alt="GiftWALA — Customised Gifts and Accessories">
     <h2 style="margin-bottom:4px">GiftWALA Admin</h2>
     <p class="sub" style="margin:0 0 16px">Sign in to manage products, orders and reviews.</p>
     <div class="grid" style="gap:12px">
@@ -149,34 +229,44 @@ tbody tr.click{cursor:pointer}
 <!-- Admin shell -->
 <div class="app" id="appView" hidden>
   <aside class="side">
-    <div class="brand">Gift<span>WALA</span></div>
+    <div class="brand"><img class="brand-logo" src="/assets/brand/giftwala-logo-dark.png" alt="GiftWALA — Customised Gifts and Accessories"><small>Admin Panel</small></div>
+    <button id="themeToggleAdmin" type="button" aria-label="Switch to light theme"><svg class="gw-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.9 4.9l1.4 1.4"/><path d="M17.7 17.7l1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.9 19.1l1.4-1.4"/><path d="M17.7 6.3l1.4-1.4"/></svg><svg class="gw-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Light theme</span></button>
+    <p class="side-label">Menu</p>
     <nav class="nav" id="nav">
-      <button data-view="dashboard" class="on">Dashboard</button>
-      <button data-view="orders">Orders <span class="count" id="ordersCount">0</span></button>
-      <button data-view="products">Products <span class="count" id="productsCount">0</span></button>
-      <button data-view="media">Media</button>
-      <button data-view="categories">Categories <span class="count" id="categoriesCount">0</span></button>
-      <button data-view="reviews">Reviews <span class="count" id="reviewsCount">0</span></button>
-      <button data-view="homepage">Homepage settings</button>
+      <button data-view="dashboard" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+      <button data-view="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5A2.5 2.5 0 0 1 14 4.5"/><path d="M9 11h6M9 15h4"/></svg>Orders <span class="count" id="ordersCount">0</span></button>
+      <button data-view="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>Products <span class="count" id="productsCount">0</span></button>
+      <button data-view="media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-5-9 9"/></svg>Media</button>
+      <button data-view="categories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Categories <span class="count" id="categoriesCount">0</span></button>
+      <button data-view="reviews"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6-5.4-2.9L6.6 19.7l1.1-6L3.2 9.4l6.1-.8z"/></svg>Reviews <span class="count" id="reviewsCount">0</span></button>
+      <button data-view="customers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M17.5 14.6a6.5 6.5 0 0 1 4 5.4"/></svg>Customers <span class="count" id="customersCount">0</span></button>
+      <button data-view="coupons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>Coupons <span class="count" id="couponsCount">0</span></button>
+      <button data-view="delivery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 4.5h13v11h-13z"/><path d="M14.5 9h3.6l3.4 3.4v3.1h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.2" cy="18" r="1.8"/></svg>Delivery &amp; Settings</button>
+      <button data-view="content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>Content / Pages</button>
+      <button data-view="homepage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V20h14V9.5"/></svg>Homepage settings</button>
     </nav>
-    <div class="foot">
-      <button class="btn sm" id="logoutBtn" style="width:100%">Sign out</button>
-    </div>
+    <button class="btn logout-btn" id="logoutBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Sign out</button>
+    <div class="owner-card"><span class="avatar">MS</span><div><strong>Muhammad Saim</strong><span>Store Owner</span><small>giftwalapk.store</small></div></div>
   </aside>
 
   <main class="main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__brand"><img class="brand-logo" src="/assets/brand/giftwala-logo-dark.png" alt="GiftWALA"><div><strong>GiftWALA Admin</strong><span>Store control panel</span></div></div>
+      <div class="admin-topbar__actions"><span class="admin-pill" id="adminPreviewPill" hidden>Preview</span><a class="btn primary" href="/" target="_blank" rel="noopener">View store</a></div>
+    </header>
 
     <!-- Dashboard -->
     <section data-section="dashboard">
       <div class="top">
-        <div><h1>Dashboard</h1><p>Live figures from your store.</p></div>
-        <div class="row"><button class="btn primary" data-open="product">+ Add product</button></div>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</h1><p>Live figures from your store.</p></div>
+        <div class="row"><button class="btn primary" data-open="product"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Add product</button></div>
       </div>
       <div class="grid kpis">
-        <div class="card kpi"><div class="label">Sales</div><div class="value" id="kSales">-</div></div>
-        <div class="card kpi"><div class="label">Orders</div><div class="value" id="kOrders">-</div></div>
-        <div class="card kpi"><div class="label">Products</div><div class="value" id="kProducts">-</div></div>
-        <div class="card kpi"><div class="label">Pending orders</div><div class="value" id="kPending">-</div></div>
+        <div class="card kpi"><span class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span><div><div class="label">Sales</div><div class="value" id="kSales">-</div></div></div>
+        <div class="card kpi"><span class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5A2.5 2.5 0 0 1 14 4.5"/><path d="M9 11h6M9 15h4"/></svg></span><div><div class="label">Orders</div><div class="value" id="kOrders">-</div></div></div>
+        <div class="card kpi"><span class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span><div><div class="label">Products</div><div class="value" id="kProducts">-</div></div></div>
+        <div class="card kpi"><span class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><div class="label">Pending orders</div><div class="value" id="kPending">-</div></div></div>
+        <div class="card kpi"><span class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div><div class="label">Low stock (&#8804; 2 left)</div><div class="value" id="kLowStock">-</div></div></div>
       </div>
       <div class="grid two">
         <div class="card">
@@ -188,12 +278,18 @@ tbody tr.click{cursor:pointer}
           <div id="dashLow"></div>
         </div>
       </div>
+      <div class="grid" style="margin-bottom:18px">
+        <div class="card">
+          <h3>Top products <span class="sub">By units sold in non-cancelled orders</span></h3>
+          <div class="tablewrap" style="border:0"><table><thead><tr><th>Product</th><th class="num">Units</th><th class="num">Revenue</th></tr></thead><tbody id="dashTop"></tbody></table></div>
+        </div>
+      </div>
     </section>
 
     <!-- Orders -->
     <section data-section="orders" hidden>
       <div class="top">
-        <div><h1>Orders</h1><p>Newest first. Click an order to see its details and change its status.</p></div>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5A2.5 2.5 0 0 1 14 4.5"/><path d="M9 11h6M9 15h4"/></svg>Orders</h1><p>Newest first. Click an order to see its details and change its status.</p></div>
         <div class="row"><input class="input search" id="orderSearch" placeholder="Search order, name or phone"></div>
       </div>
       <div class="tabs" id="orderTabs">
@@ -215,16 +311,28 @@ tbody tr.click{cursor:pointer}
     <!-- Products -->
     <section data-section="products" hidden>
       <div class="top">
-        <div><h1>Products</h1><p>Edit prices, stock, sizes and images. Changes go live on save.</p></div>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>Products</h1><p>Edit prices, stock, sizes and images. Changes go live on save.</p></div>
         <div class="row">
           <input class="input search" id="productSearch" placeholder="Search name or SKU">
           <select class="input search" id="productCat" style="min-width:160px"></select>
-          <button class="btn primary" data-open="product">+ Add product</button>
+          <select class="input search" id="productHidden" style="min-width:140px"><option value="all">All products</option><option value="visible">Visible only</option><option value="hidden">Hidden only</option></select>
+          <button class="btn primary" data-open="product"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Add product</button>
         </div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="row">
+          <strong>Bulk edit</strong><span class="sub" id="bulkCount">0 selected</span>
+          <label class="sub">Price (Rs.) <input class="input" id="bulkPrice" type="number" min="0" step="1" style="width:110px" placeholder="Leave blank"></label>
+          <label class="sub">Sale price (Rs.) <input class="input" id="bulkSalePrice" type="number" min="0" step="1" style="width:110px" placeholder="Leave blank"></label>
+          <label class="sub">Stock <input class="input" id="bulkStock" type="number" min="0" step="1" style="width:90px" placeholder="Leave blank"></label>
+          <button class="btn primary sm" id="bulkApplyBtn">Apply to selected</button>
+          <button class="btn sm" id="bulkClearBtn">Clear selection</button>
+        </div>
+        <p class="sub" style="margin:8px 0 0">Only filled-in fields are changed. Blank fields leave the current price, sale price and stock untouched. Prices are never invented — type the exact value to apply.</p>
       </div>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Product</th><th>SKU</th><th>Category</th><th class="num">Price</th><th class="num">Sale</th><th class="num">Stock</th><th>Featured</th><th></th></tr></thead>
+          <thead><tr><th><input type="checkbox" id="selectAllProducts" aria-label="Select all products"></th><th>Product</th><th>SKU</th><th>Category</th><th class="num">Price</th><th class="num">Sale</th><th class="num">Stock</th><th>Status</th><th>Featured</th><th></th></tr></thead>
           <tbody id="productRows"></tbody>
         </table>
       </div>
@@ -233,8 +341,8 @@ tbody tr.click{cursor:pointer}
     <!-- Media -->
     <section data-section="media" hidden>
       <div class="top">
-        <div><h1>Product Media</h1><p>View, upload, and manage product images.</p></div>
-        <button class="btn primary" onclick="showMediaUpload()">+ Upload image</button>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-5-9 9"/></svg>Product Media</h1><p>View, upload, and manage product images.</p></div>
+        <button class="btn primary" onclick="showMediaUpload()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Upload image</button>
       </div>
       <div class="row" style="margin-bottom:20px">
         <input type="text" id="mediaSearch" placeholder="Search by product name or SKU..." style="flex:1;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:14px" onkeyup="filterMedia(this.value)">
@@ -256,11 +364,11 @@ tbody tr.click{cursor:pointer}
             <div style="display:flex;gap:12px">
               <label style="flex:1;display:flex;align-items:center;padding:10px;border:2px solid #ddd;border-radius:6px;cursor:pointer;background:#fafafa;transition:all 0.2s" onMouseOver="this.style.background='#f0f0f0'" onMouseOut="this.style.background='#fafafa'">
                 <input type="radio" name="uploadType" value="file" checked style="margin-right:8px" onchange="switchUploadMode('file')">
-                <span style="color:#333;font-weight:500">📄 Single File</span>
+                <span style="color:#333;font-weight:500"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Single File</span>
               </label>
               <label style="flex:1;display:flex;align-items:center;padding:10px;border:2px solid #ddd;border-radius:6px;cursor:pointer;background:#fafafa;transition:all 0.2s" onMouseOver="this.style.background='#f0f0f0'" onMouseOut="this.style.background='#fafafa'">
                 <input type="radio" name="uploadType" value="folder" style="margin-right:8px" onchange="switchUploadMode('folder')">
-                <span style="color:#333;font-weight:500">📁 Folder</span>
+                <span style="color:#333;font-weight:500"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Folder</span>
               </label>
             </div>
           </div>
@@ -270,7 +378,7 @@ tbody tr.click{cursor:pointer}
             <div style="padding:40px 20px;border:2px dashed #ccc;border-radius:8px;text-align:center;cursor:pointer;background:#fafafa;transition:all 0.2s" id="dropZone" onDragOver="event.preventDefault();this.style.borderColor='#999';this.style.background='#f0f0f0'" onDragLeave="event.preventDefault();this.style.borderColor='#ccc';this.style.background='#fafafa'" onDrop="handleFileDrop(event)">
               <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
               <input type="file" id="folderInput" webkitdirectory mozdirectory style="display:none" onchange="handleFolderSelect(this)">
-              <div style="color:#666;font-size:16px;margin-bottom:8px" onclick="document.getElementById('imageFile').click()">📁 Drag files here or click to browse</div>
+              <div style="color:#666;font-size:16px;margin-bottom:8px" onclick="document.getElementById('imageFile').click()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V5"/><path d="M6 11l6-6 6 6"/><path d="M4 20h16"/></svg> Drag files here or click to browse</div>
               <p id="fileName" style="margin:8px 0 0;font-size:13px;color:#999;min-height:20px"></p>
             </div>
           </div>
@@ -286,7 +394,7 @@ tbody tr.click{cursor:pointer}
     <!-- Categories -->
     <section data-section="categories" hidden>
       <div class="top">
-        <div><h1>Categories</h1><p>Each category has a card image and description on the storefront.</p></div>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Categories</h1><p>Each category has a card image and description on the storefront.</p></div>
         <div class="row"><button class="btn primary" id="newCategoryBtn">+ New category</button></div>
       </div>
       <div class="grid" id="categoryCards" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))"></div>
@@ -295,20 +403,97 @@ tbody tr.click{cursor:pointer}
     <!-- Reviews -->
     <section data-section="reviews" hidden>
       <div class="top">
-        <div><h1>Reviews</h1><p>Reviews shown on the storefront. Delete spam or abusive ones.</p></div>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6-5.4-2.9L6.6 19.7l1.1-6L3.2 9.4l6.1-.8z"/></svg>Reviews</h1><p>Only real reviews from /api/reviews. Delete spam or abusive ones.</p></div>
+      </div>
+      <p class="sub" style="margin:0 0 12px">Approve / Reject is saved on the server — only approved reviews appear on the storefront. New reviews arrive as Pending. Delete removes the review from the server.</p>
+      <div class="tabs" id="reviewTabs">
+        <button class="on" data-review-filter="all">All</button>
+        <button data-review-filter="pending">Pending</button>
+        <button data-review-filter="approved">Approved</button>
+        <button data-review-filter="rejected">Rejected</button>
       </div>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Customer</th><th>Rating</th><th>Review</th><th>Date</th><th></th></tr></thead>
+          <thead><tr><th>Product</th><th>Customer</th><th>Rating</th><th>Review</th><th>Status</th><th>Date</th><th></th></tr></thead>
           <tbody id="reviewRows"></tbody>
         </table>
       </div>
     </section>
 
+    <!-- Customers (derived from real orders only — no invented customers) -->
+    <section data-section="customers" hidden>
+      <div class="top">
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M17.5 14.6a6.5 6.5 0 0 1 4 5.4"/></svg>Customers</h1><p>Derived from real orders only — grouped by phone number. No customers are invented.</p></div>
+        <div class="row"><input class="input search" id="customerSearch" placeholder="Search name or phone"></div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Customer</th><th>Phone / WhatsApp</th><th>Email</th><th>Orders</th><th class="num">Total spent</th><th>Last order</th></tr></thead>
+          <tbody id="customerRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Coupons / Discounts -->
+    <section data-section="coupons" hidden>
+      <div class="top">
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>Coupons &amp; Discounts</h1><p>Discount codes for checkout. Codes only work live once the coupon endpoint is deployed.</p></div>
+      </div>
+      <div class="note" id="couponNotice" hidden></div>
+      <div class="card" style="margin-bottom:16px">
+        <form id="couponForm" class="form">
+          <label>Code<input class="input" name="code" required placeholder="e.g. WELCOME10"><span class="hint">Uppercase letters and numbers.</span></label>
+          <label>Type<select class="input" name="type"><option value="percent">Percent %</option><option value="flat">Flat Rs.</option></select></label>
+          <label>Value<input class="input" name="value" type="number" min="1" step="1" required placeholder="10"></label>
+          <label>Minimum order (Rs.)<input class="input" name="minOrder" type="number" min="0" step="1" value="0"></label>
+          <label>Expiry date<input class="input" name="expires" type="date"></label>
+          <label>Active<select class="input" name="active"><option value="1">Yes</option><option value="0">No</option></select></label>
+        </form>
+        <div class="foot"><button class="btn primary" id="couponSaveBtn" type="button">Save coupon</button></div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Code</th><th>Type</th><th class="num">Value</th><th class="num">Min order</th><th>Expires</th><th>Active</th><th></th></tr></thead>
+          <tbody id="couponRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Delivery & Settings -->
+    <section data-section="delivery" hidden>
+      <div class="top">
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 4.5h13v11h-13z"/><path d="M14.5 9h3.6l3.4 3.4v3.1h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.2" cy="18" r="1.8"/></svg>Delivery &amp; Settings</h1><p>Store contact details and delivery charges. Saved to the store settings.</p></div>
+        <div class="row"><button class="btn primary" id="saveDeliveryBtn">Save settings</button></div>
+      </div>
+      <div class="card"><div class="form">
+        <label>Delivery charge (Rs.)<input class="input" id="deliveryCharge" type="number" min="0" step="1"><span class="hint">Default 300.</span></label>
+
+
+        <label>WhatsApp number<input class="input" id="whatsappNumber" type="tel"></label>
+        <label>Support email<input class="input" id="supportEmail" type="email"></label>
+        <label class="full">Announcement bar text<input class="input" id="announcementBar" placeholder="e.g. Cash on delivery available"><span class="hint">Shown at the top of the storefront once the storefront reads this setting.</span></label>
+      </div></div>
+    </section>
+
+    <!-- Content / Pages -->
+    <section data-section="content" hidden>
+      <div class="top">
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>Content &amp; Pages</h1><p>Edit the text shown on the About, Delivery, Terms and Privacy pages.</p></div>
+        <div class="row"><button class="btn primary" id="saveContentBtn">Save pages</button></div>
+      </div>
+      <div class="note"><b>Saved, but not live on the pages yet.</b> This text is stored in the store settings (D1, via the existing builder-settings endpoint). The public About / Delivery / Terms / Privacy pages do not read these keys yet — the storefront must be wired to them before the text appears live. Nothing here is hardcoded into the pages.</div>
+      <div class="card"><div class="form">
+        <label class="full">About page<textarea class="input" id="content_pageAbout" rows="4"></textarea></label>
+        <label class="full">Delivery &amp; returns page<textarea class="input" id="content_pageDelivery" rows="4"></textarea></label>
+        <label class="full">Terms page<textarea class="input" id="content_pageTerms" rows="4"></textarea></label>
+        <label class="full">Privacy page<textarea class="input" id="content_pagePrivacy" rows="4"></textarea></label>
+      </div></div>
+    </section>
+
     <!-- Homepage settings (builder settings) -->
     <section data-section="homepage" hidden>
       <div class="top">
-        <div><h1>Homepage settings</h1><p>Key and value pairs stored in builder settings. Add a key to create a new setting.</p></div>
+        <div><h1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V20h14V9.5"/></svg>Homepage settings</h1><p>Key and value pairs stored in builder settings. Add a key to create a new setting.</p></div>
         <div class="row">
           <button class="btn" id="addSettingBtn">+ Add setting</button>
           <button class="btn primary" id="saveSettingsBtn">Save changes</button>
@@ -323,7 +508,7 @@ tbody tr.click{cursor:pointer}
 <!-- Product editor -->
 <div class="scrim" id="productModal" hidden>
   <form class="modal" id="productForm" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
-    <header><h2 id="pmTitle">Add product</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <header><h2 id="pmTitle">Add product</h2><button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button></header>
     <div class="form">
       <label>Product name<input class="input" name="name" required></label>
       <label>SKU<input class="input" name="sku" required><span class="hint">Used in orders and stock</span></label>
@@ -353,7 +538,7 @@ tbody tr.click{cursor:pointer}
 <!-- Category editor -->
 <div class="scrim" id="categoryModal" hidden>
   <form class="modal" id="categoryForm" role="dialog" aria-modal="true">
-    <header><h2 id="cmTitle">New category</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <header><h2 id="cmTitle">New category</h2><button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button></header>
     <div class="form">
       <label class="full">Name<input class="input" name="name" required><span class="hint">Renaming also moves every product in this category to the new name</span></label>
       <label class="full">Description<textarea class="input" name="description"></textarea></label>
@@ -371,9 +556,12 @@ tbody tr.click{cursor:pointer}
 <!-- Order details -->
 <div class="scrim" id="orderModal" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="omTitle">
-    <header><h2 id="omTitle">Order</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <header><h2 id="omTitle">Order</h2><button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button></header>
     <div class="detail" id="orderDetail"></div>
     <div class="items" id="orderItems"></div>
+    <div class="sub" style="margin-bottom:8px">Status timeline</div>
+    <div class="timeline" id="orderTimeline"></div>
+    <p class="sub" style="margin:0 0 14px">Timeline is derived from the order's current status and order date — the API stores no per-status timestamps yet.</p>
     <div class="sub" style="margin-bottom:8px">Status</div>
     <div class="statusbtns" id="orderStatusBtns"></div>
     <div class="err" id="orderErr"></div>
@@ -386,7 +574,9 @@ tbody tr.click{cursor:pointer}
 <script>
 const TOKEN_KEY = 'giftwala_admin_token';
 const STATUSES = ['pending','confirmed','shipped','delivered','cancelled'];
-const state = { orders:[], products:[], categories:[], categoryDescriptions:{}, categoryImages:{}, reviews:[], settings:{}, orderFilter:'all', productImages:[], productImagesDirty:false, categoryImage:'', editingProduct:null, editingCategory:null };
+const state = { orders:[], products:[], categories:[], categoryDescriptions:{}, categoryImages:{}, reviews:[], settings:{}, coupons:[], couponEnabled:null, selectedProducts:new Set(), bulkHidden:'all', reviewFilter:'all', orderFilter:'all', productImages:[], productImagesDirty:false, categoryImage:'', editingProduct:null, editingCategory:null };
+// Review moderation (approve/reject) has no server endpoint yet, so it is
+// kept in this browser only (see ADMIN-GUIDE.md). Delete uses the live API.
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -394,6 +584,15 @@ const money = n => 'Rs. ' + Number(n || 0).toLocaleString('en-PK');
 const parse = (v, fallback) => { try { return JSON.parse(v) ?? fallback; } catch { return fallback; } };
 const pill = s => `<span class="pill s-${esc(s)}">${esc(s.charAt(0).toUpperCase() + s.slice(1))}</span>`;
 const dateOf = v => { const d = new Date(Number(v) || v); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', {day:'2-digit', month:'short'}); };
+// Inline SVG icon set (same system as the static HTML: 24x24, stroke 1.8).
+const SVG_ATTRS = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+const IC_X = '<svg class="ic" ' + SVG_ATTRS + '><path d="M18 6L6 18M6 6l12 12"/></svg>';
+const IC_EYE = '<svg class="ic" ' + SVG_ATTRS + '><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+const IC_EYE_OFF = '<svg class="ic" ' + SVG_ATTRS + '><path d="M17.94 17.94A10.6 10.6 0 0 1 12 19c-6.5 0-10-7-10-7a17.6 17.6 0 0 1 4.06-4.94M9.9 4.24A9.5 9.5 0 0 1 12 4c6.5 0 10 7 10 7a17.7 17.7 0 0 1-2.16 3.19M14.12 14.12A3 3 0 1 1 9.88 9.88"/><path d="M2 2l20 20"/></svg>';
+const IC_TRASH = '<svg class="ic" ' + SVG_ATTRS + '><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>';
+const IC_STAR_ON = '<svg class="ic star-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3 1.1-6.5L2.6 9.3l6.5-.9z"/></svg>';
+const IC_STAR_OFF = '<svg class="ic star-off" ' + SVG_ATTRS + '><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3 1.1-6.5L2.6 9.3l6.5-.9z"/></svg>';
+function starsSvg(rating){ const r = Math.max(0, Math.min(5, Number(rating) || 0)); return IC_STAR_ON.repeat(r) + IC_STAR_OFF.repeat(5 - r); }
 
 function toast(msg, bad){
   const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false;
@@ -407,16 +606,13 @@ async function api(path, opts = {}){
   const res = await fetch(path, { method: opts.method || 'GET', headers, body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined });
   let data = null; try { data = await res.json(); } catch {}
   if (res.status === 401 && opts.auth) { showLogin(); throw new Error('Please sign in again.'); }
-  if (!res.ok) throw new Error((data && (data.message || data.error)) || ('Request failed (' + res.status + ')'));
+  if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
   return data;
 }
 
 function showLogin(){
   localStorage.removeItem(TOKEN_KEY);
   $('appView').hidden = true; $('loginView').hidden = false;
-  $('loginPassword').type = 'password';
-  $('toggleLoginPassword').setAttribute('aria-pressed', 'false');
-  document.querySelectorAll('.scrim, #mediaUploadModal').forEach(modal => modal.hidden = true);
 }
 function showApp(){
   $('loginView').hidden = true; $('appView').hidden = false;
@@ -437,22 +633,32 @@ async function loadAll(){
     api('/api/categories'),
     api('/api/category-descriptions'),
     api('/api/category-settings'),
-    api('/api/reviews'),
+    api('/api/reviews?all=1', {auth:true}).catch(() => api('/api/reviews')),
     api('/api/builder-settings'),
   ]);
   state.orders = orders; state.products = products; state.categories = categories;
   state.categoryDescriptions = descriptions; state.categoryImages = images;
   state.reviews = reviews; state.settings = settings;
+  // Coupons: no Worker endpoint exists yet (see ADMIN-GUIDE.md). A 404 means
+  // "not yet enabled on server" — the panel keeps working without coupons.
+  try {
+    state.coupons = await api('/api/coupons', {auth:true});
+    state.couponEnabled = true;
+  } catch (e) {
+    state.coupons = [];
+    state.couponEnabled = !/404/.test(e.message);
+  }
   renderAll();
 }
 
 function renderAll(){
-  fillCategorySelects();
   $('ordersCount').textContent = state.orders.length;
   $('productsCount').textContent = state.products.length;
   $('categoriesCount').textContent = state.categories.length;
   $('reviewsCount').textContent = state.reviews.length;
   renderDashboard(); renderOrders(); renderProducts(); renderCategories(); renderReviews(); renderSettings();
+  renderCustomers(); renderCoupons(); renderDeliverySettings(); renderPageContent();
+  fillCategorySelects();
 }
 
 /* ---------- Dashboard ---------- */
@@ -462,6 +668,7 @@ function renderDashboard(){
   $('kOrders').textContent = state.orders.length;
   $('kProducts').textContent = state.products.length;
   $('kPending').textContent = state.orders.filter(o => o.status === 'pending').length;
+  $('kLowStock').textContent = state.products.filter(p => Number(p.stock) <= 2).length;
   $('dashOrders').innerHTML = state.orders.slice(0, 5).map(o => `
     <tr class="click" data-order-id="${esc(o._id || o.id)}"><td>#${esc((o._id || o.id).slice(0, 8))}</td><td>${esc(o.customer_name)}</td><td class="num">${money(o.total)}</td><td>${pill(o.status)}</td></tr>`).join('')
     || `<tr><td colspan="4" class="empty">No orders yet.</td></tr>`;
@@ -469,6 +676,20 @@ function renderDashboard(){
   $('dashLow').innerHTML = low.length
     ? low.map(p => `<div class="row" style="justify-content:space-between;margin:8px 0"><span>${esc(p.name)} <span class="sub">${esc(p.sku)}</span></span><span class="low">${p.stock} left</span></div>`).join('')
     : '<div class="sub">All products have enough stock.</div>';
+  // Top products by units sold across non-cancelled orders (derived only).
+  const sold = {};
+  state.orders.filter(o => o.status !== 'cancelled').forEach(o => {
+    parse(o.items, []).forEach(i => {
+      const key = i.sku || i.name || 'Unknown';
+      sold[key] = sold[key] || {name: i.name || i.sku || 'Unknown', sku: i.sku || '', units: 0, revenue: 0};
+      sold[key].units += Number(i.quantity || 0);
+      sold[key].revenue += Number(i.price || 0) * Number(i.quantity || 0);
+    });
+  });
+  const top = Object.values(sold).sort((a, b) => b.units - a.units).slice(0, 5);
+  $('dashTop').innerHTML = top.length
+    ? top.map(t => `<tr><td>${esc(t.name)} <span class="sub">${esc(t.sku)}</span></td><td class="num">${t.units}</td><td class="num">${money(t.revenue)}</td></tr>`).join('')
+    : `<tr><td colspan="3" class="empty">No sales yet — top products will appear here once orders come in.</td></tr>`;
 }
 
 /* ---------- Orders ---------- */
@@ -493,61 +714,102 @@ function openOrder(id){
   $('omTitle').textContent = 'Order #' + orderId(o).slice(0, 8);
   $('orderDetail').innerHTML = `
     <div><span>Customer</span>${esc(o.customer_name)}</div><div><span>Phone</span>${esc(o.phone)}</div>
-    <div><span>Email</span>${esc(o.email || '-')}</div><div><span>Payment</span>${esc(o.payment_method)}</div>
-    <div><span>Address</span>${esc(o.address)}</div><div><span>Total</span><strong>${money(o.total)}</strong></div>`;
-  $('orderItems').innerHTML = items.map(i => `<div><span>${esc(i.name || i.sku)} × ${esc(i.quantity)}</span><span>${money(Number(i.price || 0) * Number(i.quantity || 0))}</span></div>`).join('') || '<div><span class="sub">No items</span></div>';
+    <div><span>City</span>${esc(o.city || '-')}</div><div><span>Email</span>${esc(o.email || '-')}</div>
+    <div><span>Payment</span>${esc(o.payment_method)}</div><div><span>Payment reference</span>${esc(o.payment_reference || '-')}</div>
+    ${o.message ? `<div><span>Customer message</span>${esc(o.message)}</div>` : ''}
+    <div><span>Address</span>${esc(o.address)}</div>
+    <div><span>Subtotal</span><strong>${money(o.subtotal ?? o.total)}</strong></div>${o.discount ? `<div><span>Prepaid discount</span><strong>− ${money(o.discount)}</strong></div>` : ''}<div><span>Delivery</span><strong>${money(o.delivery_fee ?? 300)}</strong></div><div><span>Total payable</span><strong>${money(o.total)}</strong></div>`;
+  $('orderItems').innerHTML = items.map(i => { const bits = []; if (i.personalization) bits.push('Name: ' + i.personalization); if (i.photo) bits.push('Photo: ' + i.photo); if (i.frameSize) bits.push('Frame: ' + i.frameSize); if (i.size) bits.push('Size: ' + i.size); if (i.occasion) bits.push('Occasion: ' + i.occasion); if (i.note) bits.push('Note: ' + i.note); if (i.giftNote) bits.push('Gift note: ' + i.giftNote); return `<div><span>${esc(i.name || i.sku)} × ${esc(i.quantity)}${bits.length ? `<div class="sub">${esc(bits.join(' | '))}</div>` : ''}</span><span>${money(Number(i.price || 0) * Number(i.quantity || 0))}</span></div>`; }).join('') || '<div><span class="sub">No items</span></div>';
+  renderOrderTimeline(o);
   $('orderStatusBtns').innerHTML = STATUSES.map(s => `<button class="s-${s} ${s === o.status ? 'on' : ''}" data-status-set="${s}" ${s === o.status ? 'disabled' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</button>`).join('');
   $('orderErr').textContent = '';
   $('orderModal').hidden = false;
 }
+function renderOrderTimeline(o){
+  const flow = ['pending','confirmed','shipped','delivered'];
+  const el = $('orderTimeline'); if (!el) return;
+  if (o.status === 'cancelled'){
+    el.innerHTML = `<span class="cancelled">Cancelled</span><span>Placed ${dateOf(o.created_at)}</span>`;
+    return;
+  }
+  const idx = flow.indexOf(o.status);
+  el.innerHTML = flow.map((s, i) => `<span class="${i < idx ? 'done' : i === idx ? 'now' : ''}">${s.charAt(0).toUpperCase() + s.slice(1)}${i === 0 ? ' · ' + dateOf(o.created_at) : ''}</span>`).join('');
+}
 async function setOrderStatus(status){
   const o = state.currentOrder; if (!o) return;
   $('orderErr').textContent = '';
-  const enabled = [...$('orderStatusBtns').querySelectorAll('button:not(:disabled)')];
-  enabled.forEach(button => button.disabled = true);
   try {
     await api(`/api/orders/${encodeURIComponent(orderId(o))}/status`, {method:'PATCH', body:{status}, auth:true});
     o.status = status;
-    await loadAll();
-    if (!$('orderModal').hidden && state.currentOrder === o) openOrder(orderId(o));
+    renderAll(); openOrder(orderId(o));
     toast('Order status updated');
   } catch (e) { $('orderErr').textContent = e.message; }
-  finally { enabled.forEach(button => button.disabled = false); }
 }
 
 /* ---------- Products ---------- */
 function renderProducts(){
   const q = $('productSearch').value.trim().toLowerCase();
   const cat = $('productCat').value;
+  const hid = state.bulkHidden || 'all';
   const rows = state.products.filter(p => (!cat || p.category === cat)
+    && (hid === 'all' || (hid === 'hidden' ? p.hidden : !p.hidden))
     && (!q || p.name.toLowerCase().includes(q) || String(p.sku || '').toLowerCase().includes(q)));
   $('productRows').innerHTML = rows.map(p => `
     <tr>
+      <td><input type="checkbox" data-select-product="${esc(p.id)}" ${state.selectedProducts.has(p.id) ? 'checked' : ''} aria-label="Select ${esc(p.name)}"></td>
       <td><div class="row" style="flex-wrap:nowrap"><div class="thumb" style="background-image:url('${esc(p.imageUrl || ('/assets/products/' + encodeURIComponent(p.sku || '') + '.png'))}')"></div><div>${esc(p.name)}</div></div></td>
       <td class="sub">${esc(p.sku)}</td><td>${esc(p.category)}</td>
       <td class="num">${money(p.price)}</td>
       <td class="num">${p.salePrice && p.salePrice < p.price ? `<span style="color:var(--warn)">${money(p.salePrice)}</span>` : '<span class="sub">-</span>'}</td>
       <td class="num ${Number(p.stock) <= 2 ? 'low' : ''}">${p.stock}</td>
+      <td>${p.hidden ? '<span style="color:var(--warn)">Hidden</span>' : '<span style="color:var(--ok)">Visible</span>'}</td>
       <td>${p.featured ? '<span style="color:var(--ok)">Yes</span>' : '<span class="sub">No</span>'}</td>
       <td style="display:flex;gap:6px">
         <button class="btn sm" data-edit-product="${esc(p.id)}">Edit</button>
-        <button class="btn sm" style="color:var(--warn)" data-hide-product="${esc(p.id)}" title="${p.hidden ? 'Show' : 'Hide'}">${p.hidden ? '👁️' : '👁️‍🗨️'}</button>
-        <button class="btn sm" style="color:var(--bad)" data-delete-product="${esc(p.id)}" title="Delete">🗑️</button>
+        <button class="btn sm" style="color:var(--warn)" data-hide-product="${esc(p.id)}" title="${p.hidden ? 'Show' : 'Hide'}">${p.hidden ? IC_EYE : IC_EYE_OFF}</button>
+        <button class="btn sm" style="color:var(--bad)" data-delete-product="${esc(p.id)}" title="Delete">${IC_TRASH}</button>
       </td>
-    </tr>`).join('') || `<tr><td colspan="8" class="empty">No products found.</td></tr>`;
+    </tr>`).join('') || `<tr><td colspan="10" class="empty">No products found.</td></tr>`;
+  updateBulkCount();
+}
+function updateBulkCount(){
+  const el = $('bulkCount'); if (el) el.textContent = state.selectedProducts.size + ' selected';
+  const all = $('selectAllProducts'); if (all) all.checked = state.products.length > 0 && state.selectedProducts.size === state.products.length;
+}
+async function applyBulkEdit(){
+  if (!state.selectedProducts.size){ toast('Select at least one product first.', true); return; }
+  const price = $('bulkPrice').value.trim(), sale = $('bulkSalePrice').value.trim(), stock = $('bulkStock').value.trim();
+  if (!price && !sale && !stock){ toast('Fill in at least one field to apply.', true); return; }
+  const body = {};
+  if (price){ const n = Number(price); if (!Number.isFinite(n) || n < 0) return toast('Enter a valid price (0 or more).', true); body.price = n; }
+  if (sale){ const n = Number(sale); if (!Number.isFinite(n) || n < 0) return toast('Enter a valid sale price (0 or more).', true); body.salePrice = n; }
+  if (stock){ const n = Number(stock); if (!Number.isFinite(n) || n < 0) return toast('Enter a valid stock (0 or more).', true); body.stock = n; }
+  if (body.price !== undefined && body.salePrice !== undefined && body.salePrice > body.price) return toast('Sale price cannot be higher than the price.', true);
+  const btn = $('bulkApplyBtn'); btn.disabled = true;
+  let done = 0, skipped = 0;
+  for (const id of [...state.selectedProducts]){
+    const p = state.products.find(x => x.id === id);
+    const effPrice = body.price !== undefined ? body.price : Number(p ? p.price : 0);
+    if (body.salePrice !== undefined && body.salePrice > effPrice){ skipped++; continue; }
+    try { await api('/api/products/' + encodeURIComponent(id), {method:'PATCH', body, auth:true}); done++; }
+    catch (e) { skipped++; }
+  }
+  state.selectedProducts.clear();
+  $('bulkPrice').value = ''; $('bulkSalePrice').value = ''; $('bulkStock').value = '';
+  btn.disabled = false;
+  await loadAll();
+  toast(done + ' product(s) updated' + (skipped ? ' — ' + skipped + ' skipped (sale price above price, or save failed)' : ''));
 }
 function fillCategorySelects(){
   const names = state.categories.length ? state.categories : [...new Set(state.products.map(p => p.category))];
-  const selected = $('productCat').value;
   $('productCat').innerHTML = '<option value="">All categories</option>' + names.map(c => `<option>${esc(c)}</option>`).join('');
-  if (names.includes(selected)) $('productCat').value = selected;
   $('pCategory').innerHTML = names.map(c => `<option>${esc(c)}</option>`).join('');
 }
 function renderProductImages(){
   const el = $('pImgList');
   const count = $('pImageCount');
   if (count) count.textContent = state.productImages.length ? state.productImages.length + ' image' + (state.productImages.length === 1 ? '' : 's') + ' selected' : 'No images selected';
-  el.innerHTML = state.productImages.map((src, i) => `<div class="thumb" style="background-image:url('${esc(src)}')"><button type="button" data-remove="${i}" aria-label="Remove image">×</button></div>`).join('');
+  el.innerHTML = state.productImages.map((src, i) => `<div class="thumb" style="background-image:url('${esc(src)}')"><button type="button" data-remove="${i}" aria-label="Remove image">${IC_X}</button></div>`).join('');
   el.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { state.productImages.splice(Number(b.dataset.remove), 1); state.productImagesDirty = true; renderProductImages(); });
 }
 async function deleteProduct(id, name){
@@ -682,7 +944,7 @@ function openCategoryModal(name){
 }
 function renderCategoryImage(){
   $('cImgList').innerHTML = state.categoryImage
-    ? `<div class="thumb" style="width:120px;height:90px;background-image:url('${esc(state.categoryImage)}')"><button type="button" data-remove-cat aria-label="Remove image">×</button></div>` : '';
+    ? `<div class="thumb" style="width:120px;height:90px;background-image:url('${esc(state.categoryImage)}')"><button type="button" data-remove-cat aria-label="Remove image">${IC_X}</button></div>` : '';
   const b = document.querySelector('[data-remove-cat]'); if (b) b.onclick = () => { state.categoryImage = ''; renderCategoryImage(); };
 }
 async function saveCategory(e){
@@ -710,13 +972,36 @@ async function saveCategory(e){
 }
 
 /* ---------- Reviews ---------- */
+/* ROUND 21 (2026-11-27): moderation status lives on the server
+   (reviews.status). The old browser-only localStorage map is gone. */
+function reviewStatus(r){ return r.status || 'pending'; }
+async function setReviewStatus(id, status){
+  try {
+    await api('/api/reviews/' + encodeURIComponent(id), {method:'PATCH', auth:true, body: { status }});
+    const r = state.reviews.find(x => x.id === id);
+    if (r) r.status = status;
+    renderReviews();
+    toast('Review ' + status + (status === 'approved' ? ' — now visible on the storefront' : ''));
+  } catch (e) { toast(e.message, true); }
+}
 function renderReviews(){
-  $('reviewRows').innerHTML = state.reviews.map(r => `
-    <tr><td>${esc(r.name)}</td>
-    <td><span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span></td>
-    <td>${esc(r.comment)}</td><td class="sub">${dateOf(r.createdAt)}</td>
-    <td><button class="btn sm danger" data-delete-review="${esc(r.id)}">Delete</button></td></tr>`).join('')
-    || `<tr><td colspan="5" class="empty">No reviews yet.</td></tr>`;
+  const f = state.reviewFilter || 'all';
+  const rows = state.reviews.filter(r => f === 'all' || reviewStatus(r) === f);
+  $('reviewRows').innerHTML = rows.map(r => {
+    const st = reviewStatus(r);
+    return `
+    <tr><td>${esc(r.productName || 'Store review')}</td><td>${esc(r.name)}${r.city ? '<br><span class="sub">' + esc(r.city) + '</span>' : ''}</td>
+    <td><span class="stars">${starsSvg(r.rating)}</span></td>
+    <td>${esc(r.comment)}</td>
+    <td>${st === 'approved' ? '<span style="color:var(--ok)">Approved</span>' : st === 'rejected' ? '<span style="color:var(--bad)">Rejected</span>' : '<span style="color:var(--warn)">Pending</span>'}</td>
+    <td class="sub">${dateOf(r.createdAt)}</td>
+    <td style="display:flex;gap:6px">
+      <button class="btn sm" data-review-approve="${esc(r.id)}">Approve</button>
+      <button class="btn sm" data-review-reject="${esc(r.id)}">Reject</button>
+      <button class="btn sm danger" data-delete-review="${esc(r.id)}">Delete</button>
+    </td></tr>`;
+  }).join('')
+    || `<tr><td colspan="7" class="empty">No reviews yet.</td></tr>`;
 }
 async function deleteReview(id){
   if (!confirm('Delete this review?')) return;
@@ -725,6 +1010,108 @@ async function deleteReview(id){
     state.reviews = state.reviews.filter(r => r.id !== id);
     renderAll(); toast('Review deleted');
   } catch (e) { toast(e.message, true); }
+}
+
+/* ---------- Customers (derived from orders only) ---------- */
+function renderCustomers(){
+  const map = {};
+  state.orders.forEach(o => {
+    const phone = String(o.phone || '').replace(/\D/g, '') || 'no-phone';
+    const key = phone !== 'no-phone' ? phone : 'name:' + String(o.customer_name || 'Unknown');
+    map[key] = map[key] || {name: o.customer_name || 'Unknown', phone: o.phone || '-', email: o.email || '-', orders: 0, spent: 0, last: 0};
+    map[key].orders += 1;
+    if (o.status !== 'cancelled') map[key].spent += Number(o.total || 0);
+    const t = new Date(Number(o.created_at) || o.created_at).getTime();
+    if (Number.isFinite(t) && t > map[key].last) map[key].last = t;
+  });
+  const list = Object.values(map).sort((a, b) => b.spent - a.spent);
+  $('customersCount').textContent = list.length;
+  const q = $('customerSearch') ? $('customerSearch').value.trim().toLowerCase() : '';
+  const rows = list.filter(c => !q || c.name.toLowerCase().includes(q) || String(c.phone).toLowerCase().includes(q));
+  $('customerRows').innerHTML = rows.map(c => `<tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.email)}</td><td>${c.orders}</td><td class="num">${money(c.spent)}</td><td>${c.last ? dateOf(c.last) : '-'}</td></tr>`).join('')
+    || `<tr><td colspan="6" class="empty">No customers yet — customers appear here automatically once orders come in. No customers are invented.</td></tr>`;
+}
+
+/* ---------- Coupons ----------
+   No Worker endpoint exists yet: GET/POST /api/coupons returns 404 from
+   src/worker.js ("API route not found"). The UI shows "not yet enabled on
+   server" and disables the form instead of pretending a coupon is live.
+   The D1 table is ready in migrations/0012. Do NOT invent an endpoint. */
+function renderCoupons(){
+  const note = $('couponNotice');
+  const list = Array.isArray(state.coupons) ? state.coupons : [];
+  $('couponsCount').textContent = state.couponEnabled ? list.length : 0;
+  if (state.couponEnabled === false){
+    note.hidden = false;
+    note.innerHTML = '<b>Coupons are not yet enabled on the server.</b> The coupon endpoint does not exist in the Worker yet (GET /api/coupons returned 404), so no coupon is live. The D1 table is ready in migration 0012 — the coupon endpoint must be deployed before any code works (see ADMIN-GUIDE.md). Nothing entered here is saved live.';
+    $('couponForm').querySelectorAll('input,select').forEach(el => el.disabled = true);
+    $('couponSaveBtn').disabled = true;
+    $('couponRows').innerHTML = `<tr><td colspan="7" class="empty">No live coupons — endpoint not enabled yet.</td></tr>`;
+    return;
+  }
+  note.hidden = true;
+  $('couponForm').querySelectorAll('input,select').forEach(el => el.disabled = false);
+  $('couponSaveBtn').disabled = false;
+  $('couponRows').innerHTML = list.map(c => `<tr><td><strong>${esc(c.code)}</strong></td><td>${esc(c.type)}</td><td class="num">${c.type === 'percent' ? esc(c.value) + '%' : money(c.value)}</td><td class="num">${money(c.minOrder || 0)}</td><td>${c.expiresAt ? dateOf(c.expiresAt) : '<span class="sub">No expiry</span>'}</td><td>${c.active ? '<span style="color:var(--ok)">Yes</span>' : '<span class="sub">No</span>'}</td><td><button class="btn sm danger" data-delete-coupon="${esc(c.id)}">Delete</button></td></tr>`).join('')
+    || `<tr><td colspan="7" class="empty">No coupons yet.</td></tr>`;
+}
+async function createCoupon(){
+  const f = $('couponForm');
+  const code = f.code.value.trim().toUpperCase();
+  const type = f.type.value;
+  const value = Number(f.value.value);
+  const minOrder = Number(f.minOrder.value || 0);
+  const expires = f.expires.value ? new Date(f.expires.value + 'T23:59:59').getTime() : null;
+  if (!code) return toast('Enter a coupon code.', true);
+  if (!Number.isFinite(value) || value <= 0) return toast('Enter a value above 0.', true);
+  if (type === 'percent' && value > 100) return toast('A percent discount cannot be above 100.', true);
+  if (!Number.isFinite(minOrder) || minOrder < 0) return toast('Enter a valid minimum order.', true);
+  try {
+    await api('/api/coupons', {method:'POST', body:{code, type, value, minOrder, expiresAt: expires, active: f.active.value === '1'}, auth:true});
+    f.reset(); await loadAll(); toast('Coupon saved');
+  } catch (e) {
+    if (/404/.test(e.message)){ state.couponEnabled = false; renderCoupons(); }
+    toast(e.message, true);
+  }
+}
+async function deleteCoupon(id){
+  if (!confirm('Delete this coupon?')) return;
+  try { await api('/api/coupons/' + encodeURIComponent(id), {method:'DELETE', auth:true}); await loadAll(); toast('Coupon deleted'); }
+  catch (e) { if (/404/.test(e.message)){ state.couponEnabled = false; renderCoupons(); } toast(e.message, true); }
+}
+
+/* ---------- Delivery & Settings ----------
+   Saved via the EXISTING /api/admin/builder-settings endpoint (generic
+   key/value store in D1), so these values persist live. The storefront /
+   checkout must read the same keys — see ADMIN-GUIDE.md. */
+function renderDeliverySettings(){
+  const s = state.settings || {};
+  $('deliveryCharge').value = s.deliveryCharge ?? '300';
+  // Delivery is a flat Rs. 300 per order (owner decision, 25 Nov 2026).
+  $('whatsappNumber').value = s.whatsappNumber ?? '+92 301 074 6622';
+  $('supportEmail').value = s.supportEmail ?? 'hello@giftwala.pk';
+  $('announcementBar').value = s.announcementBar ?? '';
+}
+async function saveDeliverySettings(){
+  const body = { deliveryCharge: $('deliveryCharge').value.trim(), whatsappNumber: $('whatsappNumber').value.trim(), supportEmail: $('supportEmail').value.trim(), announcementBar: $('announcementBar').value.trim() };
+  if (Number(body.deliveryCharge) < 0) { toast('Delivery charge must be 0 or more.', true); return; }
+  if (!body.whatsappNumber || !body.supportEmail) { toast('WhatsApp number and support email are required.', true); return; }
+  try { await api('/api/admin/builder-settings', {method:'PATCH', body, auth:true}); Object.assign(state.settings, body); toast('Delivery & settings saved'); }
+  catch (e) { toast(e.message, true); }
+}
+
+/* ---------- Content / Pages ----------
+   Stored via the EXISTING /api/admin/builder-settings endpoint. The public
+   pages do not read these keys yet — wiring the storefront is a TODO for
+   the owner (see ADMIN-GUIDE.md). Nothing is hardcoded into the pages. */
+function renderPageContent(){
+  ['pageAbout','pageDelivery','pageTerms','pagePrivacy'].forEach(k => { const el = $('content_' + k); if (el) el.value = state.settings[k] || ''; });
+}
+async function savePageContent(){
+  const body = {};
+  ['pageAbout','pageDelivery','pageTerms','pagePrivacy'].forEach(k => { body[k] = $('content_' + k).value; });
+  try { await api('/api/admin/builder-settings', {method:'PATCH', body, auth:true}); Object.assign(state.settings, body); toast('Page text saved (stored — pages must be wired to show it, see note above)'); }
+  catch (e) { toast(e.message, true); }
 }
 
 /* ---------- Media gallery ---------- */
@@ -914,16 +1301,16 @@ function addSettingRow(){
   const key = prompt('Name of the new setting (for example: heroHeadline)');
   if (!key || !key.trim()) return;
   const k = key.trim();
-  if ([...document.querySelectorAll('[data-setting]')].some(input => input.dataset.setting === k)) { toast('That setting already exists.', true); return; }
-  $('settingsList').querySelector('.empty')?.remove();
-  $('settingsList').insertAdjacentHTML('beforeend', `<div class="kv"><input class="input" value="${esc(k)}" readonly><input class="input" data-setting="${esc(k)}"></div>`);
+  if (k in state.settings) { toast('That setting already exists.', true); return; }
+  state.settings[k] = '';
+  renderSettings();
 }
 async function saveSettings(){
   const btn = $('saveSettingsBtn'); btn.disabled = true;
-  const changed = Object.create(null);
+  const changed = {};
   document.querySelectorAll('[data-setting]').forEach(input => {
     const k = input.dataset.setting;
-    if (!Object.hasOwn(state.settings,k) || input.value !== String(state.settings[k] ?? '')) changed[k] = input.value;
+    if (input.value !== String(state.settings[k] ?? '')) changed[k] = input.value;
   });
   if (!Object.keys(changed).length){ btn.disabled = false; toast('Nothing to save'); return; }
   try {
@@ -949,9 +1336,8 @@ $('loginForm').addEventListener('submit', async e => {
   try {
     const data = await api('/api/admin/login', {method:'POST', body:{email:f.email.value, password:f.password.value}});
     localStorage.setItem(TOKEN_KEY, data.token);
-    await loadAll();
-    showApp();
-  } catch (err) { showLogin(); $('loginErr').textContent = err.message; }
+    showApp(); await loadAll();
+  } catch (err) { $('loginErr').textContent = err.message; }
   finally { btn.disabled = false; }
 });
 $('logoutBtn').addEventListener('click', () => { showLogin(); toast('Signed out'); });
@@ -977,6 +1363,10 @@ document.addEventListener('click', e => {
   const dm = t.closest('[data-delete-media]'); if (dm) return deleteProductImage(dm.dataset.deleteMedia);
   const ec = t.closest('[data-edit-category]'); if (ec) return openCategoryModal(ec.dataset.editCategory);
   const dr = t.closest('[data-delete-review]'); if (dr) return deleteReview(dr.dataset.deleteReview);
+  const rf = t.closest('[data-review-filter]'); if (rf){ state.reviewFilter = rf.dataset.reviewFilter; document.querySelectorAll('#reviewTabs button').forEach(b => b.classList.toggle('on', b === rf)); return renderReviews(); }
+  const ra = t.closest('[data-review-approve]'); if (ra) return setReviewStatus(ra.dataset.reviewApprove, 'approved');
+  const rr = t.closest('[data-review-reject]'); if (rr) return setReviewStatus(rr.dataset.reviewReject, 'rejected');
+  const dc = t.closest('[data-delete-coupon]'); if (dc) return deleteCoupon(dc.dataset.deleteCoupon);
   if (t.closest('[data-close]') || t.classList.contains('scrim')){
     document.querySelectorAll('.scrim').forEach(m => m.hidden = true);
   }
@@ -984,6 +1374,15 @@ document.addEventListener('click', e => {
 $('orderSearch').addEventListener('input', renderOrders);
 $('productSearch').addEventListener('input', renderProducts);
 $('productCat').addEventListener('change', renderProducts);
+$('productHidden').addEventListener('change', e => { state.bulkHidden = e.target.value; renderProducts(); });
+$('selectAllProducts').addEventListener('change', e => { state.products.forEach(p => e.target.checked ? state.selectedProducts.add(p.id) : state.selectedProducts.delete(p.id)); renderProducts(); });
+$('productRows').addEventListener('change', e => { const cb = e.target.closest('[data-select-product]'); if (!cb) return; if (cb.checked) state.selectedProducts.add(cb.dataset.selectProduct); else state.selectedProducts.delete(cb.dataset.selectProduct); updateBulkCount(); });
+$('bulkApplyBtn').addEventListener('click', applyBulkEdit);
+$('bulkClearBtn').addEventListener('click', () => { state.selectedProducts.clear(); renderProducts(); });
+$('customerSearch').addEventListener('input', renderCustomers);
+$('couponSaveBtn').addEventListener('click', createCoupon);
+$('saveDeliveryBtn').addEventListener('click', saveDeliverySettings);
+$('saveContentBtn').addEventListener('click', savePageContent);
 $('productForm').addEventListener('submit', saveProduct);
 $('categoryForm').addEventListener('submit', saveCategory);
 $('newCategoryBtn').addEventListener('click', () => openCategoryModal(null));
@@ -1002,7 +1401,7 @@ $('pCardImage').addEventListener('change', async e => {
 });
 function renderProductCardImage(){
   const list = $('pCardImgList');
-  list.innerHTML = state.productCardImage ? `<div class="thumb" style="background-image:url('${esc(state.productCardImage)}')"><button type="button" onclick="state.productCardImage='';renderProductCardImage()" aria-label="Remove">×</button></div>` : '';
+  list.innerHTML = state.productCardImage ? `<div class="thumb" style="background-image:url('${state.productCardImage}')"><button type="button" onclick="state.productCardImage='';renderProductCardImage()" aria-label="Remove">${IC_X}</button></div>` : '';
 }
 $('cImage').addEventListener('change', async e => {
   const list = [];
@@ -1021,6 +1420,17 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') document.que
     $('loginView').hidden = false;
   }
 })();
+</script>
+<script>
+/* THEME (2026-11-25): shares the giftwala-theme key with the storefront. */
+(function(){var KEY='giftwala-theme';function cur(){return document.documentElement.getAttribute('data-theme')||'dark';}function syncLogo(){var f=cur()==='light'?'/assets/brand/giftwala-logo-light.png':'/assets/brand/giftwala-logo-dark.png';document.querySelectorAll('img.brand-logo,.side .brand img,.admin-topbar__brand img').forEach(function(im){if(im.getAttribute('src')!==f)im.setAttribute('src',f);});}
+function sync(){syncLogo();var b=document.getElementById('themeToggleAdmin');if(!b)return;var dark=cur()==='dark';b.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');var sp=b.querySelector('span');if(sp)sp.textContent=dark?'Light theme':'Dark theme';}var b=document.getElementById('themeToggleAdmin');if(b)b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';try{localStorage.setItem(KEY,n);}catch(e){}document.documentElement.setAttribute('data-theme',n);sync();});sync();})();
+/* ADMIN TOPBAR (2026-11-25, round 4): the "Preview" pill shows only when
+   there is no live admin session — i.e. this copy is being viewed as a
+   preview with sample data and no token. Once signed in, the token
+   'giftwala_admin_token' exists and the pill hides, because the panel is
+   then the live store. */
+(function(){var p=document.getElementById('adminPreviewPill');if(!p)return;try{if(!localStorage.getItem('giftwala_admin_token'))p.hidden=false;}catch(e){p.hidden=false;}})();
 </script>
 </body>
 </html>

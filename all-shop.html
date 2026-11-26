@@ -1,23 +1,49 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head><script>try{var __gwT=localStorage.getItem('giftwala-theme');document.documentElement.setAttribute('data-theme',__gwT||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))}catch(__gwE){document.documentElement.setAttribute('data-theme','dark')}</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>All Shop | GiftWALA</title>
+  <title>Shop All Gifts | GiftWALA — Personalised Gifts in Pakistan</title>
+  <meta name="description" content="Shop all GiftWALA personalised gifts — frames, gift boxes, jewellery, mugs, nikkah essentials and more. Cash on Delivery available, delivery across Pakistan. Delivery charges Rs. 300 per order.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GiftWALA">
+  <meta property="og:title" content="Shop All Gifts | GiftWALA">
+  <meta property="og:description" content="Personalised gifts made with love in Pakistan. Cash on Delivery available. Delivery charges Rs. 300 per order.">
+  <meta property="og:url" content="https://giftwalapk.store/all-shop.html">
+  <meta property="og:image" content="https://giftwalapk.store/assets/giftwala-favicon-512.png">
+  <link rel="canonical" href="https://giftwalapk.store/all-shop.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
   <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Shop All Gifts | GiftWALA","url":"https://giftwalapk.store/all-shop.html","description":"All GiftWALA personalised gifts.","isPartOf":{"@type":"WebSite","name":"GiftWALA","url":"https://giftwalapk.store/"},"publisher":{"@type":"Organization","name":"GiftWALA","url":"https://giftwalapk.store/","email":"hello@giftwala.pk","sameAs":["https://instagram.com/gift_walaofficial"]}}</script>
   <style>
     .all-shop { padding: 70px 10%; max-width: 1400px; margin: 0 auto; }
     .category-header { margin-bottom: 40px; }
-    .category-header h1 { font: 600 48px 'Playfair Display'; margin: 20px 0 15px; }
-    .category-header p { color: #817970; font-size: 15px; line-height: 1.6; max-width: 700px; margin: 0 0 12px; }
+    .category-header img { width: 148px; height: auto; border-radius: 10px; display: block; margin-bottom: 6px; }
+    .category-header h1 { font: 600 48px 'Archivo'; margin: 20px 0 15px; }
+    .category-header p { color: #6f6a63; font-size: 15px; line-height: 1.6; max-width: 700px; margin: 0 0 12px; }
     .category-info { color: #aaa095; font-size: 13px; font-weight: 500; }
-    .all-shop h1 { font: 600 48px 'Playfair Display'; margin: 10px 0 30px; }
+    .all-shop h1 { font: 600 48px 'Archivo'; margin: 10px 0 30px; }
     .all-shop .product-grid { margin-top: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     .all-shop .product-card { cursor: pointer; }
-    .all-shop .product-image { width: 100%; height: 280px; overflow: hidden; background: #f5f1eb; }
+    .all-shop .product-image { width: 100%; height: 280px; overflow: hidden; background: #eceae6; position: relative; }
     .all-shop .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
     .all-shop .product-card:hover .product-image img { transform: scale(1.05); }
+    .shop-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 8px; }
+    .shop-toolbar input[type="search"], .shop-toolbar select { padding: 11px 12px; border: 1px solid #ddd3c7; border-radius: 8px; background: #ffffff; font: 500 13px Archivo, Arial, sans-serif; color: #171513; }
+    .search-wrap { flex: 1 1 220px; min-width: 180px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid #ddd3c7; border-radius: 8px; background: #ffffff; }
+    .search-wrap svg { flex: none; color: #9a7414; }
+    .search-wrap input[type="search"] { flex: 1; min-width: 0; border: 0; background: transparent; padding: 11px 0; outline: 0; font: 500 13px Archivo, Arial, sans-serif; color: #171513; }
+    .shop-toolbar select { cursor: pointer; }
+    .shop-toolbar .stock-only { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #555; cursor: pointer; }
+    .shop-toolbar .stock-only input { accent-color: #9a7414; }
+    .shop-count { color: #aaa095; font-size: 13px; margin: 0 0 4px; }
+    .shop-clear { border: 0; background: none; color: #9a7414; font: 700 12px Archivo, Arial, sans-serif; cursor: pointer; padding: 11px 4px; }
+    .out-of-stock { color: #a33; font-size: 12px; font-weight: 700; }
+    .mobile-add-cart { margin-top: 10px; padding: 10px 14px; border: 1px solid #9a7414; background: #fff; color: #8a6414; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .mobile-add-cart.added { background: #9a7414; color: #fff; }
+    .newsletter-note { font-size: 12px; color: #8a7a63; margin: 8px 0 0; }
     @media(max-width:1000px) { .all-shop .product-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
     @media(max-width:850px) {
       .all-shop { padding: 45px 8%; }
@@ -33,102 +59,231 @@
   </style>
 </head>
 <body>
-  <div class="announcement">Free delivery on orders above Rs. 3,000 • Made with love in Pakistan</div>
-  <header class="site-header"></header>
+  <div class="announcement"><div class="gw-marquee" role="marquee" aria-label="Store announcements"><div class="gw-marquee__track"><span class="gw-marquee__group"><span class="gw-marquee__item">Cash on delivery available</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Personalised for you</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Nationwide delivery</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Made with love in Pakistan</span><span class="gw-marquee__sep" aria-hidden="true">•</span></span><span class="gw-marquee__group" aria-hidden="true"><span class="gw-marquee__item">Cash on delivery available</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Personalised for you</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Nationwide delivery</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Made with love in Pakistan</span><span class="gw-marquee__sep" aria-hidden="true">•</span></span></div></div></div>
+  <header class="site-header"><a class="brand" href="/" aria-label="GiftWALA home"><img class="brand-logo" src="/assets/brand/giftwala-logo-dark.png" alt="GiftWALA" width="116" height="58"></a></header>
 
   <main class="all-shop">
     <p class="eyebrow">THE GIFTWALA COLLECTION</p>
     <div class="category-header" id="category-header" style="display:none;">
+      <img id="category-image" src="" alt="" width="148" height="125" style="display:none;">
       <h1 id="category-name"></h1>
       <p id="category-desc"></p>
       <div class="category-info"><span id="product-count"></span> products</div>
     </div>
     <h1 id="page-title">All products</h1>
+
+    <div class="shop-toolbar" role="search" aria-label="Filter products">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="shopSearch" placeholder="Search gifts…" aria-label="Search gifts">
+      </div>
+      <select id="filterCategory" aria-label="Filter by category"><option value="All">All categories</option></select>
+      <select id="filterPrice" aria-label="Filter by price">
+        <option value="all">Any price</option>
+        <option value="under1000">Under Rs. 1,000</option>
+        <option value="1000-2500">Rs. 1,000 – Rs. 2,500</option>
+        <option value="2500-5000">Rs. 2,500 – Rs. 5,000</option>
+        <option value="over5000">Above Rs. 5,000</option>
+      </select>
+      <select id="sortSelect" aria-label="Sort products">
+        <option value="featured">Sort: Featured</option>
+        <option value="low">Price: Low to high</option>
+        <option value="high">Price: High to low</option>
+        <option value="newest">Newest first</option>
+        <option value="bestseller">Bestseller</option>
+      </select>
+      <label class="stock-only"><input type="checkbox" id="filterStock"> In stock only</label>
+      <button type="button" class="shop-clear" id="clearFilters">Clear filters</button>
+    </div>
+    <p class="shop-count" id="shopCount" aria-live="polite"></p>
+
     <div id="products" class="product-grid">
       <p>Loading...</p>
     </div>
   </main>
 
   <script src="/header-sync.js"></script>
+  <script src="/all-shop-buttons.js"></script>
   <script>
     const money = n => 'Rs. ' + Number(n || 0).toLocaleString('en-PK');
-    const category = new URLSearchParams(location.search).get('category');
-    const search = new URLSearchParams(location.search).get('search');
+    const params = new URLSearchParams(location.search);
+    const categoryParam = params.get('category');
+    const searchParam = params.get('search') || '';
     const box = document.getElementById('products');
     const title = document.getElementById('page-title');
     const catHeader = document.getElementById('category-header');
     const catName = document.getElementById('category-name');
     const catDesc = document.getElementById('category-desc');
     const catCount = document.getElementById('product-count');
+    const shopCount = document.getElementById('shopCount');
+    const searchInput = document.getElementById('shopSearch');
+    const categorySelect = document.getElementById('filterCategory');
+    const priceSelect = document.getElementById('filterPrice');
+    const sortSelect = document.getElementById('sortSelect');
+    const stockCheck = document.getElementById('filterStock');
 
-    function renderProducts(allProducts) {
-      if (!Array.isArray(allProducts) || allProducts.length === 0) {
-        box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No products found.</p>';
-        return;
-      }
+    let allProducts = [];
+    /* Real category card images (assets/category_cards_148x125/), same files
+       the homepage category tiles use. Shown in the category header when a
+       category is open. */
+    const CATEGORY_IMAGES = {'Gift Boxes':'gift-boxes.jpg','Frames & Wall Art':'frames.jpg','Nikkah & Islamic':'nikkah.jpg','Jewellery':'jewellery.jpg','Accessories':'accessories.jpg','Mugs & Bottles':'mugs.jpg','Pens & Journals':'pens-journals.jpg','Home & Decor':'home-decor.jpg','Bags & Apparel':'bags-apparel.jpg',"Men's Shawls":'mens-shawls.jpg','Cotton Unstitched Suits':'cotton-suits.jpg','Wash N Wear Unstitched Suits':'wash-wear.jpg'};
+    // Bestseller: the catalogue API exposes no sales counts, so this sorts
+    // featured products first, then newest. TODO (owner): add a real
+    // sales-count field to /api/products for a true bestseller sort.
+    const priceOf = p => Number(p.salePrice || p.price || 0);
+    const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-      let filtered = allProducts;
+    function applyFilters() {
+      let list = allProducts.slice();
+      const term = (searchInput.value || '').trim().toLowerCase();
+      const cat = categorySelect.value;
+      const price = priceSelect.value;
+      const inStockOnly = stockCheck.checked;
 
-      if (search) {
-        const term = search.toLowerCase();
-        filtered = allProducts.filter(p =>
-          (p.name + ' ' + (p.category || '') + ' ' + (p.description || '')).toLowerCase().includes(term)
-        );
-        title.textContent = 'Search: ' + search;
-        catHeader.style.display = 'none';
-      } else if (category && category !== 'All') {
-        filtered = allProducts.filter(p => String(p.category || '').trim().toLowerCase() === category.trim().toLowerCase());
-        title.style.display = 'none';
-        catHeader.style.display = 'block';
-        catName.textContent = category;
-        catDesc.textContent = 'Premium personalised gifts and thoughtful accessories from GiftWALA collection.';
-        catCount.textContent = filtered.length;
-      } else {
-        catHeader.style.display = 'none';
-      }
+      if (term) list = list.filter(p => ((p.name || '') + ' ' + (p.category || '') + ' ' + (p.description || '')).toLowerCase().includes(term));
+      if (cat && cat !== 'All') list = list.filter(p => String(p.category || '').trim().toLowerCase() === cat.trim().toLowerCase());
+      if (inStockOnly) list = list.filter(p => Number(p.stock || 0) > 0);
+      if (price === 'under1000') list = list.filter(p => priceOf(p) < 1000);
+      if (price === '1000-2500') list = list.filter(p => priceOf(p) >= 1000 && priceOf(p) <= 2500);
+      if (price === '2500-5000') list = list.filter(p => priceOf(p) > 2500 && priceOf(p) <= 5000);
+      if (price === 'over5000') list = list.filter(p => priceOf(p) > 5000);
 
+      const sort = sortSelect.value;
+      if (sort === 'low') list.sort((a, b) => priceOf(a) - priceOf(b));
+      else if (sort === 'high') list.sort((a, b) => priceOf(b) - priceOf(a));
+      else if (sort === 'newest') list.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+      else if (sort === 'bestseller') list.sort((a, b) => (Number(b.featured || 0) - Number(a.featured || 0)) || (new Date(b.createdAt || 0) - new Date(a.createdAt || 0)));
+      // 'featured' keeps the API order (featured DESC, created_at DESC, sku ASC).
+
+      renderList(list);
+    }
+
+    function renderList(filtered) {
       if (!filtered.length) {
-        box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No products found.</p>';
+        box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No products match these filters. Try clearing them.</p>';
+        shopCount.textContent = '0 products';
         return;
       }
-
+      shopCount.textContent = filtered.length + (filtered.length === 1 ? ' product' : ' products');
       box.innerHTML = filtered.map(p => {
         const sku = p.sku || '';
         const ext = (p.imageName || '').toLowerCase().endsWith('.jpg') ? '.jpg' : '.png';
-        const mainImg = `/assets/products/${sku}${ext}`;
+        const mainImg = '/assets/products/' + sku + ext;
         const cardImg = p.cardImage || '';
         const imageUrl = cardImg || p.imageUrl || mainImg;
-        const sale = Number(p.salePrice || p.price || 0);
+        const sale = priceOf(p);
         const original = Number(p.price || 0);
-        const oldPrice = original > sale ? ` <del class="old-price">${money(original)}</del>` : '';
-
-        return `<article class="product-card" onclick="location.href='/product.html?id=${encodeURIComponent(sku)}'">
-          <div class="product-image">
-          <img loading="eager" decoding="async" src="${imageUrl}" alt="${p.name}" onerror="this.onerror=null;this.src='${mainImg}'">
-          </div>
-          <div class="product-info">
-            <h3>${p.name}</h3>
-            <p>${p.description || 'Thoughtfully selected for you.'}</p>
-            <b class="price">${money(sale)}${oldPrice}</b>
-          </div>
-        </article>`;
+        const oldPrice = original > sale ? ' <del class="old-price">' + money(original) + '</del>' : '';
+        const inStock = Number(p.stock || 0) > 0;
+        const stockNote = inStock ? '' : ' <span class="out-of-stock">Out of stock</span>';
+        return '<article class="product-card" data-product-id="' + esc(sku) + '" data-sku="' + esc(sku) + '" onclick="location.href=\'/product.html?id=' + encodeURIComponent(sku) + '\'">' +
+          '<div class="product-image">' +
+          '<img loading="lazy" decoding="async" src="' + esc(imageUrl) + '" alt="' + esc(p.name) + '" onerror="this.onerror=null;this.src=\'' + esc(mainImg) + '\'">' +
+          '</div>' +
+          '<div class="product-info">' +
+            '<h3>' + esc(p.name) + '</h3>' +
+            '<p>' + esc(p.description || 'Thoughtfully selected for you.') + '</p>' +
+            '<b class="price">' + money(sale) + oldPrice + '</b>' + stockNote +
+          '</div>' +
+        '</article>';
       }).join('');
     }
 
-    // Load products
-    fetch(category && category !== 'All' ? '/api/products?category=' + encodeURIComponent(category) : '/api/products?home=1')
+    function renderProducts(data) {
+      allProducts = Array.isArray(data) ? data : [];
+      // Category dropdown from the live catalogue (plus the ?category= value).
+      const cats = [...new Set(allProducts.map(p => (p.category || '').trim()).filter(Boolean))].sort();
+      if (categoryParam && categoryParam !== 'All' && !cats.includes(categoryParam)) cats.push(categoryParam);
+      categorySelect.innerHTML = '<option value="All">All categories</option>' +
+        cats.map(c => '<option value="' + esc(c) + '">' + esc(c) + '</option>').join('');
+      if (categoryParam && categoryParam !== 'All') {
+        categorySelect.value = categoryParam;
+        title.style.display = 'none';
+        catHeader.style.display = 'block';
+        catName.textContent = categoryParam;
+        const catImg = document.getElementById('category-image');
+        const catFile = CATEGORY_IMAGES[categoryParam];
+        if (catImg && catFile) { catImg.src = '/assets/category_cards_148x125/' + catFile; catImg.alt = categoryParam; catImg.style.display = 'block'; }
+        else if (catImg) { catImg.style.display = 'none'; }
+        catDesc.textContent = 'Premium personalised gifts and thoughtful accessories from GiftWALA collection.';
+      } else if (searchParam) {
+        title.textContent = 'Search: ' + searchParam;
+        catHeader.style.display = 'none';
+      } else {
+        catHeader.style.display = 'none';
+      }
+      catCount.textContent = allProducts.filter(p => !categoryParam || categoryParam === 'All' || String(p.category || '').trim().toLowerCase() === categoryParam.trim().toLowerCase()).length;
+      searchInput.value = searchParam;
+      if (params.get('openSearch') === '1') { searchInput.focus(); searchInput.scrollIntoView({ block: 'nearest' }); }
+      applyFilters();
+    }
+
+    [searchInput, categorySelect, priceSelect, sortSelect, stockCheck].forEach(el => el.addEventListener('input', applyFilters));
+    searchInput.addEventListener('input', () => {
+      // Keep the search term in the URL so a filtered view is shareable.
+      const u = new URL(location.href);
+      if (searchInput.value.trim()) u.searchParams.set('search', searchInput.value.trim());
+      else u.searchParams.delete('search');
+      history.replaceState(null, '', u);
+    });
+    document.getElementById('clearFilters').addEventListener('click', () => {
+      searchInput.value = '';
+      categorySelect.value = 'All';
+      priceSelect.value = 'all';
+      sortSelect.value = 'featured';
+      stockCheck.checked = false;
+      const u = new URL(location.href);
+      u.searchParams.delete('search');
+      u.searchParams.delete('category');
+      history.replaceState(null, '', u);
+      title.style.display = '';
+      title.textContent = 'All products';
+      catHeader.style.display = 'none';
+      applyFilters();
+    });
+
+    // Load the FULL catalogue once; category/search filtering happens in place.
+    fetch('/api/products')
       .then(r => r.json())
       .then(data => {
-        if (Array.isArray(data)) {
-          renderProducts(data);
-        } else {
-          box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Invalid data format.</p>';
-        }
+        if (Array.isArray(data)) renderProducts(data);
+        else box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Invalid data format.</p>';
       })
       .catch(err => {
         console.error('Load error:', err);
         box.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Could not load products. Please try again.</p>';
       });
+  </script>
+  <script>
+  /* Newsletter (2026-11-25): no newsletter endpoint exists in the repo — the
+     worker exposes only products/reviews/orders/categories. The shared footer
+     form (owned by header-sync.js) only shows "You're on the list" without
+     storing anything, so this page stores the address locally on this device
+     and says so honestly. TODO (owner): add a real /api/newsletter endpoint;
+     this can POST to it then. */
+  document.addEventListener('DOMContentLoaded', () => {
+    const f = document.getElementById('subscribeForm');
+    if (!f || f.dataset.gwNews) return;
+    f.dataset.gwNews = '1';
+    let last = '';
+    const inp = f.querySelector('input');
+    inp?.addEventListener('input', () => { last = inp.value.trim(); });
+    f.addEventListener('submit', () => {
+      if (!last) return;
+      try {
+        const list = JSON.parse(localStorage.getItem('giftwalaNewsletter') || '[]');
+        if (!list.includes(last)) { list.push(last); localStorage.setItem('giftwalaNewsletter', JSON.stringify(list)); }
+      } catch (e) {}
+      const b = f.querySelector('button');
+      if (b) b.textContent = 'Saved on this device';
+      if (!f.parentElement.querySelector('.newsletter-note')) {
+        const n = document.createElement('p');
+        n.className = 'newsletter-note';
+        n.textContent = 'Thanks — saved on this device. Our email newsletter is coming soon.';
+        f.after(n);
+      }
+    });
+  });
   </script>
 </body>
 </html>

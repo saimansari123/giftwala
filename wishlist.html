@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head><script>try{var __gwT=localStorage.getItem('giftwala-theme');document.documentElement.setAttribute('data-theme',__gwT||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))}catch(__gwE){document.documentElement.setAttribute('data-theme','dark')}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Wishlist | GiftWALA</title>
+  <meta name="description" content="Your GiftWALA wishlist — the gifts you saved for later. Saved on this device, ready when you are.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GiftWALA">
+  <meta property="og:title" content="My Wishlist | GiftWALA">
+  <meta property="og:description" content="The gifts you saved on GiftWALA, kept on this device.">
+  <meta property="og:url" content="https://giftwalapk.store/wishlist.html">
+  <meta property="og:image" content="https://giftwalapk.store/assets/giftwala-favicon-512.png">
+  <link rel="canonical" href="https://giftwalapk.store/wishlist.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="site-pages.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"My Wishlist | GiftWALA","url":"https://giftwalapk.store/wishlist.html","description":"Saved GiftWALA gifts, stored on this device.","isPartOf":{"@type":"WebSite","name":"GiftWALA","url":"https://giftwalapk.store/"}}</script>
+  <style>
+    .wish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; margin-top: 28px; }
+    .wish-card { background: #fff; border: 1px solid #e3ddd2; border-radius: 10px; overflow: hidden; }
+    .wish-card .wish-img { width: 100%; height: 220px; object-fit: cover; display: block; background: #eceae6; cursor: pointer; }
+    .wish-card .wish-body { padding: 16px; }
+    .wish-card h3 { margin: 0 0 6px; font-size: 15px; line-height: 1.4; }
+    .wish-card .wish-price { font-weight: 700; color: #171513; }
+    .wish-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .wish-actions button { flex: 1; padding: 11px 8px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
+    .wish-add { border: 0; background: #d6a646; color: #fff; }
+    .wish-remove { border: 1px solid #ddd3c7; background: #fff; color: #555; }
+    .wish-empty { text-align: center; color: #6f6a63; padding: 40px 0; line-height: 1.7; }
+    .wish-empty a { color: #9a7414; font-weight: 700; }
+    .wish-empty a svg { vertical-align: -3px; margin-left: 4px; }
+    .wish-add svg { vertical-align: -3px; margin-right: 4px; }
+    .newsletter-note { font-size: 12px; color: #8a7a63; margin: 8px 0 0; }
+  </style>
+</head>
+<body>
+  <div class="announcement"><div class="gw-marquee" role="marquee" aria-label="Store announcements"><div class="gw-marquee__track"><span class="gw-marquee__group"><span class="gw-marquee__item">Cash on delivery available</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Personalised for you</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Nationwide delivery</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Made with love in Pakistan</span><span class="gw-marquee__sep" aria-hidden="true">•</span></span><span class="gw-marquee__group" aria-hidden="true"><span class="gw-marquee__item">Cash on delivery available</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Personalised for you</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Nationwide delivery</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Made with love in Pakistan</span><span class="gw-marquee__sep" aria-hidden="true">•</span></span></div></div></div>
+  <header class="site-header"><a class="brand" href="/" aria-label="GiftWALA home"><img class="brand-logo" src="/assets/brand/giftwala-logo-dark.png" alt="GiftWALA" width="116" height="58"></a></header>
+  <main class="page-shell">
+    <p class="eyebrow">SAVED FOR LATER</p>
+    <h1>My <em>wishlist.</em></h1>
+    <p>Gifts you saved with the heart button. Your wishlist lives on this device — it is not shared with anyone and does not sync between devices.</p>
+    <div id="wishGrid" class="wish-grid"></div>
+    <div id="wishEmpty" class="wish-empty" style="display:none;">
+      <p>Your wishlist is empty.<br>Tap the heart on any gift to save it here.</p>
+      <p><a href="/all-shop.html">Browse the collection <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></a></p>
+    </div>
+  </main>
+  <script src="/header-sync.js"></script>
+  <script src="/all-shop-buttons.js"></script>
+  <script>
+    const money = n => 'Rs. ' + Number(n || 0).toLocaleString('en-PK');
+    const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const grid = document.getElementById('wishGrid');
+    const empty = document.getElementById('wishEmpty');
+    function getWishlist() {
+      try { const v = JSON.parse(localStorage.getItem('giftwalaWishlist') || '[]'); return Array.isArray(v) ? v : []; }
+      catch (e) { return []; }
+    }
+    function render() {
+      const list = getWishlist();
+      empty.style.display = list.length ? 'none' : 'block';
+      grid.innerHTML = list.map(x => {
+        const img = x.imageUrl || ('/assets/products/' + (x.sku || x.id) + '.png');
+        const href = '/product.html?id=' + encodeURIComponent(x.sku || x.id);
+        return '<article class="wish-card">' +
+          '<img class="wish-img" loading="lazy" decoding="async" src="' + esc(img) + '" alt="' + esc(x.name) + '" onclick="location.href=\'' + href + '\'">' +
+          '<div class="wish-body"><h3>' + esc(x.name) + '</h3><div class="wish-price">' + money(x.price) + '</div>' +
+          '<div class="wish-actions"><button type="button" class="wish-add" data-add="' + esc(x.id) + '">Add to cart</button>' +
+          '<button type="button" class="wish-remove" data-remove="' + esc(x.id) + '">Remove</button></div></div></article>';
+      }).join('');
+      grid.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => {
+        const list2 = getWishlist().filter(x => String(x.id) !== String(b.dataset.remove));
+        localStorage.setItem('giftwalaWishlist', JSON.stringify(list2));
+        if (window.GiftwalaWishlist) window.dispatchEvent(new Event('giftwala:wishlist-updated'));
+        render();
+      });
+      grid.querySelectorAll('[data-add]').forEach(b => b.onclick = () => {
+        const item = getWishlist().find(x => String(x.id) === String(b.dataset.add));
+        if (!item) return;
+        let cart = [];
+        try { cart = JSON.parse(localStorage.getItem('giftwalaCart') || '[]'); } catch (e) {}
+        const old = cart.find(x => String(x.id) === String(item.id));
+        if (old) old.qty = (old.qty || 1) + 1;
+        else cart.push({ id: item.id, sku: item.sku, name: item.name, price: item.price, qty: 1, imageUrl: item.imageUrl });
+        localStorage.setItem('giftwalaCart', JSON.stringify(cart));
+        localStorage.setItem('giftwala_checkout_cart', JSON.stringify(cart));
+        b.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg> Added';
+        setTimeout(() => { b.textContent = 'Add to cart'; }, 1400);
+      });
+    }
+    render();
+    window.addEventListener('giftwala:wishlist-updated', render);
+    window.addEventListener('storage', render);
+  </script>
+  <script>
+  /* Newsletter (2026-11-25): no newsletter endpoint exists in the repo — the
+     worker exposes only products/reviews/orders/categories. The shared footer
+     form (owned by header-sync.js) only shows "You're on the list" without
+     storing anything, so this page stores the address locally on this device
+     and says so honestly. TODO (owner): add a real /api/newsletter endpoint;
+     this can POST to it then. */
+  document.addEventListener('DOMContentLoaded', () => {
+    const f = document.getElementById('subscribeForm');
+    if (!f || f.dataset.gwNews) return;
+    f.dataset.gwNews = '1';
+    let last = '';
+    const inp = f.querySelector('input');
+    inp?.addEventListener('input', () => { last = inp.value.trim(); });
+    f.addEventListener('submit', () => {
+      if (!last) return;
+      try {
+        const list = JSON.parse(localStorage.getItem('giftwalaNewsletter') || '[]');
+        if (!list.includes(last)) { list.push(last); localStorage.setItem('giftwalaNewsletter', JSON.stringify(list)); }
+      } catch (e) {}
+      const b = f.querySelector('button');
+      if (b) b.textContent = 'Saved on this device';
+      if (!f.parentElement.querySelector('.newsletter-note')) {
+        const n = document.createElement('p');
+        n.className = 'newsletter-note';
+        n.textContent = 'Thanks — saved on this device. Our email newsletter is coming soon.';
+        f.after(n);
+      }
+    });
+  });
+  </script>
+</body>
+</html>

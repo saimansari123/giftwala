@@ -1,3 +1,37 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reviews | GiftWALA</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="site-pages.css"></head><body><div class="announcement">Free delivery on orders above Rs. 2,500 - Made with love in Pakistan</div><header class="site-header"><a class="brand" href="/"><span class="brand-mark">G</span><span><strong>Gift<span>WALA</span></strong><small>CUSTOMIZED GIFTS &amp; ACCESSORIES</small></span></a><nav class="desktop-nav"><a href="/">Shop</a><a href="/customize.html">Build your box</a><a href="/categories.html">Categories</a><a href="/how-it-works.html">How it works</a><a href="/reviews.html">Reviews</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header><main class="page-shell"><p class="eyebrow">THEY SAID IT BEST</p><h1>Loved by <em>gift-givers.</em></h1><div class="page-grid"><div class="page-card"><br><br>The attention to detail was beyond perfect.<br><br><b> Ayesha K.</b></div><div class="page-card"><br><br>Beautifully packed and delivered on time.<br><br><b> Sidra K.</b></div><div class="page-card"><br><br>The personalisation was exactly as requested.<br><br><b> Amna B.</b></div></div></main><script src="/header-sync.js"></script></body></html>
+<!doctype html><html><head><script>try{var __gwT=localStorage.getItem('giftwala-theme');document.documentElement.setAttribute('data-theme',__gwT||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))}catch(__gwE){document.documentElement.setAttribute('data-theme','dark')}</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reviews | GiftWALA — Loved by Gift-Givers</title><meta name="description" content="Real customer reviews for GiftWALA personalised gifts. Only verified reviews from our store are shown — no invented ratings."><meta property="og:type" content="website"><meta property="og:site_name" content="GiftWALA"><meta property="og:title" content="Reviews | GiftWALA"><meta property="og:description" content="What gift-givers say about GiftWALA."><meta property="og:url" content="https://giftwalapk.store/reviews.html"><link rel="canonical" href="https://giftwalapk.store/reviews.html"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="site-pages.css"></head><body><div class="announcement"><div class="gw-marquee" role="marquee" aria-label="Store announcements"><div class="gw-marquee__track"><span class="gw-marquee__group"><span class="gw-marquee__item">Cash on delivery available</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Personalised for you</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Nationwide delivery</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Made with love in Pakistan</span><span class="gw-marquee__sep" aria-hidden="true">•</span></span><span class="gw-marquee__group" aria-hidden="true"><span class="gw-marquee__item">Cash on delivery available</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Personalised for you</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Nationwide delivery</span><span class="gw-marquee__sep" aria-hidden="true">•</span><span class="gw-marquee__item">Made with love in Pakistan</span><span class="gw-marquee__sep" aria-hidden="true">•</span></span></div></div></div><header class="site-header"><a class="brand" href="/" aria-label="GiftWALA home"><img class="brand-logo" src="/assets/brand/giftwala-logo-dark.png" alt="GiftWALA" width="116" height="58"></a><nav class="desktop-nav"><a href="/">Shop</a><a href="/categories.html">Categories</a><a href="/how-it-works.html">How it works</a><a href="/reviews.html">Reviews</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header><main class="page-shell"><p class="eyebrow">THEY SAID IT BEST</p><h1>Loved by <em>gift-givers.</em></h1><div class="review-grid" id="reviewGrid"></div><p class="reviews-empty">No verified customer reviews yet — be the first to share yours below.</p><p style="margin-top:18px;font-size:13px;color:#746d63;">Questions about an order? See the <a href="/faq.html" style="color:#9a7414;">FAQ</a> or <a href="/delivery-returns.html" style="color:#9a7414;">Delivery &amp; Returns</a>.</p></main><script src="/header-sync.js"></script>
+<script>
+/* Newsletter (2026-11-25): no newsletter endpoint exists in the repo — the
+   worker exposes only products/reviews/orders/categories. The shared footer
+   form (owned by header-sync.js) only shows "You're on the list" without
+   storing anything, so this page stores the address locally on this device
+   and says so honestly. TODO (owner): add a real /api/newsletter endpoint;
+   this can POST to it then. */
+document.addEventListener('DOMContentLoaded', () => {
+  const f = document.getElementById('subscribeForm');
+  if (!f || f.dataset.gwNews) return;
+  f.dataset.gwNews = '1';
+  let last = '';
+  const inp = f.querySelector('input');
+  inp?.addEventListener('input', () => { last = inp.value.trim(); });
+  f.addEventListener('submit', () => {
+    if (!last) return;
+    try {
+      const list = JSON.parse(localStorage.getItem('giftwalaNewsletter') || '[]');
+      if (!list.includes(last)) { list.push(last); localStorage.setItem('giftwalaNewsletter', JSON.stringify(list)); }
+    } catch (e) {}
+    const b = f.querySelector('button');
+    if (b) b.textContent = 'Saved on this device';
+    if (!f.parentElement.querySelector('.newsletter-note')) {
+      const n = document.createElement('p');
+      n.className = 'newsletter-note';
+      n.textContent = 'Thanks — saved on this device. Our email newsletter is coming soon.';
+      n.style.cssText = 'font-size:12px;color:#8a7a63;margin:8px 0 0;';
+      f.after(n);
+    }
+  });
+});
+</script>
+</body></html>
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
-<link rel="stylesheet" href="/preview-ui.css"><script src="/reviews-ui.js"></script>
+<link rel="stylesheet" href="/preview-ui.css"><script src="/reviews-shared.js"></script>
+<script src="/reviews-ui.js"></script>

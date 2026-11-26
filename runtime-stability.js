@@ -13,13 +13,6 @@
     return requestCache.get(key).then(response => response.clone());
   };
 
-  /* Prevent repeated mobile search result containers from stacking. */
-  const cleanSearchResults = () => {
-    const nodes = [...document.querySelectorAll('.mobile-search-results')];
-    nodes.slice(1).forEach(node => node.remove());
-  };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', cleanSearchResults, { once: true });
-  else cleanSearchResults();
 
   /* Keep dynamically injected product/category images efficient and stable. */
   const prepareImages = root => root.querySelectorAll?.('img').forEach(img => {
@@ -72,7 +65,7 @@
       localStorage.setItem('giftwalaCart', saved);
       localStorage.setItem('giftwala_checkout_cart', saved);
     } catch (_) {}
-    document.querySelectorAll('#checkoutBtn, .direct-checkout').forEach(button => {
+    document.querySelectorAll('#checkoutBtn, #proceedCheckoutBtn, .direct-checkout').forEach(button => {
       button.disabled = !items.length;
       button.setAttribute('aria-disabled', String(!items.length));
     });
@@ -97,7 +90,7 @@
     }
     text('cartDelivery', format(totals.delivery));
     text('cartGrandTotal', format(totals.total));
-    document.querySelectorAll('#checkoutBtn, .direct-checkout').forEach(button => {
+    document.querySelectorAll('#checkoutBtn, #proceedCheckoutBtn, .direct-checkout').forEach(button => {
       button.disabled = !items.length;
       button.setAttribute('aria-disabled', String(!items.length));
     });

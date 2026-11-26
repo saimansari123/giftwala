@@ -1,1 +1,21 @@
-.how-ui{max-width:1200px;margin:auto;padding:0 24px 80px}.how-hero{text-align:center;padding:60px 20px;background:#fff;border-bottom:1px solid #e8e0d5}.how-ui small{color:#b47d1d;letter-spacing:.18em;font-weight:700;font-size:10px}.how-hero h1{font-size:clamp(40px,5vw,64px);line-height:1.05;margin:15px 0}.how-ui em{color:#b47d1d;font-style:normal}.how-hero p,.how-title p{color:#746d63;line-height:1.8;max-width:600px;margin:0 auto 24px}.how-hero a,.how-cta a{display:inline-block;background:#b47d1d;color:#fff;padding:14px 20px;font-size:11px;font-weight:bold;text-decoration:none;margin:5px}.how-hero a.light{background:#fff;color:#b47d1d;border:1px solid #b47d1d}.how-title{text-align:center;padding:60px 0 30px}.how-title h2,.how-cta h2{font-size:34px;margin:12px 0}.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.how-steps article{background:#fff;border:1px solid #e8e0d5;padding:24px}.how-steps article>b{color:#b47d1d;font-size:11px}.how-steps h3{font-size:17px}.how-steps p{color:#746d63;line-height:1.7;font-size:13px}.how-steps a{color:#b47d1d;font-size:10px;font-weight:bold;text-decoration:none}.how-cta{text-align:center;background:#1b1915;color:#fff;padding:42px;margin-top:55px}.how-cta p{color:#d4cec4}.how-cta a{background:#25d366}@media(max-width:750px){.how-steps{grid-template-columns:1fr 1fr}.how-ui{padding:0 14px 55px}}@media(max-width:480px){.how-steps{grid-template-columns:1fr}}
+.how-ui{max-width:1200px;margin:auto;padding:0 24px 80px}.how-hero{text-align:center;padding:60px 20px;background:#fff;border-bottom:1px solid #e3ddd2}.how-ui small{color:#9a7414;letter-spacing:.18em;font-weight:700;font-size:10px}.how-hero h1{font-size:clamp(40px,5vw,64px);line-height:1.05;margin:15px 0}.how-ui em{color:#9a7414;font-style:normal}.how-hero p,.how-title p{color:#746d63;line-height:1.8;max-width:600px;margin:0 auto 24px}.how-hero a,.how-cta a{display:inline-block;background:#9a7414;color:#fff;padding:14px 20px;font-size:11px;font-weight:bold;text-decoration:none;margin:5px}.how-hero a.light{background:#fff;color:#9a7414;border:1px solid #9a7414}.how-title{text-align:center;padding:60px 0 30px}.how-title h2,.how-cta h2{font-size:34px;margin:12px 0}.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.how-steps article{background:#fff;border:1px solid #e3ddd2;padding:24px}.how-steps article>b{color:#9a7414;font-size:11px}.how-steps h3{font-size:17px}.how-steps p{color:#746d63;line-height:1.7;font-size:13px}.how-steps a{color:#9a7414;font-size:10px;font-weight:bold;text-decoration:none}.how-cta{text-align:center;background:#1b1915;color:#fff;padding:42px;margin-top:55px}.how-cta p{color:#d4cec4}.how-cta a{background:#25d366}@media(max-width:750px){.how-steps{grid-template-columns:1fr 1fr}.how-ui{padding:0 14px 55px}}@media(max-width:480px){.how-steps{grid-template-columns:1fr}}
+
+/* ---- DESIGN (2026-11-25): unified with the site design system ---- */
+.how-hero h1,.how-title h2,.how-cta h2,.how-steps h3{font-family:'Archivo',Arial,sans-serif}
+.how-hero a,.how-cta a{min-height:44px;display:inline-flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease}
+.how-hero a:hover,.how-cta a:hover{transform:translateY(-2px)}
+.how-hero a:active,.how-cta a:active{transform:scale(.98)}
+.how-steps article{border-radius:8px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.how-steps article:hover{border-color:#dba83d;transform:translateY(-3px);box-shadow:0 8px 22px rgba(23,21,19,.12)}
+.how-hero a:focus-visible,.how-cta a:focus-visible,.how-steps a:focus-visible{outline:2px solid #dba83d;outline-offset:2px}
+@media(max-width:400px){
+  .how-ui{padding:0 12px 48px}
+  .how-hero{padding:44px 14px}
+  .how-hero h1{font-size:38px}
+  .how-steps article{padding:20px}
+  .how-cta{padding:32px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .how-hero a,.how-cta a,.how-steps article,.how-hero a:hover,.how-cta a:hover,.how-steps article:hover{transition:none;transform:none}
+}
+.how-wa-icon{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#25d366;color:#fff;margin-bottom:12px}.how-wa-icon svg{width:23px;height:23px}
