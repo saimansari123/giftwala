@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head><link rel="preload" as="image" href="/assets/preview/img-8a0fc0d40887abfdd59e975ad4f75fdf7f6a025e90cd9d4dd78e8db272ba80ea.webp">
+<head><style>.strip{display:none!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style id="remove-preview-banner-critical">.strip{display:none!important}</style>
-<title>GiftWALA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Redesign Preview</title>
-<meta name="description" content="Preview of the redesigned GiftWALA personalised gifts store ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â new design, full shop and wishlist, with a dark and light theme.">
+<title>GiftWALA — Redesign Preview</title>
+<meta name="description" content="Preview of the redesigned GiftWALA personalised gifts store — new design, full shop and wishlist, with a dark and light theme.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -524,7 +523,7 @@ footer.site p{color:var(--ink-faint);font-size:14px;max-width:36ch}
 @media(max-width:430px){.sc-side{grid-template-columns:1fr 1fr;min-height:128px}.sc-small .sc-cap b{font-size:13.5px}.sc-small .sc-cap small{display:none}}
 /* ===== v11: light-theme button fixes =====
    In light theme --gold/--gold2 are darkened so gold TEXT stays readable on
-   white ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â but every element that uses them as a BACKGROUND (buttons, badges,
+   white — but every element that uses them as a BACKGROUND (buttons, badges,
    chips, the marquee, the CTA banner) turned dark olive with near-black text
    on top: muddy, low-contrast buttons. In light theme those backgrounds now
    use the bright gold scale again, with a defined edge and a soft warm
@@ -553,7 +552,7 @@ footer.site p{color:var(--ink-faint);font-size:14px;max-width:36ch}
 :root[data-theme="light"] .hero h1 em{background-image:linear-gradient(100deg,#7A5A0E,#A87F1F 45%,#8C6A12)}
 :root[data-theme="light"] .auser .avatar{background:#E2B84B;color:#241a05}
 :root[data-theme="light"] ::selection{background:#E2B84B;color:#241a05}
-/* ===== v12: light-theme crispness ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â remove the blur / haze =====
+/* ===== v12: light-theme crispness — remove the blur / haze =====
    In light theme the page read as "blurry" for four reasons: the sticky
    header's backdrop-filter blur smeared a grey band under it, category
    photos sat at 85% opacity (washed out), caption text carried an 8px
@@ -561,7 +560,7 @@ footer.site p{color:var(--ink-faint);font-size:14px;max-width:36ch}
    in the hero hazed everything over. Light theme is now fully crisp:
    solid header with no backdrop blur, photos at full opacity, tight
    small shadows, and a clean flat hero background. Dark theme keeps
-   its glow ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â it is untouched. */
+   its glow — it is untouched. */
 :root[data-theme="light"]{--shadow:0 10px 24px rgba(60,48,16,.12);--shadow-sm:0 4px 12px rgba(60,48,16,.09)}
 :root[data-theme="light"] header.site{backdrop-filter:none;-webkit-backdrop-filter:none;background:#FFFFFF;box-shadow:0 1px 0 rgba(25,20,16,.05),0 2px 8px rgba(25,20,16,.05)}
 :root[data-theme="light"] .cat-card img{opacity:1}
@@ -579,12 +578,12 @@ footer.site p{color:var(--ink-faint);font-size:14px;max-width:36ch}
 /* ===== v15: centred logo, single header search, product breadcrumb + photo viewer =====
    1) Logo centred: the brand sits dead-centre of the header row (absolute
    centre), the ONE search bar lives on the left, icons on the right, and
-   the main nav moved to its own centred row underneath ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â so the header
+   the main nav moved to its own centred row underneath — so the header
    no longer carries two search controls (bar + icon button).
    2) Product page: breadcrumb links (All Shop / Category / Product name)
    replace "Back to Shop".
    3) Photo viewer: the gallery no longer stretches to the height of the
-   details column (that left a big white empty block under the photo) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â
+   details column (that left a big white empty block under the photo) —
    it is a square, sticky viewer with a thumbnail and a full-screen
    lightbox on tap. */
 .brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
@@ -624,12 +623,12 @@ nav.main{justify-content:center;margin:0;padding:2px 0 12px;flex-wrap:wrap}
 /* ===== v16: WhatsApp glyph dead-centre + compact header, search as an icon =====
    1) WhatsApp float: pixel measurement of the v15 build showed the glyph
    artwork sitting ~6.5px BELOW the centre of the green disc (horizontal
-   offset was 0) ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the in-flow SVG kept rendering low inside the button no
+   offset was 0) — the in-flow SVG kept rendering low inside the button no
    matter how the flow centring was written. The glyph is now absolutely
    centred on the button's own box (left/top 50% + translate -50%,-50%),
    which does not depend on flow layout at all, so it stays dead-centre
    at every width and in both themes.
-   2) Header: the wide search bar is gone ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â search is a small icon button
+   2) Header: the wide search bar is gone — search is a small icon button
    alongside wishlist / bag / theme (its existing #hSearch handler opens
    the shop and focuses the shop search box). Rows are tightened (logo
    40px, slimmer paddings, slimmer nav) so the sticky header is roughly
@@ -643,11 +642,11 @@ nav.main{padding:0 0 6px}
 nav.main button{min-height:38px;padding:6px 12px}
 .mq-group{padding-top:6px;padding-bottom:6px}
 .pv-gallery{top:118px}
-/* ===== v17: header layout ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â logo left, options centre, icons right =====
+/* ===== v17: header layout — logo left, options centre, icons right =====
    One single header row: the brand sits on the LEFT in normal flow (the
    v15 absolute centring is removed), the main nav (Shop / Categories /
    Occasions / FAQ / Track Order) is CENTRED in the middle of the row,
-   and everything else ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â search, wishlist, bag, theme, burger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â sits on
+   and everything else — search, wishlist, bag, theme, burger — sits on
    the RIGHT. On mobile the nav collapses into the burger menu as
    before, keeping logo left and icons right on one compact row. The
    sticky header is also one row shorter now, so the product gallery's
@@ -668,7 +667,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 /* ===== v18: emojis replaced with professional SVG icons =====
    Every pictographic emoji (marquee, topbar, occasion cards, why-cards,
    payment chips, product cards) is now a clean stroke SVG in the site's
-   existing icon style ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â no emoji anywhere, so the page renders the same
+   existing icon style — no emoji anywhere, so the page renders the same
    on every device. Typographic arrows/checks in running text stay. */
 /* ===== v22: strip under the announcement bar removed + mobile polish =====
    The dark .topbar strip that sat between the gold announcement marquee
@@ -693,21 +692,21 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 .card .del .icon{width:15px;height:15px;color:var(--gold)}
 /* ===== v19: WhatsApp glyph class collision fixed =====
    The real cause of the "WhatsApp is still not right" reports: every
-   WhatsApp brand glyph carried class "wa" ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the SAME class as the cart
+   WhatsApp brand glyph carried class "wa" — the SAME class as the cart
    drawer's full-width green order button (.wa{width:100%;background:
    #25d366;margin-top:14px}). Those button styles leaked onto the glyphs:
    the step-2 tile icon stretched to full width on a green band, and the
    floating button's glyph was pushed 14px below centre by the leaked
    margin-top (which is why re-centring the SVG box in v16 never fixed
    it). The glyphs now use their own class "wag", which only carries the
-   fill rule, and the float's centring rule also zeroes margin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the
+   fill rule, and the float's centring rule also zeroes margin — the
    glyph sits dead-centre and no button style can reach it again. */
 /* ===== v20: Checkout page + Buy Now =====
    A full checkout view (customer details, payment methods with the 15%
    prepaid discount, live order summary, order-ID success panel), a gold
    "Proceed to Checkout" button in the cart drawer above the WhatsApp
    order button, and a gold "Buy Now" button on every product card and
-   on the product page ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Buy Now checks out just that one item. */
+   on the product page — Buy Now checks out just that one item. */
 .card .buy{margin-top:8px;background:linear-gradient(180deg,#e8c268,var(--gold) 55%,var(--gold2));color:#241a05;border:1px solid var(--gold2);border-radius:10px;min-height:44px;font-weight:800;font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
 .card .buy:hover{filter:brightness(1.06)}
 .card .buy .icon{width:17px;height:17px}
@@ -760,20 +759,20 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <body>
 
 <div class="strip" id="strip"><div class="wrap">
-  <span><b>REDESIGN PREVIEW</b> &nbsp;This is the new redesigned GiftWALA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â it is not live yet. The catalogue below is sample data; after deploy, your real products load from the live site. Prices, the cart and wishlist all work so you can test them. Use the sun/moon button in the header to switch between the dark and light theme.</span>
+  <span><b>REDESIGN PREVIEW</b> &nbsp;This is the new redesigned GiftWALA — it is not live yet. The catalogue below is sample data; after deploy, your real products load from the live site. Prices, the cart and wishlist all work so you can test them. Use the sun/moon button in the header to switch between the dark and light theme.</span>
   <button id="stripClose" type="button">Dismiss</button>
 </div></div>
 
 <div class="announce" aria-label="Personalised gifts, made to order. Cash on Delivery available. Made with love in Pakistan."><div class="announce-track">
-  <div class="mq-group"><span>Gifts from Rs. 349</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>15% OFF on prepaid ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â JazzCash / Easypaisa</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>Cash on Delivery ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â nationwide</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>Design confirmed on WhatsApp first</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>Flat Rs. 300 Delivery</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span></div>
-  <div class="mq-group" aria-hidden="true"><span>Gifts from Rs. 349</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>15% OFF on prepaid ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â JazzCash / Easypaisa</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>Cash on Delivery ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â nationwide</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>Design confirmed on WhatsApp first</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span><span>Flat Rs. 300 Delivery</span><span class="mq-sep">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢</span></div>
+  <div class="mq-group"><span>Gifts from Rs. 349</span><span class="mq-sep">•</span><span>15% OFF on prepaid — JazzCash / Easypaisa</span><span class="mq-sep">•</span><span>Cash on Delivery — nationwide</span><span class="mq-sep">•</span><span>Design confirmed on WhatsApp first</span><span class="mq-sep">•</span><span>Flat Rs. 300 Delivery</span><span class="mq-sep">•</span></div>
+  <div class="mq-group" aria-hidden="true"><span>Gifts from Rs. 349</span><span class="mq-sep">•</span><span>15% OFF on prepaid — JazzCash / Easypaisa</span><span class="mq-sep">•</span><span>Cash on Delivery — nationwide</span><span class="mq-sep">•</span><span>Design confirmed on WhatsApp first</span><span class="mq-sep">•</span><span>Flat Rs. 300 Delivery</span><span class="mq-sep">•</span></div>
 </div></div>
 
 <header class="site"><div class="wrap">
   <div class="header-in">
     <button class="brand" data-go="home" type="button" aria-label="GiftWALA home">
-      <img class="lg-d" src="/assets/preview/img-f20f5767e0b77b7f95bed79d78ae975a3ae7a7e427dd8870bf8e30f8e84d7603.webp" alt="GiftWALA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Customized Gifts & Accessories">
-      <img class="lg-l" src="/assets/preview/img-6ad415aa5273853d1b99f0b95bef029539a7db2f8973a87e3694f261c951dedd.webp" alt="GiftWALA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Customized Gifts & Accessories">
+      <img class="lg-d" src="/assets/preview/img-f20f5767e0b77b7f95bed79d78ae975a3ae7a7e427dd8870bf8e30f8e84d7603.webp" alt="GiftWALA — Customized Gifts & Accessories">
+      <img class="lg-l" src="/assets/preview/img-6ad415aa5273853d1b99f0b95bef029539a7db2f8973a87e3694f261c951dedd.webp" alt="GiftWALA — Customized Gifts & Accessories">
     </button>
     <nav class="main" aria-label="Main">
       <button data-go="shop" type="button">Shop</button>
@@ -807,13 +806,13 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
     <div class="wrap">
     <div class="rv hero-copy">
       <div class="kicker">Pakistan's Personalised Gift Studio</div>
-      <h1>A name, a photo, a feeling ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â<br>a gift they will <em>keep forever.</em></h1>
-      <p><strong style="color:var(--ink)">76+ ready-to-personalise gifts</strong> ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â photo frames, gift boxes, mugs, Nikkah Nama, jewellery and more. Send a name or photo, we confirm the design with you on WhatsApp, then make it by hand and deliver it. <strong style="color:var(--gold)">From Rs. 349.</strong></p>
+      <h1>A name, a photo, a feeling —<br>a gift they will <em>keep forever.</em></h1>
+      <p><strong style="color:var(--ink)">76+ ready-to-personalise gifts</strong> — photo frames, gift boxes, mugs, Nikkah Nama, jewellery and more. Send a name or photo, we confirm the design with you on WhatsApp, then make it by hand and deliver it. <strong style="color:var(--gold)">From Rs. 349.</strong></p>
       <div class="cta-row">
-        <button class="btn btn-gold" data-go="shop" type="button" style="font-size:16.5px;padding:16px 30px">Shop Now ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Order in 2 Minutes</button>
-        <button class="btn btn-ghost" data-go="home" data-scroll="finder" type="button">Gift Finder ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Find a gift in 10 seconds</button>
+        <button class="btn btn-gold" data-go="shop" type="button" style="font-size:16.5px;padding:16px 30px">Shop Now — Order in 2 Minutes</button>
+        <button class="btn btn-ghost" data-go="home" data-scroll="finder" type="button">Gift Finder — Find a gift in 10 seconds</button>
       </div>
-      <div class="hero-proof"><div class="proof-txt"><b>How ordering works:</b> Pick a gift ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Add name / photo ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ We confirm the design on WhatsApp ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Pay on delivery. No hidden charges, no surprises.</div></div>
+      <div class="hero-proof"><div class="proof-txt"><b>How ordering works:</b> Pick a gift → Add name / photo → We confirm the design on WhatsApp → Pay on delivery. No hidden charges, no surprises.</div></div>
       <div class="stats-row"><div><b>76+</b><span>Products</span></div><div><b>11</b><span>Collections</span></div><div><b>Rs. 300</b><span>Flat Delivery</span></div><div><b>COD</b><span>Cash on Delivery</span></div></div>
       <div class="chips">
         <span class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>15% OFF on prepaid</span>
@@ -825,9 +824,9 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       <div class="hero-wa-chip"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Design confirmed on WhatsApp first</div>
       <div class="showcase">
         <button class="sc-main" data-open="GW-GB-001" type="button" aria-label="Shop the bestselling Double Perfume Gift Box">
-          <img loading="lazy" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Double Perfume Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â complete personalised gift set by GiftWALA">
+          <img loading="lazy" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Double Perfume Gift Box — complete personalised gift set by GiftWALA">
           <span class="sc-badge">Bestseller</span>
-          <span class="sc-cap"><b>Gift Boxes</b><small>Complete ready-to-gift sets ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â suit, watch, perfume &amp; more</small></span>
+          <span class="sc-cap"><b>Gift Boxes</b><small>Complete ready-to-gift sets — suit, watch, perfume &amp; more</small></span>
         </button>
         <div class="sc-side">
           <button class="sc-small" data-open="GW-FW-001" type="button" aria-label="Shop personalised photo frames">
@@ -842,8 +841,8 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       </div>
       <div class="hero-order-card">
         <img loading="lazy" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="">
-        <div class="hoc-txt"><small>Bestseller ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Gift Boxes</small><b>Double Perfume Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5-in-1 Set</b><span class="hoc-price"><b>Rs. 7,999</b><s>Rs. 9,599</s> Ãƒâ€šÃ‚Â· Only 2 left</span></div>
-        <button class="btn btn-gold" data-open="GW-GB-001" type="button">Order Now ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</button>
+        <div class="hoc-txt"><small>Bestseller — Gift Boxes</small><b>Double Perfume Gift Box – 5-in-1 Set</b><span class="hoc-price"><b>Rs. 7,999</b><s>Rs. 9,599</s> · Only 2 left</span></div>
+        <button class="btn btn-gold" data-open="GW-GB-001" type="button">Order Now →</button>
       </div>
     </div>
   </div></div>
@@ -857,30 +856,30 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 
   <!-- GIFT FINDER -->
   <section id="finder" style="padding:28px 0 8px"><div class="wrap"><div class="finder rv">
-    <h3>Gift Finder ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Not sure what to buy? Find the perfect gift in 10 seconds</h3><p>Pick the occasion, who it is for, and your budget ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â we will show you the best matches.</p>
+    <h3>Gift Finder — Not sure what to buy? Find the perfect gift in 10 seconds</h3><p>Pick the occasion, who it is for, and your budget — we will show you the best matches.</p>
     <div class="finder-grid">
-      <select id="fOcc"><option value="">Occasion ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â All</option><option>Birthday</option><option>Anniversary</option><option>Wedding / Nikkah</option><option>Just Because</option></select>
-      <select id="fFor"><option value="">Who is it for? ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Everyone</option><option value="him">For Him</option><option value="her">For Her</option><option value="couple">For a Couple</option></select>
-      <select id="fBudget"><option value="">Budget ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Any</option><option value="0-1000">Under Rs. 1,000</option><option value="1000-2500">Rs. 1,000 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 2,500</option><option value="2500-5000">Rs. 2,500 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5,000</option><option value="5000-999999">Rs. 5,000+</option></select>
-      <button class="btn btn-gold" id="finderBtn" type="button" style="justify-content:center">Show Gifts ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</button>
+      <select id="fOcc"><option value="">Occasion — All</option><option>Birthday</option><option>Anniversary</option><option>Wedding / Nikkah</option><option>Just Because</option></select>
+      <select id="fFor"><option value="">Who is it for? — Everyone</option><option value="him">For Him</option><option value="her">For Her</option><option value="couple">For a Couple</option></select>
+      <select id="fBudget"><option value="">Budget — Any</option><option value="0-1000">Under Rs. 1,000</option><option value="1000-2500">Rs. 1,000 – 2,500</option><option value="2500-5000">Rs. 2,500 – 5,000</option><option value="5000-999999">Rs. 5,000+</option></select>
+      <button class="btn btn-gold" id="finderBtn" type="button" style="justify-content:center">Show Gifts →</button>
     </div>
   </div></div></section>
 
   <!-- OCCASIONS -->
   <section id="occasions" style="padding-top:36px"><div class="wrap">
-    <div class="sec-head rv"><div><div class="kicker">Shop by Occasion</div><h2>The perfect gift for every occasion</h2><p>Birthday, anniversary or Nikkah ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â pick the occasion and we will point you to the right gift.</p></div><button class="link" data-go="shop" type="button">View all gifts ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</button></div>
+    <div class="sec-head rv"><div><div class="kicker">Shop by Occasion</div><h2>The perfect gift for every occasion</h2><p>Birthday, anniversary or Nikkah — pick the occasion and we will point you to the right gift.</p></div><button class="link" data-go="shop" type="button">View all gifts →</button></div>
     <div class="occ-grid rv">
-      <button class="occ-card" data-occ="Birthday" type="button"><img loading="lazy" src="/assets/preview/img-d47dd59f483c5392c6d508f6402ff46ff94751e5d395c51181c1adbb32b7b10f.webp" alt="Birthday gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M4 21h16"/><path d="M5 21v-4.5A1.5 1.5 0 0 1 6.5 15h11A1.5 1.5 0 0 1 19 16.5V21"/><path d="M5 18h14"/><path d="M8.5 15v-2.2M12 15v-2.2M15.5 15v-2.2"/><path d="M8.5 9.4c.55.62.55 1.3 0 1.9-.55-.6-.55-1.28 0-1.9zM12 9.4c.55.62.55 1.3 0 1.9-.55-.6-.55-1.28 0-1.9zM15.5 9.4c.55.62.55 1.3 0 1.9-.55-.6-.55-1.28 0-1.9z"/></svg>Birthday</b><small>Photo frames, hampers & surprise boxes</small><span>Shop Birthday ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</span></span></button>
-      <button class="occ-card" data-occ="Anniversary" type="button"><img loading="lazy" src="/assets/preview/img-92041c21a46102ea2d36ca27c79b75fd9ef4a31fdbf3777a490b8718cd52f1db.webp" alt="Anniversary gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.4 5 7.9 5c1.6 0 3.2.9 4.1 2.3C12.9 5.9 14.5 5 16.1 5c2.5 0 4.4 2 4.4 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg>Anniversary</b><small>Couple frames, jewellery & premium boxes</small><span>Shop Anniversary ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</span></span></button>
-      <button class="occ-card" data-cat="Nikkah & Islamic" type="button"><img loading="lazy" src="/assets/preview/img-df68df9ea040b9532b7116bcd9b8015d97560433866c304dfd1d2d2ed8c162dc.webp" alt="Nikkah and Islamic gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>Nikkah &amp; Wedding</b><small>Nikkah Nama, certificates & Islamic gifts</small><span>Shop Nikkah ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</span></span></button>
-      <button class="occ-card" data-cat="Gift Boxes" type="button"><img loading="lazy" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Gift boxes for him"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M8.5 4.5L4 7l1.8 3L7.5 9v10.5h9V9l1.7 1L20 7l-4.5-2.5a3.5 3.5 0 0 1-7 0z"/></svg>For Him</b><small>Ready gift boxes with suit, watch & perfume</small><span>Shop For Him ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</span></span></button>
-      <button class="occ-card" data-cat="Jewellery" type="button"><img loading="lazy" src="/assets/preview/img-3535079f4fed0ec1a214d0dd2abb298c834bc9a495c8b0b3671485971228a805.webp" alt="Jewellery gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M7 4h10l3.2 4.8L12 20 3.8 8.8z"/><path d="M3.8 8.8h16.4"/><path d="M12 20L8.6 8.8 10.2 4M12 20l3.4-11.2L13.8 4"/></svg>For Her</b><small>Lockets, bracelets, mugs & keepsakes</small><span>Shop For Her ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</span></span></button>
-      <button class="occ-card" data-cat="Mugs & Bottles" type="button"><img loading="lazy" src="/assets/preview/img-66947c956eadb64dc7e27eec3be622dd0d607746c98685f2e1e57d10d5d3a99a.webp" alt="Everyday personalised gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M4.5 10h12.5v4.8a4.7 4.7 0 0 1-4.7 4.7H9.2a4.7 4.7 0 0 1-4.7-4.7z"/><path d="M17 11.2h.9a2.9 2.9 0 0 1 0 5.8H17"/><path d="M8 6.8c0-1.1.9-1.2.9-2.3M11.8 6.8c0-1.1.9-1.2.9-2.3"/></svg>Everyday / Office</b><small>Magic mugs, bottles, diaries & pens</small><span>Shop Daily Gifts ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</span></span></button>
+      <button class="occ-card" data-occ="Birthday" type="button"><img loading="lazy" src="/assets/preview/img-d47dd59f483c5392c6d508f6402ff46ff94751e5d395c51181c1adbb32b7b10f.webp" alt="Birthday gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M4 21h16"/><path d="M5 21v-4.5A1.5 1.5 0 0 1 6.5 15h11A1.5 1.5 0 0 1 19 16.5V21"/><path d="M5 18h14"/><path d="M8.5 15v-2.2M12 15v-2.2M15.5 15v-2.2"/><path d="M8.5 9.4c.55.62.55 1.3 0 1.9-.55-.6-.55-1.28 0-1.9zM12 9.4c.55.62.55 1.3 0 1.9-.55-.6-.55-1.28 0-1.9zM15.5 9.4c.55.62.55 1.3 0 1.9-.55-.6-.55-1.28 0-1.9z"/></svg>Birthday</b><small>Photo frames, hampers & surprise boxes</small><span>Shop Birthday →</span></span></button>
+      <button class="occ-card" data-occ="Anniversary" type="button"><img loading="lazy" src="/assets/preview/img-92041c21a46102ea2d36ca27c79b75fd9ef4a31fdbf3777a490b8718cd52f1db.webp" alt="Anniversary gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.4 5 7.9 5c1.6 0 3.2.9 4.1 2.3C12.9 5.9 14.5 5 16.1 5c2.5 0 4.4 2 4.4 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg>Anniversary</b><small>Couple frames, jewellery & premium boxes</small><span>Shop Anniversary →</span></span></button>
+      <button class="occ-card" data-cat="Nikkah & Islamic" type="button"><img loading="lazy" src="/assets/preview/img-df68df9ea040b9532b7116bcd9b8015d97560433866c304dfd1d2d2ed8c162dc.webp" alt="Nikkah and Islamic gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>Nikkah &amp; Wedding</b><small>Nikkah Nama, certificates & Islamic gifts</small><span>Shop Nikkah →</span></span></button>
+      <button class="occ-card" data-cat="Gift Boxes" type="button"><img loading="lazy" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Gift boxes for him"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M8.5 4.5L4 7l1.8 3L7.5 9v10.5h9V9l1.7 1L20 7l-4.5-2.5a3.5 3.5 0 0 1-7 0z"/></svg>For Him</b><small>Ready gift boxes with suit, watch & perfume</small><span>Shop For Him →</span></span></button>
+      <button class="occ-card" data-cat="Jewellery" type="button"><img loading="lazy" src="/assets/preview/img-3535079f4fed0ec1a214d0dd2abb298c834bc9a495c8b0b3671485971228a805.webp" alt="Jewellery gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M7 4h10l3.2 4.8L12 20 3.8 8.8z"/><path d="M3.8 8.8h16.4"/><path d="M12 20L8.6 8.8 10.2 4M12 20l3.4-11.2L13.8 4"/></svg>For Her</b><small>Lockets, bracelets, mugs & keepsakes</small><span>Shop For Her →</span></span></button>
+      <button class="occ-card" data-cat="Mugs & Bottles" type="button"><img loading="lazy" src="/assets/preview/img-66947c956eadb64dc7e27eec3be622dd0d607746c98685f2e1e57d10d5d3a99a.webp" alt="Everyday personalised gifts"><span class="oc"><b><svg class="icon" viewBox="0 0 24 24"><path d="M4.5 10h12.5v4.8a4.7 4.7 0 0 1-4.7 4.7H9.2a4.7 4.7 0 0 1-4.7-4.7z"/><path d="M17 11.2h.9a2.9 2.9 0 0 1 0 5.8H17"/><path d="M8 6.8c0-1.1.9-1.2.9-2.3M11.8 6.8c0-1.1.9-1.2.9-2.3"/></svg>Everyday / Office</b><small>Magic mugs, bottles, diaries & pens</small><span>Shop Daily Gifts →</span></span></button>
     </div>
   </div></section>
 
   <section id="cats"><div class="wrap">
-    <div class="sec-head rv"><div><div class="kicker">Categories</div><h2>Shop by category ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 11 collections</h2><p>Everything in one tap. Every category is ready to personalise.</p></div></div>
+    <div class="sec-head rv"><div><div class="kicker">Categories</div><h2>Shop by category — 11 collections</h2><p>Everything in one tap. Every category is ready to personalise.</p></div></div>
     <div class="cats rv" id="catGrid"></div>
   </div></section>
 
@@ -888,57 +887,57 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
   <section style="padding-top:0"><div class="wrap">
     <div class="sec-head rv"><div><div class="kicker">Shop by Budget</div><h2>A great gift at every budget</h2></div></div>
     <div class="budget-grid rv">
-      <button class="budget-card" data-budget="0-1000" type="button"><b>Under Rs. 1,000</b><span>Keychains, mugs, frames ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â small budget, big impact</span><em>See options ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</em></button>
-      <button class="budget-card" data-budget="1000-2500" type="button"><b>Rs. 1,000 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 2,500</b><span>Our most popular range ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â jewellery, wallets, bottles</span><em>See options ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</em></button>
-      <button class="budget-card" data-budget="2500-5000" type="button"><b>Rs. 2,500 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5,000</b><span>Premium personalised sets & Nikkah gifts</span><em>See options ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</em></button>
-      <button class="budget-card" data-budget="5000-999999" type="button"><b>Rs. 5,000+</b><span>Luxury gift boxes ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â complete suit, watch & perfume sets</span><em>See options ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</em></button>
+      <button class="budget-card" data-budget="0-1000" type="button"><b>Under Rs. 1,000</b><span>Keychains, mugs, frames — small budget, big impact</span><em>See options →</em></button>
+      <button class="budget-card" data-budget="1000-2500" type="button"><b>Rs. 1,000 – 2,500</b><span>Our most popular range — jewellery, wallets, bottles</span><em>See options →</em></button>
+      <button class="budget-card" data-budget="2500-5000" type="button"><b>Rs. 2,500 – 5,000</b><span>Premium personalised sets & Nikkah gifts</span><em>See options →</em></button>
+      <button class="budget-card" data-budget="5000-999999" type="button"><b>Rs. 5,000+</b><span>Luxury gift boxes — complete suit, watch & perfume sets</span><em>See options →</em></button>
     </div>
   </div></section>
 
   <section style="padding-top:6px"><div class="wrap">
-    <div class="sec-head rv"><div><div class="kicker">Bestsellers</div><h2>Our bestsellers</h2><p>The eight gifts customers reach for first ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â shown once, in one place.</p></div>
+    <div class="sec-head rv"><div><div class="kicker">Bestsellers</div><h2>Our bestsellers</h2><p>The eight gifts customers reach for first — shown once, in one place.</p></div>
     <button class="link" data-go="shop" type="button">View all products <svg class="icon sm" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
     <div class="grid rv" id="bestGrid"></div>
   </div></section>
 
   <!-- DEAL OF THE DAY -->
   <section style="padding-top:6px"><div class="wrap"><div class="deal rv">
-    <div class="deal-copy"><div class="kicker" style="color:#E2B84B">Deal of the Day ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Our Bestselling Box</div><h2>Double Perfume Gift Box<br>Complete 5-in-1 Set</h2><p>J. Janan perfume, Fogg, suit, watch & wallet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â everything in one box. Ready for birthdays and anniversaries, and it can be personalised with a name.</p><div class="deal-price"><span class="now">Rs. 7,999</span><span class="was">Rs. 9,599</span><span class="badge" style="position:static">SAVE 17%</span></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-gold" data-open="GW-GB-001" type="button">Order Now ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</button><button class="btn btn-ghost" data-open="GW-GB-001" type="button" style="color:#E2B84B;border-color:rgba(226,184,75,.4)">View Details</button></div><p style="font-size:13.5px;margin-top:14px">ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Cash on Delivery &nbsp;ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢&nbsp; ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Confirmed on WhatsApp first &nbsp;ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢&nbsp; Only 2 left in stock</p></div>
+    <div class="deal-copy"><div class="kicker" style="color:#E2B84B">Deal of the Day — Our Bestselling Box</div><h2>Double Perfume Gift Box<br>Complete 5-in-1 Set</h2><p>J. Janan perfume, Fogg, suit, watch & wallet — everything in one box. Ready for birthdays and anniversaries, and it can be personalised with a name.</p><div class="deal-price"><span class="now">Rs. 7,999</span><span class="was">Rs. 9,599</span><span class="badge" style="position:static">SAVE 17%</span></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-gold" data-open="GW-GB-001" type="button">Order Now →</button><button class="btn btn-ghost" data-open="GW-GB-001" type="button" style="color:#E2B84B;border-color:rgba(226,184,75,.4)">View Details</button></div><p style="font-size:13.5px;margin-top:14px">✓ Cash on Delivery &nbsp;•&nbsp; ✓ Confirmed on WhatsApp first &nbsp;•&nbsp; Only 2 left in stock</p></div>
     <div class="deal-img"><img loading="lazy" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Double Perfume Gift Box"></div>
   </div></div></section>
 
   <!-- WHY -->
   <section style="padding-top:6px"><div class="wrap">
-    <div class="sec-head rv"><div><div class="kicker">Why GiftWALA</div><h2>Why customers order with confidence</h2><p>No risk and no confusion ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â everything is confirmed with you before anything is made.</p></div></div>
+    <div class="sec-head rv"><div><div class="kicker">Why GiftWALA</div><h2>Why customers order with confidence</h2><p>No risk and no confusion — everything is confirmed with you before anything is made.</p></div></div>
     <div class="why-grid rv">
-      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Design first, payment later</h3><p>Every order is confirmed on WhatsApp. Name spelling, photo and design ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â nothing is made until you approve it.</p></div>
+      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Design first, payment later</h3><p>Every order is confirmed on WhatsApp. Name spelling, photo and design — nothing is made until you approve it.</p></div>
       <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.7"/><path d="M6.2 9.4h.01M17.8 14.6h.01"/></svg></div><h3>Cash on Delivery</h3><p>Pay only when the gift is in your hands. Prepaid orders (JazzCash / Easypaisa / Bank) get 15% OFF.</p></div>
-      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M13.5 6.5l3 3"/></svg></div><h3>Personalised by hand</h3><p>Made with care, not just printed ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the name, photo and message exactly as you sent them.</p></div>
-      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M3 8h11v9H3zM14 11h4l3 3v3h-7z"/><circle cx="7" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg></div><h3>Flat Rs. 300 delivery</h3><p>From Karachi to Khyber ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â one delivery charge across Pakistan, with no hidden costs.</p></div>
+      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M13.5 6.5l3 3"/></svg></div><h3>Personalised by hand</h3><p>Made with care, not just printed — the name, photo and message exactly as you sent them.</p></div>
+      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M3 8h11v9H3zM14 11h4l3 3v3h-7z"/><circle cx="7" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg></div><h3>Flat Rs. 300 delivery</h3><p>From Karachi to Khyber — one delivery charge across Pakistan, with no hidden costs.</p></div>
       <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 2.6V11c0 4.6-3 7.7-7 9.4C8 18.7 5 15.6 5 11V5.6z"/><path d="M9.2 11.6l2 2 3.6-3.9"/></svg></div><h3>Damaged? We make it right</h3><p>If your gift arrives damaged, defective or wrong, send a photo on WhatsApp and we will repair, replace or refund it.</p></div>
-      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2.5L4.8 13.4h6L9.7 21.5l8.2-10.9h-6z"/></svg></div><h3>Last-minute gift? No problem</h3><p>Forgot a birthday? Order in 2 minutes and we will do our best to get it made and moving fast ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â timing is confirmed on WhatsApp.</p></div>
+      <div class="why-card"><div class="wic"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2.5L4.8 13.4h6L9.7 21.5l8.2-10.9h-6z"/></svg></div><h3>Last-minute gift? No problem</h3><p>Forgot a birthday? Order in 2 minutes and we will do our best to get it made and moving fast — timing is confirmed on WhatsApp.</p></div>
     </div>
   </div></section>
 
   <section style="padding-top:6px"><div class="wrap">
-    <div class="sec-head rv"><div><div class="kicker">How it works</div><h2>In 3 steps ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â from your idea to their door</h2></div></div>
+    <div class="sec-head rv"><div><div class="kicker">How it works</div><h2>In 3 steps — from your idea to their door</h2></div></div>
     <div class="steps rv">
-      <div class="step"><div class="n"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M13.5 6.5l3 3"/></svg></div><h3>1. Personalise it</h3><p>Add the name, photo or message on the product page ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â it goes straight into your order, nothing gets lost.</p></div>
+      <div class="step"><div class="n"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M13.5 6.5l3 3"/></svg></div><h3>1. Personalise it</h3><p>Add the name, photo or message on the product page — it goes straight into your order, nothing gets lost.</p></div>
       <div class="step"><div class="n"><svg class="icon wag" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></div><h3>2. We confirm on WhatsApp</h3><p>Your order opens in WhatsApp with every detail filled in. We confirm the design with you before anything is made.</p></div>
       <div class="step"><div class="n"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></div><h3>3. Made &amp; delivered</h3><p>Your gift is made to order, packed with care and delivered anywhere in Pakistan. Pay cash on delivery.</p></div>
     </div>
   </div></section>
 
   <section><div class="wrap">
-    <div class="sec-head rv"><div><div class="kicker">Reviews</div><h2>What customers say</h2><p>Real reviews from delivered orders ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â each one checked before it appears here.</p></div><button class="btn btn-ghost" id="writeReviewBtn" type="button">Write a review</button></div>
+    <div class="sec-head rv"><div><div class="kicker">Reviews</div><h2>What customers say</h2><p>Real reviews from delivered orders — each one checked before it appears here.</p></div><button class="btn btn-ghost" id="writeReviewBtn" type="button">Write a review</button></div>
     <div id="revSummary"></div>
     <div class="rev-grid" id="revGrid"></div>
     <div class="empty-note rv" id="revEmpty">
       <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l2.2 4.9 5.3.6-3.9 3.6 1 5.2L12 14.7l-4.6 2.6 1-5.2-3.9-3.6 5.3-.6z"/></svg>
-      <b>No verified reviews yet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â be the first</b>
-      Reviews appear here only from real, delivered orders ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â no made-up star ratings. Ordered from us? Tap ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œWrite a reviewÃƒÂ¢Ã¢â€šÂ¬Ã‚Â above and tell us how it went ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â it shows here once it has been checked against your order.
+      <b>No verified reviews yet — be the first</b>
+      Reviews appear here only from real, delivered orders — no made-up star ratings. Ordered from us? Tap “Write a review” above and tell us how it went — it shows here once it has been checked against your order.
     </div>
-    <div class="cta-banner rv" style="margin-top:28px"><div style="flex:1;min-width:260px"><h2>Ready to make someone's day?</h2><p>Pick a gift in 2 minutes, add the name, and add it to your bag ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â we handle the rest. Confirmed on WhatsApp first, then delivered to their door.</p><div class="pay-row"><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.7"/><path d="M6.2 9.4h.01M17.8 14.6h.01"/></svg>Cash on Delivery</span><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10.8 18.6h2.4"/></svg>JazzCash</span><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h15A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 8.5V7a2.5 2.5 0 0 1 2.5-2.5H19"/><circle cx="16.8" cy="13.8" r="1.1"/></svg>Easypaisa ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 15% OFF</span><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><path d="M3.5 9.5L12 4l8.5 5.5"/><path d="M5.5 10v7M10 10v7M14 10v7M18.5 10v7"/><path d="M3.5 20.5h17"/></svg>Bank Transfer</span></div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn-dark2" data-go="shop" type="button">Shop Now ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â From Rs. 349 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢</button><button class="btn-wa2" id="ctaWa" type="button"><svg class="icon wag" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Order on WhatsApp</button></div></div>
+    <div class="cta-banner rv" style="margin-top:28px"><div style="flex:1;min-width:260px"><h2>Ready to make someone's day?</h2><p>Pick a gift in 2 minutes, add the name, and add it to your bag — we handle the rest. Confirmed on WhatsApp first, then delivered to their door.</p><div class="pay-row"><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.7"/><path d="M6.2 9.4h.01M17.8 14.6h.01"/></svg>Cash on Delivery</span><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10.8 18.6h2.4"/></svg>JazzCash</span><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h15A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 8.5V7a2.5 2.5 0 0 1 2.5-2.5H19"/><circle cx="16.8" cy="13.8" r="1.1"/></svg>Easypaisa — 15% OFF</span><span class="pay" style="background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.15);color:#191410"><svg class="icon" viewBox="0 0 24 24"><path d="M3.5 9.5L12 4l8.5 5.5"/><path d="M5.5 10v7M10 10v7M14 10v7M18.5 10v7"/><path d="M3.5 20.5h17"/></svg>Bank Transfer</span></div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn-dark2" data-go="shop" type="button">Shop Now — From Rs. 349 →</button><button class="btn-wa2" id="ctaWa" type="button"><svg class="icon wag" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Order on WhatsApp</button></div></div>
   </div></section>
 </div>
 
@@ -946,8 +945,8 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <div class="view" id="view-shop"><div class="wrap" style="padding-top:36px;padding-bottom:70px">
   <div class="sec-head" style="margin-bottom:20px"><div><div class="kicker">All Shop</div><h2>Shop all gifts</h2></div></div>
   <div class="toolbar">
-    <div class="search"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg><input id="shopSearch" type="search" placeholder="Search gifts, frames, mugsÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦" aria-label="Search products"></div>
-    <select id="shopPrice" aria-label="Filter by price"><option value="">Any price</option><option value="0-1000">Under Rs. 1,000</option><option value="1000-2500">Rs. 1,000 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 2,500</option><option value="2500-5000">Rs. 2,500 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5,000</option><option value="5000-999999">Above Rs. 5,000</option></select>
+    <div class="search"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg><input id="shopSearch" type="search" placeholder="Search gifts, frames, mugs…" aria-label="Search products"></div>
+    <select id="shopPrice" aria-label="Filter by price"><option value="">Any price</option><option value="0-1000">Under Rs. 1,000</option><option value="1000-2500">Rs. 1,000 – 2,500</option><option value="2500-5000">Rs. 2,500 – 5,000</option><option value="5000-999999">Above Rs. 5,000</option></select>
     <select id="shopSort" aria-label="Sort products"><option value="featured">Sort: Featured</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="name">Name: A to Z</option><option value="discount">Biggest discount</option></select>
   </div>
   <div class="chiprow" id="shopChips"></div>
@@ -968,12 +967,12 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
   <div class="pv">
     <div class="pv-gallery">
       <div class="main-img" id="pvMainWrap">
-        <img loading="lazy" id="pvImg" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Selected product photo">
+        <img id="pvImg" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Selected product photo">
         <button class="pv-view-btn" id="pvViewBtn" type="button"><svg class="icon sm" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>View full picture</button>
       </div>
       <div class="pv-thumbs">
-        <button class="pv-thumb on" id="pvThumbMain" type="button" aria-label="View main product photo"><img loading="lazy" id="pvThumbImg" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt=""></button>
-        <div class="pv-photo-note"><b>Product photo</b><span>Tap the photo or ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œView full pictureÃƒÂ¢Ã¢â€šÂ¬Ã‚Â to see it full-screen.</span></div>
+        <button class="pv-thumb on" id="pvThumbMain" type="button" aria-label="View main product photo"><img id="pvThumbImg" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt=""></button>
+        <div class="pv-photo-note"><b>Product photo</b><span>Tap the photo or “View full picture” to see it full-screen.</span></div>
       </div>
     </div>
     <div>
@@ -983,11 +982,11 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       <div class="stock" id="pvStock"></div>
       <p class="desc" id="pvDesc" style="margin-top:14px"></p>
       <div class="field"><label for="pvPerson">Name to print (personalisation)</label><input id="pvPerson" type="text" placeholder="e.g. Happy Birthday, Ayesha" maxlength="60"></div>
-      <div class="field"><label for="pvPhoto">Your photo for this gift</label><input id="pvPhoto" type="file" accept="image/*"><small style="color:var(--ink-faint)">The file stays on your device ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â we confirm the photo with you on WhatsApp.</small></div>
-      <div class="field" id="pvSizeWrap" hidden><label for="pvSize">Frame size</label><select id="pvSize"><option>A5</option><option selected>A4</option><option>A3</option></select><small style="color:var(--ink-faint)">Size prices are confirmed on WhatsApp ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â no made-up prices here.</small></div>
+      <div class="field"><label for="pvPhoto">Your photo for this gift</label><input id="pvPhoto" type="file" accept="image/*"><small style="color:var(--ink-faint)">The file stays on your device — we confirm the photo with you on WhatsApp.</small></div>
+      <div class="field" id="pvSizeWrap" hidden><label for="pvSize">Frame size</label><select id="pvSize"><option>A5</option><option selected>A4</option><option>A3</option></select><small style="color:var(--ink-faint)">Size prices are confirmed on WhatsApp — no made-up prices here.</small></div>
       <div class="field"><label for="pvNote">Gift note (optional)</label><textarea id="pvNote" rows="2" maxlength="200" placeholder="A short message to include with the gift"></textarea></div>
       <div class="pv-actions">
-        <div class="qty"><button id="qMinus" type="button" aria-label="Decrease quantity">ÃƒÂ¢Ã‹â€ Ã¢â‚¬â„¢</button><output id="qVal">1</output><button id="qPlus" type="button" aria-label="Increase quantity">+</button></div>
+        <div class="qty"><button id="qMinus" type="button" aria-label="Decrease quantity">−</button><output id="qVal">1</output><button id="qPlus" type="button" aria-label="Increase quantity">+</button></div>
         <button class="btn btn-gold" id="pvAdd" type="button"><svg class="icon sm" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12.2a1.8 1.8 0 0 1-1.8 1.6H8a1.8 1.8 0 0 1-1.8-1.6L5 8z"/><path d="M8.5 10.5V6.8a3.5 3.5 0 0 1 7 0v3.7"/></svg>Add to bag</button>
         <button class="btn btn-gold pv-buy" id="pvBuy" type="button"><svg class="icon sm" viewBox="0 0 24 24"><path d="M13 2.5L4.8 13.4h6L9.7 21.5l8.2-10.9h-6z"/></svg>Buy Now</button>
         <button class="btn btn-ghost" id="pvWish" type="button"><svg class="icon sm" viewBox="0 0 24 24"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.4 5 7.9 5c1.6 0 3.2.9 4.1 2.3C12.9 5.9 14.5 5 16.1 5c2.5 0 4.4 2 4.4 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg><span>Save to wishlist</span></button>
@@ -1010,7 +1009,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
   <div class="sec-head" style="margin:14px 0 24px"><div><div class="kicker">Checkout</div><h2>Complete your order</h2><p>Fill in your delivery details, choose how you would like to pay, and place your order. We confirm the design with you on WhatsApp before anything is made.</p></div></div>
 
   <div id="coEmpty" hidden>
-    <div class="empty-note"><svg class="icon" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12.2a1.8 1.8 0 0 1-1.8 1.6H8a1.8 1.8 0 0 1-1.8-1.6L5 8z"/><path d="M8.5 10.5V6.8a3.5 3.5 0 0 1 7 0v3.7"/></svg><b>Your bag is empty</b>Add a gift first ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â checkout opens once there is something to order.<div style="margin-top:16px"><button class="btn btn-gold" data-go="shop" type="button">Shop now</button></div></div>
+    <div class="empty-note"><svg class="icon" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12.2a1.8 1.8 0 0 1-1.8 1.6H8a1.8 1.8 0 0 1-1.8-1.6L5 8z"/><path d="M8.5 10.5V6.8a3.5 3.5 0 0 1 7 0v3.7"/></svg><b>Your bag is empty</b>Add a gift first — checkout opens once there is something to order.<div style="margin-top:16px"><button class="btn btn-gold" data-go="shop" type="button">Shop now</button></div></div>
   </div>
 
   <div class="co-grid" id="coMain">
@@ -1022,7 +1021,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
         <div class="field"><label for="coCity">City *</label><input id="coCity" type="text" placeholder="e.g. Lahore" autocomplete="address-level2" maxlength="40"></div>
       </div>
       <div class="field"><label for="coAddr">Full delivery address *</label><textarea id="coAddr" rows="2" placeholder="House, street, area, nearest landmark" maxlength="240"></textarea></div>
-      <div class="field"><label for="coNotes">Order notes (optional)</label><textarea id="coNotes" rows="2" placeholder="Anything we should know ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â delivery timing, a message for the riderÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦" maxlength="240"></textarea></div>
+      <div class="field"><label for="coNotes">Order notes (optional)</label><textarea id="coNotes" rows="2" placeholder="Anything we should know — delivery timing, a message for the rider…" maxlength="240"></textarea></div>
 
       <h3 class="mt">Payment method</h3>
       <div id="coPays" role="radiogroup" aria-label="Payment method">
@@ -1031,11 +1030,11 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
         <label class="payopt"><input type="radio" name="coPay" value="jazzcash"><span class="po-txt"><b>JazzCash</b><small>Pay in advance and save 15% on your order.</small></span><span class="po-badge">15% OFF</span></label>
         <label class="payopt"><input type="radio" name="coPay" value="bank"><span class="po-txt"><b>Bank Transfer</b><small>Pay in advance and save 15% on your order.</small></span><span class="po-badge">15% OFF</span></label>
       </div>
-      <div class="field" id="coTxnWrap" hidden style="margin-top:14px"><label for="coTxn">Transaction ID (optional)</label><input id="coTxn" type="text" placeholder="e.g. 12345678901" maxlength="30"><small style="color:var(--ink-faint)">If you have already paid, add the transaction ID ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â otherwise just place the order and pay after we confirm.</small></div>
-      <div class="co-note" id="coPayNote" hidden><b>Prepaid ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 15% off applied.</b> Payment details are shared at checkout confirmation ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â pay after we confirm your design on WhatsApp, never before.</div>
+      <div class="field" id="coTxnWrap" hidden style="margin-top:14px"><label for="coTxn">Transaction ID (optional)</label><input id="coTxn" type="text" placeholder="e.g. 12345678901" maxlength="30"><small style="color:var(--ink-faint)">If you have already paid, add the transaction ID — otherwise just place the order and pay after we confirm.</small></div>
+      <div class="co-note" id="coPayNote" hidden><b>Prepaid — 15% off applied.</b> Payment details are shared at checkout confirmation — pay after we confirm your design on WhatsApp, never before.</div>
       <div class="msg warn" id="coMsg"></div>
       <button class="btn btn-gold" id="coPlace" type="submit" style="width:100%;justify-content:center;margin-top:18px">Place Order</button>
-      <p style="color:var(--ink-faint);font-size:13px;text-align:center;margin-top:12px">Flat Rs. 300 delivery, anywhere in Pakistan Ãƒâ€šÃ‚Â· Every order confirmed on WhatsApp first</p>
+      <p style="color:var(--ink-faint);font-size:13px;text-align:center;margin-top:12px">Flat Rs. 300 delivery, anywhere in Pakistan · Every order confirmed on WhatsApp first</p>
     </form>
 
     <aside class="co-card" aria-label="Order summary">
@@ -1043,7 +1042,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       <div class="co-items" id="coItems"></div>
       <div class="co-rows">
         <div class="drow"><span>Subtotal</span><span id="coSub">Rs. 0</span></div>
-        <div class="drow" id="coDiscRow" hidden><span>Prepaid discount (15%)</span><span id="coDisc">ÃƒÂ¢Ã‹â€ Ã¢â‚¬â„¢ Rs. 0</span></div>
+        <div class="drow" id="coDiscRow" hidden><span>Prepaid discount (15%)</span><span id="coDisc">− Rs. 0</span></div>
         <div class="drow"><span>Delivery</span><span id="coDel">Rs. 0</span></div>
         <div class="drow total"><span>Total</span><span id="coTotal">Rs. 0</span></div>
       </div>
@@ -1054,11 +1053,11 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
   <div id="coSuccess" hidden style="padding-bottom:70px">
     <div class="co-card co-success" style="max-width:680px;margin:0 auto">
       <div class="ok-ic"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-      <h3>Order placed ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â thank you!</h3>
+      <h3>Order placed — thank you!</h3>
       <p>Your order ID is:</p>
       <div><span class="co-oid" id="coOid">GW-00000</span></div>
       <p id="coSuccessTxt" style="margin-top:12px"></p>
-      <p style="margin-top:10px">We will confirm your design on WhatsApp before anything is made. Keep your order ID safe ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â you can track your order with it any time.</p>
+      <p style="margin-top:10px">We will confirm your design on WhatsApp before anything is made. Keep your order ID safe — you can track your order with it any time.</p>
       <div class="cta-row">
         <button class="btn btn-gold" id="coTrackBtn" type="button">Track this order</button>
         <button class="btn btn-ghost" data-go="shop" type="button">Continue shopping</button>
@@ -1071,7 +1070,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <div class="view" id="view-wishlist"><div class="wrap" style="padding-top:36px;padding-bottom:70px">
   <div class="sec-head"><div><div class="kicker">Wishlist</div><h2>Your saved gifts</h2><p>Tap the heart on any product to save it here.</p></div></div>
   <div class="grid" id="wishGrid"></div>
-  <div class="empty-note" id="wishEmpty"><b>Your wishlist is empty</b>Nothing saved yet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â browse the shop and tap a heart to keep a gift here.</div>
+  <div class="empty-note" id="wishEmpty"><b>Your wishlist is empty</b>Nothing saved yet — browse the shop and tap a heart to keep a gift here.</div>
 </div></div>
 
 <!-- ============ FAQ ============ -->
@@ -1094,7 +1093,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <div class="view" id="view-admin"><div class="wrap" style="padding-top:36px;padding-bottom:70px">
   <div class="admin-shell">
     <div class="admin-top">
-      <div class="at-brand"><img loading="lazy" class="lg-d" src="/assets/preview/img-f20f5767e0b77b7f95bed79d78ae975a3ae7a7e427dd8870bf8e30f8e84d7603.webp" alt="GiftWALA logo"><img loading="lazy" class="lg-l" src="/assets/preview/img-6ad415aa5273853d1b99f0b95bef029539a7db2f8973a87e3694f261c951dedd.webp" alt="GiftWALA logo"><div><b>GiftWALA Admin</b><small>Store control panel</small></div></div>
+      <div class="at-brand"><img class="lg-d" src="/assets/preview/img-f20f5767e0b77b7f95bed79d78ae975a3ae7a7e427dd8870bf8e30f8e84d7603.webp" alt="GiftWALA logo"><img class="lg-l" src="/assets/preview/img-6ad415aa5273853d1b99f0b95bef029539a7db2f8973a87e3694f261c951dedd.webp" alt="GiftWALA logo"><div><b>GiftWALA Admin</b><small>Store control panel</small></div></div>
       <div class="at-actions"><span class="pill preview">Preview mode</span><button class="btn btn-ghost" data-go="home" type="button">View store</button></div>
     </div>
     <aside class="aside">
@@ -1105,47 +1104,47 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
     <div class="amain">
       <div class="apane on" data-pane="dashboard">
         <div class="stat-grid">
-          <div class="stat"><span class="sic"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg></span><div><small>Products live</small><b id="stProducts">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â</b><span>Across 11 categories</span></div></div>
-          <div class="stat"><span class="sic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3L2.5 20h19zM12 10v4.5M12 17.5h.01"/></svg></span><div><small>Low stock</small><b id="stLow">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â</b><span>Items with 4 or fewer left</span></div></div>
+          <div class="stat"><span class="sic"><svg class="icon" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg></span><div><small>Products live</small><b id="stProducts">—</b><span>Across 11 categories</span></div></div>
+          <div class="stat"><span class="sic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3L2.5 20h19zM12 10v4.5M12 17.5h.01"/></svg></span><div><small>Low stock</small><b id="stLow">—</b><span>Items with 4 or fewer left</span></div></div>
           <div class="stat"><span class="sic"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21zM9 8h6M9 12h6"/></svg></span><div><small>Orders today</small><b>Sample</b><span>Live orders appear after deploy</span></div></div>
           <div class="stat"><span class="sic"><svg class="icon" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M6 9.5h.01M18 15.5h.01"/></svg></span><div><small>Revenue today</small><b>Sample</b><span>Live revenue appears after deploy</span></div></div>
         </div>
-        <div class="note"><b>Security:</b> the panel now needs the ADMIN_TOKEN, ADMIN_EMAIL and ADMIN_PASSWORD secrets set before deploy ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â until then, admin login returns 401 and the public shop keeps working.</div>
-        <h3 class="serif" style="font-size:21px;margin-bottom:10px">Needs attention ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â low stock</h3>
+        <div class="note"><b>Security:</b> the panel now needs the ADMIN_TOKEN, ADMIN_EMAIL and ADMIN_PASSWORD secrets set before deploy — until then, admin login returns 401 and the public shop keeps working.</div>
+        <h3 class="serif" style="font-size:21px;margin-bottom:10px">Needs attention — low stock</h3>
         <div class="tblwrap"><table><thead><tr><th></th><th>Product</th><th>SKU</th><th>Price</th><th>Stock</th></tr></thead><tbody id="lowRows"></tbody></table></div>
       </div>
       <div class="apane" data-pane="products">
-        <div class="note"><b>Products:</b> edit prices, stock and visibility, or bulk-update price and stock. Quick-save no longer wipes a price to Rs. 0 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â that bug is fixed.</div>
+        <div class="note"><b>Products:</b> edit prices, stock and visibility, or bulk-update price and stock. Quick-save no longer wipes a price to Rs. 0 — that bug is fixed.</div>
         <div class="tblwrap"><table><thead><tr><th></th><th>Product</th><th>Category</th><th>Price</th><th>Sale</th><th>Stock</th><th>Status</th></tr></thead><tbody id="prodRows"></tbody></table></div>
       </div>
       <div class="apane" data-pane="orders">
-        <div class="note"><b>Orders:</b> every order shows a status timeline ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Placed ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Confirmed ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Making ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Dispatched ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Delivered. Cancelling an order restores its stock automatically. Live orders appear here after deploy; this preview has none.</div>
+        <div class="note"><b>Orders:</b> every order shows a status timeline — Placed → Confirmed → Making → Dispatched → Delivered. Cancelling an order restores its stock automatically. Live orders appear here after deploy; this preview has none.</div>
         <div class="empty-note"><b>No orders in preview</b>Real orders from the live store will list here.</div>
       </div>
       <div class="apane" data-pane="categories">
         <div class="tblwrap"><table><thead><tr><th>Category</th><th>Products</th></tr></thead><tbody id="catRows"></tbody></table></div>
       </div>
       <div class="apane" data-pane="customers">
-        <div class="note"><b>Customers</b> are built only from real orders ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â names, phone numbers and order history. No invented customer lists.</div>
+        <div class="note"><b>Customers</b> are built only from real orders — names, phone numbers and order history. No invented customer lists.</div>
         <div class="empty-note"><b>No customers in preview</b>Customers appear once real orders come in.</div>
       </div>
       <div class="apane" data-pane="reviews">
-        <div class="note"><b>Reviews moderation:</b> approve or reject reviews before they show on the site. Star ratings are calculated from real reviews only ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the old hard-coded 4.9 is gone.</div>
+        <div class="note"><b>Reviews moderation:</b> approve or reject reviews before they show on the site. Star ratings are calculated from real reviews only — the old hard-coded 4.9 is gone.</div>
         <div class="empty-note"><b>No reviews waiting</b>New reviews from delivered orders will appear here for approval.</div>
       </div>
       <div class="apane" data-pane="coupons">
-        <div class="note"><b>Not live yet:</b> the coupons screen and database table are ready, but the <b>/api/coupons</b> endpoint still has to be added to the Worker ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â coupon codes will not work at checkout until then.</div>
+        <div class="note"><b>Not live yet:</b> the coupons screen and database table are ready, but the <b>/api/coupons</b> endpoint still has to be added to the Worker — coupon codes will not work at checkout until then.</div>
         <div class="empty-note"><b>Coupons are built, not switched on</b>This is shown honestly in the panel so a code is never promised before it works.</div>
       </div>
       <div class="apane" data-pane="settings">
         <div class="form-card" style="max-width:520px">
           <div class="field"><label>Delivery charge (Rs.)</label><input type="number" value="300"></div>
-          <div class="field"><label>Prepaid discount</label><input type="text" value="15% off ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Easypaisa / JazzCash / Bank Transfer"></div>
+          <div class="field"><label>Prepaid discount</label><input type="text" value="15% off — Easypaisa / JazzCash / Bank Transfer"></div>
           <small style="color:var(--ink-faint)">In the live panel these settings save to the store. In this preview they are display only.</small>
         </div>
       </div>
       <div class="apane" data-pane="content">
-        <div class="note"><b>Content &amp; Pages:</b> edit the Delivery &amp; Returns, Terms, Privacy, About and FAQ pages from here ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the same pages linked in the shop footer.</div>
+        <div class="note"><b>Content &amp; Pages:</b> edit the Delivery &amp; Returns, Terms, Privacy, About and FAQ pages from here — the same pages linked in the shop footer.</div>
         <div class="tblwrap"><table><thead><tr><th>Page</th><th>Status</th></tr></thead><tbody>
           <tr><td>Delivery &amp; Returns</td><td><span class="pill ok">Published</span></td></tr>
           <tr><td>Terms &amp; Conditions</td><td><span class="pill ok">Published</span></td></tr>
@@ -1166,9 +1165,9 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
   <div class="fgrid">
     <div class="fbrand">
       <img loading="lazy" src="/assets/preview/img-f20f5767e0b77b7f95bed79d78ae975a3ae7a7e427dd8870bf8e30f8e84d7603.webp" alt="GiftWALA logo">
-      <p>Personalised gifts, curated boxes and keepsakes ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â made with love in Pakistan. Every order confirmed on WhatsApp, with Cash on Delivery.</p><div class="pay-row"><span class="pay">COD</span><span class="pay">JazzCash</span><span class="pay">Easypaisa</span><span class="pay">Bank Transfer</span></div>
+      <p>Personalised gifts, curated boxes and keepsakes — made with love in Pakistan. Every order confirmed on WhatsApp, with Cash on Delivery.</p><div class="pay-row"><span class="pay">COD</span><span class="pay">JazzCash</span><span class="pay">Easypaisa</span><span class="pay">Bank Transfer</span></div>
       <form class="news" id="newsForm"><input type="email" required placeholder="Email for gift ideas &amp; offers" aria-label="Email address"><button class="btn btn-gold" type="submit" style="box-shadow:none">Join</button></form>
-      <div class="msg ok" id="newsMsg">Thank you ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â you are on the list.</div>
+      <div class="msg ok" id="newsMsg">Thank you — you are on the list.</div>
     </div>
     <div><h4>Shop</h4>
       <button class="fl" data-go="shop" type="button">All products</button>
@@ -1186,7 +1185,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       <button class="fl" data-policy="delivery" type="button">Shipping Policy</button>
     </div>
   </div>
-  <div class="fbot"><span>Ãƒâ€šÃ‚Â© 2026 GiftWALA ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Personalised Gifts, Pakistan</span><span style="margin-left:auto">Redesign preview ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â not the live site</span></div>
+  <div class="fbot"><span>© 2026 GiftWALA — Personalised Gifts, Pakistan</span><span style="margin-left:auto">Redesign preview — not the live site</span></div>
 </div></footer>
 
 <!-- cart drawer -->
@@ -1215,7 +1214,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <div class="lightbox" id="pvLightbox" role="dialog" aria-modal="true" aria-label="Product photo viewer" hidden>
   <button class="lb-close" id="lbClose" type="button" aria-label="Close photo viewer"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <figure class="lb-fig">
-    <img loading="lazy" id="lbImg" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Product photo, full view">
+    <img id="lbImg" src="/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp" alt="Product photo, full view">
     <figcaption id="lbCap"></figcaption>
   </figure>
 </div>
@@ -1223,20 +1222,20 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-var PRODUCTS = [{"sku":"GW-GB-001","name":"Double Perfume Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ J. Janan, Fogg, Suit, Watch & Wallet","cat":"Gift Boxes","price":9599,"sale":7999,"img":"/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp","desc":"Make a special occasion memorable with Double Perfume Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ J.","stock":2},{"sku":"GW-GB-002","name":"Premium Men's Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Perfume, Body Spray & Wallet","cat":"Gift Boxes","price":8999,"sale":7499,"img":"/assets/preview/img-05c22275503090f713f0302819cffe6247008adbb9e87e725f50577165eb7068.webp","desc":"Make a special occasion memorable with Premium Men's Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Perfume, Body Spray & Wallet.","stock":7},{"sku":"GW-GB-003","name":"Birthday Gift Hamper ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Pasha Cotton Suit, T-Shirt, Watch & Perfume","cat":"Gift Boxes","price":8399,"sale":6999,"img":"/assets/preview/img-d47dd59f483c5392c6d508f6402ff46ff94751e5d395c51181c1adbb32b7b10f.webp","desc":"Make a special occasion memorable with Birthday Gift Hamper ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Pasha Cotton Suit, T-Shirt, Watch & Perfume.","stock":3},{"sku":"GW-GB-004","name":"Zellbury Grey Perfume Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Wallet & Sunglasses","cat":"Gift Boxes","price":8399,"sale":6999,"img":"/assets/preview/img-2525c527e87953338bd7ec23fd32c081535d7aaa5343862be15e94bfadc182d1.webp","desc":"Make a special occasion memorable with Zellbury Grey Perfume Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Wallet & Sunglasses.","stock":20},{"sku":"GW-GB-005","name":"Anniversary Gift Box for Husband ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Perfume & Cufflinks","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-92041c21a46102ea2d36ca27c79b75fd9ef4a31fdbf3777a490b8718cd52f1db.webp","desc":"Make a special occasion memorable with Anniversary Gift Box for Husband ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Perfume & Cufflinks.","stock":20},{"sku":"GW-GB-006","name":"Anniversary Gift Set ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Belt, Coffee Tumbler & Heart Chocolates","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-a20c71b0a6c586565a5c0760da4c4fd325c252072c823726878c387f2cc3e4ac.webp","desc":"Make a special occasion memorable with Anniversary Gift Set ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Belt, Coffee Tumbler & Heart Chocolates.","stock":2},{"sku":"GW-GB-007","name":"Birthday Gift Box for Him ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Perfume, Cufflinks & Wallet","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-9b0d67ab5f2d7ef46dc9fb8587e1b9f2d1eac1e30c510984ce63cfee2c6d4e70.webp","desc":"Make a special occasion memorable with Birthday Gift Box for Him ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Perfume, Cufflinks & Wallet.","stock":11},{"sku":"GW-GB-008","name":"Birthday Gift Box with Customised T-Shirt, Cap, Watch & Perfume","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-5fb37f5fd8843943ecb2197c510c9ea5065336423cf00bbd2fc6dfb242d8e6aa.webp","desc":"Make a special occasion memorable with Birthday Gift Box with Customised T-Shirt, Cap, Watch & Perfume.","stock":3},{"sku":"GW-GB-009","name":"Gift Box for Him ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5 Piece Men's Gift Hamper with Suit, Watch & Perfume","cat":"Gift Boxes","price":6799,"sale":5499,"img":"/assets/preview/img-e07615ab479b3372980f0e5c5b5ed9a7f550727695deeb817d8c89ca274c9b48.webp","desc":"Make a special occasion memorable with Gift Box for Him ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5 Piece Men's Gift Hamper with Suit, Watch & Perfume.","stock":9},{"sku":"GW-GB-010","name":"Men's Deal Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5 Piece Gift Set with J. Suit, Watch & Perfume","cat":"Gift Boxes","price":6799,"sale":5499,"img":"/assets/preview/img-0b4b27f02a79929bf1176f3af2bf3a2ed00dda3348ba43117f3e20acf9f7b1e9.webp","desc":"Make a special occasion memorable with Men's Deal Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 5 Piece Gift Set with J.","stock":11},{"sku":"GW-GB-011","name":"Men's Ring Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Fogg Perfume & Wallet","cat":"Gift Boxes","price":5999,"sale":4999,"img":"/assets/preview/img-0bc57ca92e9921099ee6c1a3204aa2543ba3d78fcf77d1d454a6ee78f6ad4355.webp","desc":"Make a special occasion memorable with Men's Ring Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Watch, Fogg Perfume & Wallet.","stock":4},{"sku":"GW-GB-012","name":"Rose Bouquet Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Chocolates, Perfume, Body Spray & Wallet","cat":"Gift Boxes","price":5999,"sale":4999,"img":"/assets/preview/img-48ea03532534ba5fc28baa1820ed57e992bb10abc1e3002947520140d28bb70b.webp","desc":"Make a special occasion memorable with Rose Bouquet Gift Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Chocolates, Perfume, Body Spray & Wallet.","stock":12},{"sku":"GW-GB-013","name":"Affordable Gift Box for Him ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Customised Cufflinks & Chocolates","cat":"Gift Boxes","price":4799,"sale":3999,"img":"/assets/preview/img-00e2cf0d890a63c86fb962aa81934ba57a1ad5b3cdb77b6d5a576b3f9458b0b5.webp","desc":"Make a special occasion memorable with Affordable Gift Box for Him ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Suit, Customised Cufflinks & Chocolates.","stock":10},{"sku":"GW-GB-014","name":"Mega Deal Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 7 Piece Gift Set","cat":"Gift Boxes","price":2199,"sale":null,"img":"/assets/preview/img-f323aa0de33a9e18b0b95abae50d953350e0fa7197c95ddfdb7d6a9f7dbb5973.webp","desc":"Make a special occasion memorable with Mega Deal Box ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 7 Piece Gift Set.","stock":12},{"sku":"GW-FW-001","name":"Customized 2 in 1 3D Magic Mirror Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-a0dc9fbe15a7be143c35f24a34a2f32422e94af72521c7781cdf42c0f898b906.webp","desc":"Turn a favourite photo, name or milestone into a display piece with Customized 2 in 1 3D Magic Mirror Frame.","stock":20},{"sku":"GW-FW-002","name":"Customized Acrylic Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Transparent","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-7fc9329d004a7d9fe8f2cccaa3a700aa26505ed4e682a666e805b28840f68f5f.webp","desc":"Turn a favourite photo, name or milestone into a display piece with Customized Acrylic Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Transparent.","stock":20},{"sku":"GW-FW-003","name":"Customized Birthday Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Collage Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-63b89d60d5a7e6fd4d54460ffc56ddfbcf3b7052245cda6e4ae0f07d9bd6f828.webp","desc":"Turn a birthday or new arrival into a display piece with Customized Birthday Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Collage Frame.","stock":20},{"sku":"GW-FW-004","name":"Customized Couple Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Square Memory Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-870f9eb0461d2885e88f253cca5b7567e923b3bdffbc0e666df980152fe3abe5.webp","desc":"Turn a special relationship or shared memory into a display piece with Customized Couple Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Square Memory Frame.","stock":20},{"sku":"GW-FW-005","name":"Personalized Birthday Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Elegant Minimal Design","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-77f2738dc1d01d160b9809c4d98aa6d2a48bdf687ed827a2d816171040858616.webp","desc":"Turn a birthday or new arrival into a display piece with Personalized Birthday Photo Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Elegant Minimal Design.","stock":20},{"sku":"GW-FW-006","name":"Customized Sticky Wooden Photo Tiles","cat":"Frames & Wall Art","price":1800,"sale":1099,"img":"/assets/preview/img-b5cb8fe275d7f198b3993172be80b76f9fb8f5f6561ac94195545e8f8bcb1650.webp","desc":"Turn a favourite photo, name or milestone into a display piece with Customized Sticky Wooden Photo Tiles.","stock":20},{"sku":"GW-FW-007","name":"2-1 3D LED Customize Magic Mirror Frame for Gift","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-0eb10ee2486be4010805e789fe04e8c0c24f5afe2d57469b3e84ac15bc4be503.webp","desc":"Turn a favourite photo, name or milestone into a display piece with 2-1 3D LED Customize Magic Mirror Frame for Gift.","stock":20},{"sku":"GW-FW-008","name":"2-1 3D LED Customized Heart Shape Magic Mirror Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-11d26efe029bd3f7adc7532a50e132ecb34949069fd530c4fdca5f0e4a388889.webp","desc":"Turn a favourite photo, name or milestone into a display piece with 2-1 3D LED Customized Heart Shape Magic Mirror Frame.","stock":20},{"sku":"GW-NI-001","name":"Customized Nikkah Nama Folder ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Luxury Velvet Folder","cat":"Nikkah & Islamic","price":2899,"sale":null,"img":"/assets/preview/img-df68df9ea040b9532b7116bcd9b8015d97560433866c304dfd1d2d2ed8c162dc.webp","desc":"Mark a meaningful religious or wedding occasion with Customized Nikkah Nama Folder ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Luxury Velvet Folder.","stock":20},{"sku":"GW-NI-002","name":"Customized Islamic Prayer Mat ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Janamaz","cat":"Nikkah & Islamic","price":2499,"sale":null,"img":"/assets/preview/img-734c2b2a81b559dc29e87880c833d04c23b067b86d64818320ebf36d5c447d29.webp","desc":"Mark a meaningful religious or wedding occasion with Customized Islamic Prayer Mat ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Janamaz.","stock":20},{"sku":"GW-NI-003","name":"Customized Nikkah Certificate Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Islamic Wedding Frame","cat":"Nikkah & Islamic","price":699,"sale":null,"img":"/assets/preview/img-847f356c417a0f4d5fd433b2a90e4ab1dc1735216e8cad22d496617c5f7a7bdb.webp","desc":"Mark a meaningful religious or wedding occasion with Customized Nikkah Certificate Frame ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Islamic Wedding Frame.","stock":20},{"sku":"GW-NI-004","name":"Premium Arabic Nikkah Nama","cat":"Nikkah & Islamic","price":699,"sale":null,"img":"/assets/preview/img-297c31f11ad2e356e5c05545f2953392987b087bec25cc9a8ef34fb9d0c6ece8.webp","desc":"Mark a meaningful religious or wedding occasion with Premium Arabic Nikkah Nama.","stock":20},{"sku":"GW-NI-005","name":"Royal Green Nikkah Nama Frame","cat":"Nikkah & Islamic","price":699,"sale":null,"img":"/assets/preview/img-6e3223e86614d75313623713166dc13f4aba27e4700f920745dc1d0acaf2a7ef.webp","desc":"Mark a meaningful religious or wedding occasion with Royal Green Nikkah Nama Frame.","stock":20},{"sku":"GW-NI-006","name":"Luxury Wedding Certificate Set","cat":"Nikkah & Islamic","price":5199,"sale":4799,"img":"/assets/preview/img-ac925e0b7cccdc94624febd822392b708b845ef0750cbde66d7e710fd8f851db.webp","desc":"Mark a meaningful religious or wedding occasion with Luxury Wedding Certificate Set.","stock":20},{"sku":"GW-JW-001","name":"Customized Name Plate Bracelet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Rolex Style","cat":"Jewellery","price":1999,"sale":null,"img":"/assets/preview/img-739fe2c5394a18745fea13b0af09158cb7613fd629cecbb38ef4b131bf94cb21.webp","desc":"Keep a name, photo or shared detail close with Customized Name Plate Bracelet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Rolex Style.","stock":20},{"sku":"GW-JW-002","name":"Customized Name Plate Bracelet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Chain Style","cat":"Jewellery","price":1399,"sale":null,"img":"/assets/preview/img-03f60598bd812eb050be25966ae98c0ce2d4c47f3ce4e50209916620f748f292.webp","desc":"Keep a name, photo or shared detail close with Customized Name Plate Bracelet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Chain Style.","stock":20},{"sku":"GW-JW-003","name":"Customize Locket","cat":"Jewellery","price":1999,"sale":1299,"img":"/assets/preview/img-3535079f4fed0ec1a214d0dd2abb298c834bc9a495c8b0b3671485971228a805.webp","desc":"Keep a name, photo or shared detail close with Customize Locket.","stock":20},{"sku":"GW-JW-004","name":"Personalized Engraved Name Bracelet","cat":"Jewellery","price":1499,"sale":1199,"img":"/assets/preview/img-04b295689cab8b749ca100a24f9884cba17d58d7ffbf514cdf95214ed197e8c3.webp","desc":"Keep a name, photo or shared detail close with Personalized Engraved Name Bracelet.","stock":20},{"sku":"GW-JW-005","name":"Customize Name Necklace","cat":"Jewellery","price":999,"sale":null,"img":"/assets/preview/img-03f60598bd812eb050be25966ae98c0ce2d4c47f3ce4e50209916620f748f292.webp","desc":"Keep a name, photo or shared detail close with Customize Name Necklace.","stock":20},{"sku":"GW-JW-006","name":"Customized Bar Pendant Necklace ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Name Engraved Necklace","cat":"Jewellery","price":999,"sale":null,"img":"/assets/preview/img-81c8d26ea444e8e11c44224e44a216c5eb9d802b427fe07c56d281695da9360b.webp","desc":"Keep a name, photo or shared detail close with Customized Bar Pendant Necklace ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Name Engraved Necklace.","stock":20},{"sku":"GW-AC-001","name":"Customized Long Wallet Gift Set with Pencil","cat":"Accessories","price":2749,"sale":null,"img":"/assets/preview/img-e7ea471ae201ca0b542c1724c189514892459fec09a6bccba2f615871ef89814.webp","desc":"Give a useful everyday item a personal touch with Customized Long Wallet Gift Set with Pencil.","stock":20},{"sku":"GW-AC-002","name":"Acrylic Keychain","cat":"Accessories","price":349,"sale":null,"img":"/assets/preview/img-a87b1ff3ecca72896432aab5113e4a02a5235a036db162e442b64cda1a65f8ff.webp","desc":"Give a useful everyday item a personal touch with Acrylic Keychain.","stock":20},{"sku":"GW-AC-003","name":"Customized Photo Watch ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Couple Watch","cat":"Accessories","price":2399,"sale":null,"img":"/assets/preview/img-89966876baec53b709ffce8f864fe2f8702a206d3446143c23aab5465ee90217.webp","desc":"Give a useful everyday item a personal touch with Customized Photo Watch ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Couple Watch.","stock":20},{"sku":"GW-AC-004","name":"Personalised Perfume Gift Set ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Fragrance","cat":"Accessories","price":2999,"sale":1999,"img":"/assets/preview/img-8fac3c2b0936cdd2512bde6c78139a06a968747bdeb97392de131be00eca9807.webp","desc":"Give a useful everyday item a personal touch with Personalised Perfume Gift Set ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Fragrance.","stock":20},{"sku":"GW-AC-005","name":"Custom Picture and Name Wallet Keychain with Gift Box","cat":"Accessories","price":2499,"sale":1699,"img":"/assets/preview/img-281e8533fca2c660704c15f07ebf119bc43697a142e0ac04405119abd9afa5e3.webp","desc":"Give a useful everyday item a personal touch with Custom Picture and Name Wallet Keychain with Gift Box.","stock":20},{"sku":"GW-AC-006","name":"Customized Mobile Covers","cat":"Accessories","price":1599,"sale":1499,"img":"/assets/preview/img-c694098ab432e1ba0348f098219d97793ed4c07b95259cc28f75c9c10e85e020.webp","desc":"Give a useful everyday item a personal touch with Customized Mobile Covers.","stock":20},{"sku":"GW-AC-007","name":"Customize Long Wallet & Keychain","cat":"Accessories","price":2299,"sale":1399,"img":"/assets/preview/img-993c787d586057ccc33c6c1bb62d31cf34f566a0fddef73683d8aa532961d907.webp","desc":"Give a useful everyday item a personal touch with Customize Long Wallet & Keychain.","stock":20},{"sku":"GW-AC-008","name":"Customized Right Choice Name 2pc Wallet Set","cat":"Accessories","price":1499,"sale":999,"img":"/assets/preview/img-c0bc33437813890485dcbbf0be680ac202c831d68ec05e27bbfdec562b43e814.webp","desc":"Give a useful everyday item a personal touch with Customized Right Choice Name 2pc Wallet Set.","stock":20},{"sku":"GW-MB-001","name":"Personalised Magic Mug","cat":"Mugs & Bottles","price":1899,"sale":1499,"img":"/assets/preview/img-66947c956eadb64dc7e27eec3be622dd0d607746c98685f2e1e57d10d5d3a99a.webp","desc":"Make a daily drink feel more personal with Personalised Magic Mug.","stock":20},{"sku":"GW-MB-002","name":"Customize Colour Mug Standard ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 11 Ounce","cat":"Mugs & Bottles","price":1799,"sale":1399,"img":"/assets/preview/img-8a0fc0d40887abfdd59e975ad4f75fdf7f6a025e90cd9d4dd78e8db272ba80ea.webp","desc":"Make a daily drink feel more personal with Customize Colour Mug Standard ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 11 Ounce.","stock":20},{"sku":"GW-MB-003","name":"Customized Name Water Bottle ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Thermal Bottle","cat":"Mugs & Bottles","price":1399,"sale":null,"img":"/assets/preview/img-0e1e07bb635f23919748cc0a9887549531b9af06c6ad9b8826d1b89f4f07dca5.webp","desc":"Make a daily drink feel more personal with Customized Name Water Bottle ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalized Thermal Bottle.","stock":20},{"sku":"GW-MB-004","name":"Customize Mug with Free Pen","cat":"Mugs & Bottles","price":1299,"sale":null,"img":"/assets/preview/img-b40d61a38ad7f54dad71e52a5334ee2f32b3f1db2f75b9b12f722ef7a99c3854.webp","desc":"Make a daily drink feel more personal with Customize Mug with Free Pen.","stock":20},{"sku":"GW-MB-005","name":"Customize Led Smart Water Bottle Digital Thermos Temperature","cat":"Mugs & Bottles","price":1899,"sale":1199,"img":"/assets/preview/img-3f44af3109a2bc7322b19da114505253d509cea638630c654ed8fda0f9db511b.webp","desc":"Make a daily drink feel more personal with Customize Led Smart Water Bottle Digital Thermos Temperature.","stock":20},{"sku":"GW-MB-006","name":"Customize White Mug Standard ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 11 Ounce","cat":"Mugs & Bottles","price":1599,"sale":1199,"img":"/assets/preview/img-b9b03b73890109447f987f60c728154837d263d5c0b5f5b01638fb9d17a40b3e.webp","desc":"Make a daily drink feel more personal with Customize White Mug Standard ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 11 Ounce.","stock":20},{"sku":"GW-MB-007","name":"Customized Printed Mug","cat":"Mugs & Bottles","price":999,"sale":null,"img":"/assets/preview/img-ec4689b346dc4f99dfda0628c856b16bf559c79045c0159caede388bc6ec4951.webp","desc":"Make a daily drink feel more personal with Customized Printed Mug.","stock":20},{"sku":"GW-MB-008","name":"Customize White Printed Mug 11oz","cat":"Mugs & Bottles","price":1200,"sale":799,"img":"/assets/preview/img-1ce9a6c73174ac0a1ee94a31b9656b876250a76ff38264be71336aed20bf616c.webp","desc":"Make a daily drink feel more personal with Customize White Printed Mug 11oz.","stock":20},{"sku":"GW-PJ-001","name":"Personalised Photo Magazine ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Printed Keepsake","cat":"Pens & Journals","price":1450,"sale":null,"img":"/assets/preview/img-01a7e544f9f3f4c356fce5602d7a23b20ebe1351d7233bf6cc68e07310aa2766.webp","desc":"Keep notes, ideas and daily plans together with Personalised Photo Magazine ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Printed Keepsake.","stock":20},{"sku":"GW-PJ-002","name":"Cute Girl Mini Notepad ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Illustrated Pocket Diary","cat":"Pens & Journals","price":250,"sale":null,"img":"/assets/preview/img-c0f830d8b10c07934b2708faf3e7c9ee87c55e6d96181db474b0dda579600fbf.webp","desc":"Keep notes, ideas and daily plans together with Cute Girl Mini Notepad ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Illustrated Pocket Diary.","stock":20},{"sku":"GW-PJ-003","name":"Customize Wooden Diary with Free Pen","cat":"Pens & Journals","price":2099,"sale":1499,"img":"/assets/preview/img-cd87eaf111c119cdebf3a5fd34b3db123c978308f42fc68e17eb27886ee772a4.webp","desc":"Keep notes, ideas and daily plans together with Customize Wooden Diary with Free Pen.","stock":20},{"sku":"GW-PJ-004","name":"Spiral Notebook a5 Size","cat":"Pens & Journals","price":1299,"sale":null,"img":"/assets/preview/img-30730a44d2fa4f9e33b78639c6e0443c97429a24e79f50bf6dbf68810d2afe97.webp","desc":"Keep notes, ideas and daily plans together with Spiral Notebook a5 Size.","stock":20},{"sku":"GW-PJ-005","name":"Customized Diary Journal","cat":"Pens & Journals","price":1299,"sale":999,"img":"/assets/preview/img-a04abaa7f79afe9e1a1809da0c4a04f4a76a29a5a65a2044265695040e294f8e.webp","desc":"Keep notes, ideas and daily plans together with Customized Diary Journal.","stock":20},{"sku":"GW-PJ-006","name":"Cute Panda Spiral Journal ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ A5 Illustrated Notebook","cat":"Pens & Journals","price":999,"sale":null,"img":"/assets/preview/img-d17116cdc34c93c0bafdb977bfab8f416fbeb67ebf6d1e32b24268f94fec30bf.webp","desc":"Keep notes, ideas and daily plans together with Cute Panda Spiral Journal ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ A5 Illustrated Notebook.","stock":20},{"sku":"GW-BA-001","name":"Black Premium Cotton T-Shirt ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Printed","cat":"Bags & Apparel","price":1999,"sale":1499,"img":"/assets/preview/img-4be2d0db6a506d3401e5ff41617ccee7ccbfc34584a704fad1a43edd7b39a897.webp","desc":"Add a personal touch to daily wear or carry with Black Premium Cotton T-Shirt ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Printed.","stock":20},{"sku":"GW-BA-002","name":"Personalised Cotton Tote Bag","cat":"Bags & Apparel","price":1499,"sale":null,"img":"/assets/preview/img-e50c671ffeac4638ea492844190897d52e1d322e255e5ec7e7aae1290f929ba9.webp","desc":"Add a personal touch to daily wear or carry with Personalised Cotton Tote Bag.","stock":20},{"sku":"GW-BA-003","name":"White Premium Cotton T-Shirt ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Printed","cat":"Bags & Apparel","price":1999,"sale":1499,"img":"/assets/preview/img-9afcb5f53df12efd950fac1548f67661dffa67df5be55afb848e05034a483210.webp","desc":"Add a personal touch to daily wear or carry with White Premium Cotton T-Shirt ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Custom Printed.","stock":20},{"sku":"GW-BA-004","name":"Custom Portrait Tote Bag ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalised Canvas Bag","cat":"Bags & Apparel","price":1450,"sale":null,"img":"/assets/preview/img-9490d44ae9136d291cb83218750739565724272c963bf05763e4447325999965.webp","desc":"Add a personal touch to daily wear or carry with Custom Portrait Tote Bag ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Personalised Canvas Bag.","stock":20},{"sku":"GW-BA-005","name":"Customized White T-shirt","cat":"Bags & Apparel","price":1499,"sale":1299,"img":"/assets/preview/img-058ac4b942f83aa770c1473b5bd6abd6d86e0f426cd35964302dff7e5426b4ca.webp","desc":"Add a personal touch to daily wear or carry with Customized White T-shirt.","stock":20},{"sku":"GW-BA-006","name":"Printed Customized Caps","cat":"Bags & Apparel","price":1299,"sale":599,"img":"/assets/preview/img-d1a7b13499cedf0d79a408ffa7cb3c99548b6674839546df1210d98252a1684f.webp","desc":"Add a personal touch to daily wear or carry with Printed Customized Caps.","stock":20},{"sku":"GW-MS-001","name":"Black Chitrali Woolen Shawl","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-f1f334fd28cfe9a29cd1fae349bea095bb7e27b83f697e5b89ce9fed7fa367bb.webp","desc":"Add a black woolen shawl to your seasonal wardrobe with Black Chitrali Woolen Shawl.","stock":20},{"sku":"GW-MS-002","name":"Cashmere Ring Jacquard Woolen Shawl","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-b63063d5896c97d2c8b625d2163076a5159307f155e1754c2cc61992d5b6a20f.webp","desc":"Add a woolen shawl to your seasonal wardrobe with Cashmere Ring Jacquard Woolen Shawl.","stock":20},{"sku":"GW-MS-003","name":"Chitrali Woolen Shawl","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-961efae08b5ad4e32b25b04354e6ac8bcb5001046b39bc9ad710da3cd25adc0e.webp","desc":"Add a woolen shawl to your seasonal wardrobe with Chitrali Woolen Shawl.","stock":20},{"sku":"GW-MS-004","name":"Chitrali Woolen Shawl Dark Grey","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-e588f769eea0da1aa6cacb6e28f3daee8b9423c9b9b99a913d36b582851ab391.webp","desc":"Add a dark grey woolen shawl to your seasonal wardrobe with Chitrali Woolen Shawl Dark Grey.","stock":20},{"sku":"GW-CS-001","name":"Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Aqua Blue","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-8d4184f5c9991d7f919f97e8852605f77449c9587607c84c33ea1e298bf64d78.webp","desc":"Choose soft cotton in Aqua Blue with Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Aqua Blue.","stock":20},{"sku":"GW-CS-002","name":"Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Blush Pink","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-eaccc7e66d18e31e693c72213560e388d1fa471bdc9eb4d32d945960370c04d4.webp","desc":"Choose soft cotton in Blush Pink with Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Blush Pink.","stock":20},{"sku":"GW-CS-003","name":"Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Butter Yellow","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-da82b2c00bcf50ea19ec8ebead1720b5b7ec582c15e8b657d9e57cc8068287c6.webp","desc":"Choose soft cotton in Butter Yellow with Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Butter Yellow.","stock":20},{"sku":"GW-CS-004","name":"Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Classic Khaki","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-cce039f5f23bebaaaa536e9f25e5dae9104eb7719a96618f0c54ea517988ee42.webp","desc":"Choose soft cotton in Classic Khaki with Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Classic Khaki.","stock":20},{"sku":"GW-CS-005","name":"Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Classic White","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-8bfe7eda7dd37a584a1f7e073916509502805cdcb2aa6641d85b43c1d0bc873e.webp","desc":"Choose soft cotton in Classic White with Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Classic White.","stock":20},{"sku":"GW-CS-006","name":"Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Cornflower Blue","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-97ee9aaa6613c50d1481fed7e086932d25736d767ca34b87adb9aab781321e26.webp","desc":"Choose soft cotton in Cornflower Blue with Rasha Soft Cotton Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Cornflower Blue.","stock":20},{"sku":"GW-WW-001","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Blush Pink","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-38a2f5b29accfaa8d930550ec602a186767eee9ed9e1a012c102d9c275f5d934.webp","desc":"Choose Italian Boski wash-and-wear in Blush Pink with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Blush Pink.","stock":20},{"sku":"GW-WW-002","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Bottle Green","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-c090983210002b58267d0f8781128ab73bd2f2547e2dfdfa9c071a4919141c88.webp","desc":"Choose Italian Boski wash-and-wear in Bottle Green with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Bottle Green.","stock":20},{"sku":"GW-WW-003","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Chocolate Brown","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-6fadf4ba0efe1bd9009fd0cef0e967a015087555dbb9b08e0f31984903d2787d.webp","desc":"Choose Italian Boski wash-and-wear in Chocolate Brown with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Chocolate Brown.","stock":20},{"sku":"GW-WW-004","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Classic White","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-a9391544f38d2909bd6b5454b9c7bbb0131e5c1dffa85d31c7c2d9d16b7260e3.webp","desc":"Choose Italian Boski wash-and-wear in Classic White with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Classic White.","stock":20}];
+var PRODUCTS = [{"sku":"GW-GB-001","name":"Double Perfume Gift Box – J. Janan, Fogg, Suit, Watch & Wallet","cat":"Gift Boxes","price":9599,"sale":7999,"img":"/assets/preview/img-5ee3cf2d411f2a8e2489e5db665f6f847e71de1359a0ecf63fb49b1352a91fc5.webp","desc":"Make a special occasion memorable with Double Perfume Gift Box – J.","stock":2},{"sku":"GW-GB-002","name":"Premium Men's Gift Box – Suit, Watch, Perfume, Body Spray & Wallet","cat":"Gift Boxes","price":8999,"sale":7499,"img":"/assets/preview/img-05c22275503090f713f0302819cffe6247008adbb9e87e725f50577165eb7068.webp","desc":"Make a special occasion memorable with Premium Men's Gift Box – Suit, Watch, Perfume, Body Spray & Wallet.","stock":7},{"sku":"GW-GB-003","name":"Birthday Gift Hamper – Pasha Cotton Suit, T-Shirt, Watch & Perfume","cat":"Gift Boxes","price":8399,"sale":6999,"img":"/assets/preview/img-d47dd59f483c5392c6d508f6402ff46ff94751e5d395c51181c1adbb32b7b10f.webp","desc":"Make a special occasion memorable with Birthday Gift Hamper – Pasha Cotton Suit, T-Shirt, Watch & Perfume.","stock":3},{"sku":"GW-GB-004","name":"Zellbury Grey Perfume Gift Box – Suit, Watch, Wallet & Sunglasses","cat":"Gift Boxes","price":8399,"sale":6999,"img":"/assets/preview/img-2525c527e87953338bd7ec23fd32c081535d7aaa5343862be15e94bfadc182d1.webp","desc":"Make a special occasion memorable with Zellbury Grey Perfume Gift Box – Suit, Watch, Wallet & Sunglasses.","stock":20},{"sku":"GW-GB-005","name":"Anniversary Gift Box for Husband – Suit, Watch, Perfume & Cufflinks","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-92041c21a46102ea2d36ca27c79b75fd9ef4a31fdbf3777a490b8718cd52f1db.webp","desc":"Make a special occasion memorable with Anniversary Gift Box for Husband – Suit, Watch, Perfume & Cufflinks.","stock":20},{"sku":"GW-GB-006","name":"Anniversary Gift Set – Belt, Coffee Tumbler & Heart Chocolates","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-a20c71b0a6c586565a5c0760da4c4fd325c252072c823726878c387f2cc3e4ac.webp","desc":"Make a special occasion memorable with Anniversary Gift Set – Belt, Coffee Tumbler & Heart Chocolates.","stock":2},{"sku":"GW-GB-007","name":"Birthday Gift Box for Him – Suit, Watch, Perfume, Cufflinks & Wallet","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-9b0d67ab5f2d7ef46dc9fb8587e1b9f2d1eac1e30c510984ce63cfee2c6d4e70.webp","desc":"Make a special occasion memorable with Birthday Gift Box for Him – Suit, Watch, Perfume, Cufflinks & Wallet.","stock":11},{"sku":"GW-GB-008","name":"Birthday Gift Box with Customised T-Shirt, Cap, Watch & Perfume","cat":"Gift Boxes","price":7799,"sale":6499,"img":"/assets/preview/img-5fb37f5fd8843943ecb2197c510c9ea5065336423cf00bbd2fc6dfb242d8e6aa.webp","desc":"Make a special occasion memorable with Birthday Gift Box with Customised T-Shirt, Cap, Watch & Perfume.","stock":3},{"sku":"GW-GB-009","name":"Gift Box for Him – 5 Piece Men's Gift Hamper with Suit, Watch & Perfume","cat":"Gift Boxes","price":6799,"sale":5499,"img":"/assets/preview/img-e07615ab479b3372980f0e5c5b5ed9a7f550727695deeb817d8c89ca274c9b48.webp","desc":"Make a special occasion memorable with Gift Box for Him – 5 Piece Men's Gift Hamper with Suit, Watch & Perfume.","stock":9},{"sku":"GW-GB-010","name":"Men's Deal Box – 5 Piece Gift Set with J. Suit, Watch & Perfume","cat":"Gift Boxes","price":6799,"sale":5499,"img":"/assets/preview/img-0b4b27f02a79929bf1176f3af2bf3a2ed00dda3348ba43117f3e20acf9f7b1e9.webp","desc":"Make a special occasion memorable with Men's Deal Box – 5 Piece Gift Set with J.","stock":11},{"sku":"GW-GB-011","name":"Men's Ring Gift Box – Suit, Watch, Fogg Perfume & Wallet","cat":"Gift Boxes","price":5999,"sale":4999,"img":"/assets/preview/img-0bc57ca92e9921099ee6c1a3204aa2543ba3d78fcf77d1d454a6ee78f6ad4355.webp","desc":"Make a special occasion memorable with Men's Ring Gift Box – Suit, Watch, Fogg Perfume & Wallet.","stock":4},{"sku":"GW-GB-012","name":"Rose Bouquet Gift Box – Chocolates, Perfume, Body Spray & Wallet","cat":"Gift Boxes","price":5999,"sale":4999,"img":"/assets/preview/img-48ea03532534ba5fc28baa1820ed57e992bb10abc1e3002947520140d28bb70b.webp","desc":"Make a special occasion memorable with Rose Bouquet Gift Box – Chocolates, Perfume, Body Spray & Wallet.","stock":12},{"sku":"GW-GB-013","name":"Affordable Gift Box for Him – Suit, Customised Cufflinks & Chocolates","cat":"Gift Boxes","price":4799,"sale":3999,"img":"/assets/preview/img-00e2cf0d890a63c86fb962aa81934ba57a1ad5b3cdb77b6d5a576b3f9458b0b5.webp","desc":"Make a special occasion memorable with Affordable Gift Box for Him – Suit, Customised Cufflinks & Chocolates.","stock":10},{"sku":"GW-GB-014","name":"Mega Deal Box – 7 Piece Gift Set","cat":"Gift Boxes","price":2199,"sale":null,"img":"/assets/preview/img-f323aa0de33a9e18b0b95abae50d953350e0fa7197c95ddfdb7d6a9f7dbb5973.webp","desc":"Make a special occasion memorable with Mega Deal Box – 7 Piece Gift Set.","stock":12},{"sku":"GW-FW-001","name":"Customized 2 in 1 3D Magic Mirror Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-a0dc9fbe15a7be143c35f24a34a2f32422e94af72521c7781cdf42c0f898b906.webp","desc":"Turn a favourite photo, name or milestone into a display piece with Customized 2 in 1 3D Magic Mirror Frame.","stock":20},{"sku":"GW-FW-002","name":"Customized Acrylic Photo Frame – Transparent","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-7fc9329d004a7d9fe8f2cccaa3a700aa26505ed4e682a666e805b28840f68f5f.webp","desc":"Turn a favourite photo, name or milestone into a display piece with Customized Acrylic Photo Frame – Transparent.","stock":20},{"sku":"GW-FW-003","name":"Customized Birthday Photo Frame – Personalized Collage Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-63b89d60d5a7e6fd4d54460ffc56ddfbcf3b7052245cda6e4ae0f07d9bd6f828.webp","desc":"Turn a birthday or new arrival into a display piece with Customized Birthday Photo Frame – Personalized Collage Frame.","stock":20},{"sku":"GW-FW-004","name":"Customized Couple Photo Frame – Square Memory Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-870f9eb0461d2885e88f253cca5b7567e923b3bdffbc0e666df980152fe3abe5.webp","desc":"Turn a special relationship or shared memory into a display piece with Customized Couple Photo Frame – Square Memory Frame.","stock":20},{"sku":"GW-FW-005","name":"Personalized Birthday Photo Frame – Elegant Minimal Design","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-77f2738dc1d01d160b9809c4d98aa6d2a48bdf687ed827a2d816171040858616.webp","desc":"Turn a birthday or new arrival into a display piece with Personalized Birthday Photo Frame – Elegant Minimal Design.","stock":20},{"sku":"GW-FW-006","name":"Customized Sticky Wooden Photo Tiles","cat":"Frames & Wall Art","price":1800,"sale":1099,"img":"/assets/preview/img-b5cb8fe275d7f198b3993172be80b76f9fb8f5f6561ac94195545e8f8bcb1650.webp","desc":"Turn a favourite photo, name or milestone into a display piece with Customized Sticky Wooden Photo Tiles.","stock":20},{"sku":"GW-FW-007","name":"2-1 3D LED Customize Magic Mirror Frame for Gift","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-0eb10ee2486be4010805e789fe04e8c0c24f5afe2d57469b3e84ac15bc4be503.webp","desc":"Turn a favourite photo, name or milestone into a display piece with 2-1 3D LED Customize Magic Mirror Frame for Gift.","stock":20},{"sku":"GW-FW-008","name":"2-1 3D LED Customized Heart Shape Magic Mirror Frame","cat":"Frames & Wall Art","price":699,"sale":null,"img":"/assets/preview/img-11d26efe029bd3f7adc7532a50e132ecb34949069fd530c4fdca5f0e4a388889.webp","desc":"Turn a favourite photo, name or milestone into a display piece with 2-1 3D LED Customized Heart Shape Magic Mirror Frame.","stock":20},{"sku":"GW-NI-001","name":"Customized Nikkah Nama Folder – Luxury Velvet Folder","cat":"Nikkah & Islamic","price":2899,"sale":null,"img":"/assets/preview/img-df68df9ea040b9532b7116bcd9b8015d97560433866c304dfd1d2d2ed8c162dc.webp","desc":"Mark a meaningful religious or wedding occasion with Customized Nikkah Nama Folder – Luxury Velvet Folder.","stock":20},{"sku":"GW-NI-002","name":"Customized Islamic Prayer Mat – Personalized Janamaz","cat":"Nikkah & Islamic","price":2499,"sale":null,"img":"/assets/preview/img-734c2b2a81b559dc29e87880c833d04c23b067b86d64818320ebf36d5c447d29.webp","desc":"Mark a meaningful religious or wedding occasion with Customized Islamic Prayer Mat – Personalized Janamaz.","stock":20},{"sku":"GW-NI-003","name":"Customized Nikkah Certificate Frame – Islamic Wedding Frame","cat":"Nikkah & Islamic","price":699,"sale":null,"img":"/assets/preview/img-847f356c417a0f4d5fd433b2a90e4ab1dc1735216e8cad22d496617c5f7a7bdb.webp","desc":"Mark a meaningful religious or wedding occasion with Customized Nikkah Certificate Frame – Islamic Wedding Frame.","stock":20},{"sku":"GW-NI-004","name":"Premium Arabic Nikkah Nama","cat":"Nikkah & Islamic","price":699,"sale":null,"img":"/assets/preview/img-297c31f11ad2e356e5c05545f2953392987b087bec25cc9a8ef34fb9d0c6ece8.webp","desc":"Mark a meaningful religious or wedding occasion with Premium Arabic Nikkah Nama.","stock":20},{"sku":"GW-NI-005","name":"Royal Green Nikkah Nama Frame","cat":"Nikkah & Islamic","price":699,"sale":null,"img":"/assets/preview/img-6e3223e86614d75313623713166dc13f4aba27e4700f920745dc1d0acaf2a7ef.webp","desc":"Mark a meaningful religious or wedding occasion with Royal Green Nikkah Nama Frame.","stock":20},{"sku":"GW-NI-006","name":"Luxury Wedding Certificate Set","cat":"Nikkah & Islamic","price":5199,"sale":4799,"img":"/assets/preview/img-ac925e0b7cccdc94624febd822392b708b845ef0750cbde66d7e710fd8f851db.webp","desc":"Mark a meaningful religious or wedding occasion with Luxury Wedding Certificate Set.","stock":20},{"sku":"GW-JW-001","name":"Customized Name Plate Bracelet – Rolex Style","cat":"Jewellery","price":1999,"sale":null,"img":"/assets/preview/img-739fe2c5394a18745fea13b0af09158cb7613fd629cecbb38ef4b131bf94cb21.webp","desc":"Keep a name, photo or shared detail close with Customized Name Plate Bracelet – Rolex Style.","stock":20},{"sku":"GW-JW-002","name":"Customized Name Plate Bracelet – Chain Style","cat":"Jewellery","price":1399,"sale":null,"img":"/assets/preview/img-03f60598bd812eb050be25966ae98c0ce2d4c47f3ce4e50209916620f748f292.webp","desc":"Keep a name, photo or shared detail close with Customized Name Plate Bracelet – Chain Style.","stock":20},{"sku":"GW-JW-003","name":"Customize Locket","cat":"Jewellery","price":1999,"sale":1299,"img":"/assets/preview/img-3535079f4fed0ec1a214d0dd2abb298c834bc9a495c8b0b3671485971228a805.webp","desc":"Keep a name, photo or shared detail close with Customize Locket.","stock":20},{"sku":"GW-JW-004","name":"Personalized Engraved Name Bracelet","cat":"Jewellery","price":1499,"sale":1199,"img":"/assets/preview/img-04b295689cab8b749ca100a24f9884cba17d58d7ffbf514cdf95214ed197e8c3.webp","desc":"Keep a name, photo or shared detail close with Personalized Engraved Name Bracelet.","stock":20},{"sku":"GW-JW-005","name":"Customize Name Necklace","cat":"Jewellery","price":999,"sale":null,"img":"/assets/preview/img-03f60598bd812eb050be25966ae98c0ce2d4c47f3ce4e50209916620f748f292.webp","desc":"Keep a name, photo or shared detail close with Customize Name Necklace.","stock":20},{"sku":"GW-JW-006","name":"Customized Bar Pendant Necklace – Name Engraved Necklace","cat":"Jewellery","price":999,"sale":null,"img":"/assets/preview/img-81c8d26ea444e8e11c44224e44a216c5eb9d802b427fe07c56d281695da9360b.webp","desc":"Keep a name, photo or shared detail close with Customized Bar Pendant Necklace – Name Engraved Necklace.","stock":20},{"sku":"GW-AC-001","name":"Customized Long Wallet Gift Set with Pencil","cat":"Accessories","price":2749,"sale":null,"img":"/assets/preview/img-e7ea471ae201ca0b542c1724c189514892459fec09a6bccba2f615871ef89814.webp","desc":"Give a useful everyday item a personal touch with Customized Long Wallet Gift Set with Pencil.","stock":20},{"sku":"GW-AC-002","name":"Acrylic Keychain","cat":"Accessories","price":349,"sale":null,"img":"/assets/preview/img-a87b1ff3ecca72896432aab5113e4a02a5235a036db162e442b64cda1a65f8ff.webp","desc":"Give a useful everyday item a personal touch with Acrylic Keychain.","stock":20},{"sku":"GW-AC-003","name":"Customized Photo Watch – Personalized Couple Watch","cat":"Accessories","price":2399,"sale":null,"img":"/assets/preview/img-89966876baec53b709ffce8f864fe2f8702a206d3446143c23aab5465ee90217.webp","desc":"Give a useful everyday item a personal touch with Customized Photo Watch – Personalized Couple Watch.","stock":20},{"sku":"GW-AC-004","name":"Personalised Perfume Gift Set – Custom Fragrance","cat":"Accessories","price":2999,"sale":1999,"img":"/assets/preview/img-8fac3c2b0936cdd2512bde6c78139a06a968747bdeb97392de131be00eca9807.webp","desc":"Give a useful everyday item a personal touch with Personalised Perfume Gift Set – Custom Fragrance.","stock":20},{"sku":"GW-AC-005","name":"Custom Picture and Name Wallet Keychain with Gift Box","cat":"Accessories","price":2499,"sale":1699,"img":"/assets/preview/img-281e8533fca2c660704c15f07ebf119bc43697a142e0ac04405119abd9afa5e3.webp","desc":"Give a useful everyday item a personal touch with Custom Picture and Name Wallet Keychain with Gift Box.","stock":20},{"sku":"GW-AC-006","name":"Customized Mobile Covers","cat":"Accessories","price":1599,"sale":1499,"img":"/assets/preview/img-c694098ab432e1ba0348f098219d97793ed4c07b95259cc28f75c9c10e85e020.webp","desc":"Give a useful everyday item a personal touch with Customized Mobile Covers.","stock":20},{"sku":"GW-AC-007","name":"Customize Long Wallet & Keychain","cat":"Accessories","price":2299,"sale":1399,"img":"/assets/preview/img-993c787d586057ccc33c6c1bb62d31cf34f566a0fddef73683d8aa532961d907.webp","desc":"Give a useful everyday item a personal touch with Customize Long Wallet & Keychain.","stock":20},{"sku":"GW-AC-008","name":"Customized Right Choice Name 2pc Wallet Set","cat":"Accessories","price":1499,"sale":999,"img":"/assets/preview/img-c0bc33437813890485dcbbf0be680ac202c831d68ec05e27bbfdec562b43e814.webp","desc":"Give a useful everyday item a personal touch with Customized Right Choice Name 2pc Wallet Set.","stock":20},{"sku":"GW-MB-001","name":"Personalised Magic Mug","cat":"Mugs & Bottles","price":1899,"sale":1499,"img":"/assets/preview/img-66947c956eadb64dc7e27eec3be622dd0d607746c98685f2e1e57d10d5d3a99a.webp","desc":"Make a daily drink feel more personal with Personalised Magic Mug.","stock":20},{"sku":"GW-MB-002","name":"Customize Colour Mug Standard – 11 Ounce","cat":"Mugs & Bottles","price":1799,"sale":1399,"img":"/assets/preview/img-8a0fc0d40887abfdd59e975ad4f75fdf7f6a025e90cd9d4dd78e8db272ba80ea.webp","desc":"Make a daily drink feel more personal with Customize Colour Mug Standard – 11 Ounce.","stock":20},{"sku":"GW-MB-003","name":"Customized Name Water Bottle – Personalized Thermal Bottle","cat":"Mugs & Bottles","price":1399,"sale":null,"img":"/assets/preview/img-0e1e07bb635f23919748cc0a9887549531b9af06c6ad9b8826d1b89f4f07dca5.webp","desc":"Make a daily drink feel more personal with Customized Name Water Bottle – Personalized Thermal Bottle.","stock":20},{"sku":"GW-MB-004","name":"Customize Mug with Free Pen","cat":"Mugs & Bottles","price":1299,"sale":null,"img":"/assets/preview/img-b40d61a38ad7f54dad71e52a5334ee2f32b3f1db2f75b9b12f722ef7a99c3854.webp","desc":"Make a daily drink feel more personal with Customize Mug with Free Pen.","stock":20},{"sku":"GW-MB-005","name":"Customize Led Smart Water Bottle Digital Thermos Temperature","cat":"Mugs & Bottles","price":1899,"sale":1199,"img":"/assets/preview/img-3f44af3109a2bc7322b19da114505253d509cea638630c654ed8fda0f9db511b.webp","desc":"Make a daily drink feel more personal with Customize Led Smart Water Bottle Digital Thermos Temperature.","stock":20},{"sku":"GW-MB-006","name":"Customize White Mug Standard – 11 Ounce","cat":"Mugs & Bottles","price":1599,"sale":1199,"img":"/assets/preview/img-b9b03b73890109447f987f60c728154837d263d5c0b5f5b01638fb9d17a40b3e.webp","desc":"Make a daily drink feel more personal with Customize White Mug Standard – 11 Ounce.","stock":20},{"sku":"GW-MB-007","name":"Customized Printed Mug","cat":"Mugs & Bottles","price":999,"sale":null,"img":"/assets/preview/img-ec4689b346dc4f99dfda0628c856b16bf559c79045c0159caede388bc6ec4951.webp","desc":"Make a daily drink feel more personal with Customized Printed Mug.","stock":20},{"sku":"GW-MB-008","name":"Customize White Printed Mug 11oz","cat":"Mugs & Bottles","price":1200,"sale":799,"img":"/assets/preview/img-1ce9a6c73174ac0a1ee94a31b9656b876250a76ff38264be71336aed20bf616c.webp","desc":"Make a daily drink feel more personal with Customize White Printed Mug 11oz.","stock":20},{"sku":"GW-PJ-001","name":"Personalised Photo Magazine – Custom Printed Keepsake","cat":"Pens & Journals","price":1450,"sale":null,"img":"/assets/preview/img-01a7e544f9f3f4c356fce5602d7a23b20ebe1351d7233bf6cc68e07310aa2766.webp","desc":"Keep notes, ideas and daily plans together with Personalised Photo Magazine – Custom Printed Keepsake.","stock":20},{"sku":"GW-PJ-002","name":"Cute Girl Mini Notepad – Illustrated Pocket Diary","cat":"Pens & Journals","price":250,"sale":null,"img":"/assets/preview/img-c0f830d8b10c07934b2708faf3e7c9ee87c55e6d96181db474b0dda579600fbf.webp","desc":"Keep notes, ideas and daily plans together with Cute Girl Mini Notepad – Illustrated Pocket Diary.","stock":20},{"sku":"GW-PJ-003","name":"Customize Wooden Diary with Free Pen","cat":"Pens & Journals","price":2099,"sale":1499,"img":"/assets/preview/img-cd87eaf111c119cdebf3a5fd34b3db123c978308f42fc68e17eb27886ee772a4.webp","desc":"Keep notes, ideas and daily plans together with Customize Wooden Diary with Free Pen.","stock":20},{"sku":"GW-PJ-004","name":"Spiral Notebook a5 Size","cat":"Pens & Journals","price":1299,"sale":null,"img":"/assets/preview/img-30730a44d2fa4f9e33b78639c6e0443c97429a24e79f50bf6dbf68810d2afe97.webp","desc":"Keep notes, ideas and daily plans together with Spiral Notebook a5 Size.","stock":20},{"sku":"GW-PJ-005","name":"Customized Diary Journal","cat":"Pens & Journals","price":1299,"sale":999,"img":"/assets/preview/img-a04abaa7f79afe9e1a1809da0c4a04f4a76a29a5a65a2044265695040e294f8e.webp","desc":"Keep notes, ideas and daily plans together with Customized Diary Journal.","stock":20},{"sku":"GW-PJ-006","name":"Cute Panda Spiral Journal – A5 Illustrated Notebook","cat":"Pens & Journals","price":999,"sale":null,"img":"/assets/preview/img-d17116cdc34c93c0bafdb977bfab8f416fbeb67ebf6d1e32b24268f94fec30bf.webp","desc":"Keep notes, ideas and daily plans together with Cute Panda Spiral Journal – A5 Illustrated Notebook.","stock":20},{"sku":"GW-BA-001","name":"Black Premium Cotton T-Shirt – Custom Printed","cat":"Bags & Apparel","price":1999,"sale":1499,"img":"/assets/preview/img-4be2d0db6a506d3401e5ff41617ccee7ccbfc34584a704fad1a43edd7b39a897.webp","desc":"Add a personal touch to daily wear or carry with Black Premium Cotton T-Shirt – Custom Printed.","stock":20},{"sku":"GW-BA-002","name":"Personalised Cotton Tote Bag","cat":"Bags & Apparel","price":1499,"sale":null,"img":"/assets/preview/img-e50c671ffeac4638ea492844190897d52e1d322e255e5ec7e7aae1290f929ba9.webp","desc":"Add a personal touch to daily wear or carry with Personalised Cotton Tote Bag.","stock":20},{"sku":"GW-BA-003","name":"White Premium Cotton T-Shirt – Custom Printed","cat":"Bags & Apparel","price":1999,"sale":1499,"img":"/assets/preview/img-9afcb5f53df12efd950fac1548f67661dffa67df5be55afb848e05034a483210.webp","desc":"Add a personal touch to daily wear or carry with White Premium Cotton T-Shirt – Custom Printed.","stock":20},{"sku":"GW-BA-004","name":"Custom Portrait Tote Bag – Personalised Canvas Bag","cat":"Bags & Apparel","price":1450,"sale":null,"img":"/assets/preview/img-9490d44ae9136d291cb83218750739565724272c963bf05763e4447325999965.webp","desc":"Add a personal touch to daily wear or carry with Custom Portrait Tote Bag – Personalised Canvas Bag.","stock":20},{"sku":"GW-BA-005","name":"Customized White T-shirt","cat":"Bags & Apparel","price":1499,"sale":1299,"img":"/assets/preview/img-058ac4b942f83aa770c1473b5bd6abd6d86e0f426cd35964302dff7e5426b4ca.webp","desc":"Add a personal touch to daily wear or carry with Customized White T-shirt.","stock":20},{"sku":"GW-BA-006","name":"Printed Customized Caps","cat":"Bags & Apparel","price":1299,"sale":599,"img":"/assets/preview/img-d1a7b13499cedf0d79a408ffa7cb3c99548b6674839546df1210d98252a1684f.webp","desc":"Add a personal touch to daily wear or carry with Printed Customized Caps.","stock":20},{"sku":"GW-MS-001","name":"Black Chitrali Woolen Shawl","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-f1f334fd28cfe9a29cd1fae349bea095bb7e27b83f697e5b89ce9fed7fa367bb.webp","desc":"Add a black woolen shawl to your seasonal wardrobe with Black Chitrali Woolen Shawl.","stock":20},{"sku":"GW-MS-002","name":"Cashmere Ring Jacquard Woolen Shawl","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-b63063d5896c97d2c8b625d2163076a5159307f155e1754c2cc61992d5b6a20f.webp","desc":"Add a woolen shawl to your seasonal wardrobe with Cashmere Ring Jacquard Woolen Shawl.","stock":20},{"sku":"GW-MS-003","name":"Chitrali Woolen Shawl","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-961efae08b5ad4e32b25b04354e6ac8bcb5001046b39bc9ad710da3cd25adc0e.webp","desc":"Add a woolen shawl to your seasonal wardrobe with Chitrali Woolen Shawl.","stock":20},{"sku":"GW-MS-004","name":"Chitrali Woolen Shawl Dark Grey","cat":"Men's Shawls","price":5000,"sale":2099,"img":"/assets/preview/img-e588f769eea0da1aa6cacb6e28f3daee8b9423c9b9b99a913d36b582851ab391.webp","desc":"Add a dark grey woolen shawl to your seasonal wardrobe with Chitrali Woolen Shawl Dark Grey.","stock":20},{"sku":"GW-CS-001","name":"Rasha Soft Cotton Unstitched Suit – Aqua Blue","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-8d4184f5c9991d7f919f97e8852605f77449c9587607c84c33ea1e298bf64d78.webp","desc":"Choose soft cotton in Aqua Blue with Rasha Soft Cotton Unstitched Suit – Aqua Blue.","stock":20},{"sku":"GW-CS-002","name":"Rasha Soft Cotton Unstitched Suit – Blush Pink","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-eaccc7e66d18e31e693c72213560e388d1fa471bdc9eb4d32d945960370c04d4.webp","desc":"Choose soft cotton in Blush Pink with Rasha Soft Cotton Unstitched Suit – Blush Pink.","stock":20},{"sku":"GW-CS-003","name":"Rasha Soft Cotton Unstitched Suit – Butter Yellow","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-da82b2c00bcf50ea19ec8ebead1720b5b7ec582c15e8b657d9e57cc8068287c6.webp","desc":"Choose soft cotton in Butter Yellow with Rasha Soft Cotton Unstitched Suit – Butter Yellow.","stock":20},{"sku":"GW-CS-004","name":"Rasha Soft Cotton Unstitched Suit – Classic Khaki","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-cce039f5f23bebaaaa536e9f25e5dae9104eb7719a96618f0c54ea517988ee42.webp","desc":"Choose soft cotton in Classic Khaki with Rasha Soft Cotton Unstitched Suit – Classic Khaki.","stock":20},{"sku":"GW-CS-005","name":"Rasha Soft Cotton Unstitched Suit – Classic White","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-8bfe7eda7dd37a584a1f7e073916509502805cdcb2aa6641d85b43c1d0bc873e.webp","desc":"Choose soft cotton in Classic White with Rasha Soft Cotton Unstitched Suit – Classic White.","stock":20},{"sku":"GW-CS-006","name":"Rasha Soft Cotton Unstitched Suit – Cornflower Blue","cat":"Cotton Unstitched Suits","price":3199,"sale":null,"img":"/assets/preview/img-97ee9aaa6613c50d1481fed7e086932d25736d767ca34b87adb9aab781321e26.webp","desc":"Choose soft cotton in Cornflower Blue with Rasha Soft Cotton Unstitched Suit – Cornflower Blue.","stock":20},{"sku":"GW-WW-001","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Blush Pink","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-38a2f5b29accfaa8d930550ec602a186767eee9ed9e1a012c102d9c275f5d934.webp","desc":"Choose Italian Boski wash-and-wear in Blush Pink with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Blush Pink.","stock":20},{"sku":"GW-WW-002","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Bottle Green","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-c090983210002b58267d0f8781128ab73bd2f2547e2dfdfa9c071a4919141c88.webp","desc":"Choose Italian Boski wash-and-wear in Bottle Green with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Bottle Green.","stock":20},{"sku":"GW-WW-003","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Chocolate Brown","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-6fadf4ba0efe1bd9009fd0cef0e967a015087555dbb9b08e0f31984903d2787d.webp","desc":"Choose Italian Boski wash-and-wear in Chocolate Brown with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Chocolate Brown.","stock":20},{"sku":"GW-WW-004","name":"Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Classic White","cat":"Wash N Wear Unstitched Suits","price":2499,"sale":null,"img":"/assets/preview/img-a9391544f38d2909bd6b5454b9c7bbb0131e5c1dffa85d31c7c2d9d16b7260e3.webp","desc":"Choose Italian Boski wash-and-wear in Classic White with Junaid Jamshed Italian Boski Wash & Wear Unstitched Suit – Classic White.","stock":20}];
 var BEST = ["GW-GB-001","GW-GB-002","GW-FW-001","GW-NI-001","GW-JW-003","GW-MB-001","GW-AC-004","GW-BA-001"];
 var FAQS = [
  ["How much is delivery?","Delivery is a flat Rs. 300 per order. An empty bag has no delivery charge."],
  ["How long will my order take to arrive?","Personalised gifts are made to order, so the delivery time depends on the item. We confirm the expected delivery time with you on WhatsApp when you place your order, before you pay anything."],
- ["How can I pay?","Cash on Delivery is available. Prepaid orders through Easypaisa, JazzCash or Bank Transfer get 15% off. Payment details are shared with you at checkout ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â only there, so you always see them in the context of your own order."],
+ ["How can I pay?","Cash on Delivery is available. Prepaid orders through Easypaisa, JazzCash or Bank Transfer get 15% off. Payment details are shared with you at checkout — only there, so you always see them in the context of your own order."],
  ["Can I return a personalised gift?","Because personalised gifts are made specially for you, they cannot be returned for a change of mind. If your order arrives damaged, defective, or is the wrong item, contact us on WhatsApp as soon as you receive it, with a photo, and we will make it right."],
- ["How do I personalise a gift?","On the product page you can add the name exactly as you want it printed, a gift note, and upload a photo for photo gifts. The file itself is not uploaded to our server ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â we confirm it with you on WhatsApp."],
+ ["How do I personalise a gift?","On the product page you can add the name exactly as you want it printed, a gift note, and upload a photo for photo gifts. The file itself is not uploaded to our server — we confirm it with you on WhatsApp."],
  ["How do I track my order?","You receive an order ID after checkout. Enter it on the Track Order page to see the latest delivery status."],
  ["Do you deliver across Pakistan?","Yes, we deliver nationwide across Pakistan."]
 ];
 var POLICIES = {
  delivery:{t:"Delivery & Returns",b:"<p>Delivery is charged at a flat <b>Rs. 300 per order</b>. An empty bag is never charged delivery. We deliver nationwide across Pakistan.</p><h3>Made to order</h3><p>Personalised gifts are made specially for you after your order is confirmed on WhatsApp. Your expected delivery time is confirmed with you before you pay anything.</p><h3>Returns</h3><p>Personalised items cannot be returned for a change of mind. If your order arrives damaged, defective, or is the wrong item, message us on WhatsApp as soon as you receive it, with a photo, and we will repair, replace or refund it.</p>"},
- terms:{t:"Terms & Conditions",b:"<p>By ordering from GiftWALA you agree to the following:</p><ul><li>Prices are shown in Pakistani Rupees (Rs.) and include the personalisation described on each product page.</li><li>Every order is confirmed with you on WhatsApp before it is made. Please check names, spellings and photos carefully at confirmation ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â personalised items are produced exactly as confirmed.</li><li>Cash on Delivery is available nationwide. Prepaid orders (Easypaisa, JazzCash, Bank Transfer) receive 15% off; payment details are shared only at checkout.</li><li>Delivery is charged at a flat Rs. 300 per order.</li></ul>"},
+ terms:{t:"Terms & Conditions",b:"<p>By ordering from GiftWALA you agree to the following:</p><ul><li>Prices are shown in Pakistani Rupees (Rs.) and include the personalisation described on each product page.</li><li>Every order is confirmed with you on WhatsApp before it is made. Please check names, spellings and photos carefully at confirmation — personalised items are produced exactly as confirmed.</li><li>Cash on Delivery is available nationwide. Prepaid orders (Easypaisa, JazzCash, Bank Transfer) receive 15% off; payment details are shared only at checkout.</li><li>Delivery is charged at a flat Rs. 300 per order.</li></ul>"},
  privacy:{t:"Privacy Policy",b:"<p>We only collect what your order needs:</p><ul><li>Your name, phone number and delivery address, used only to make and deliver your order.</li><li>Names and photos you provide for personalisation, used only to produce your gift. Photo files are confirmed with you on WhatsApp and are not uploaded to our server from the product page.</li><li>We never sell your details, and we never ask for payment details anywhere except at checkout.</li></ul><p>To ask what we hold about you, or to have it removed, contact us on WhatsApp.</p>"}
 };
 var ADMIN = [
@@ -1280,8 +1279,8 @@ function go(view,scrollTo){
   reveal();
 }
 /* The admin panel is separate from the store: nothing in the shop links to it.
-   It opens only from its own direct address (ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦#admin), the way the live panel
-   sits at its own admin address behind a login ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â customers browsing the store
+   It opens only from its own direct address (…#admin), the way the live panel
+   sits at its own admin address behind a login — customers browsing the store
    never see a way in. */
 function openAdmin(){adminUnlocked=true;document.body.classList.add("admin-mode");go("admin")}
 function checkAdminHash(){
@@ -1306,15 +1305,15 @@ function cardHTML(p){
   var isBest=BEST.indexOf(p.sku)>-1;
   return '<article class="card">'
   +'<button class="ph" data-open="'+p.sku+'" type="button" aria-label="View '+esc(p.name)+'"><img loading="lazy" src="'+p.img+'" alt="'+esc(p.name)+'" loading="lazy">'
-  +(off?'<span class="badge">ÃƒÂ¢Ã‹â€ Ã¢â‚¬â„¢'+off+'% OFF</span>':(isBest?'<span class="badge">BESTSELLER</span>':''))
+  +(off?'<span class="badge">−'+off+'% OFF</span>':(isBest?'<span class="badge">BESTSELLER</span>':''))
   +'<span class="wish'+(wish[p.sku]?" on":"")+'" data-wish="'+p.sku+'" role="button" aria-label="Save to wishlist">'+HEART+'</span></button>'
   +'<div class="cb"><span class="cat">'+esc(p.cat)+'</span>'
   +'<h3><button data-open="'+p.sku+'" type="button">'+esc(p.name)+'</button></h3>'
   +'<div class="meta"><span class="tag">Personalised</span><span class="tag green">COD Available</span></div>'
-  +'<span class="stock'+(p.stock<=4?" low":"")+'">'+(p.stock<=4?("Only "+p.stock+" left in stock"):"In stock ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ready to personalise")+'</span>'
-  +'<span class="del"><svg class="icon" viewBox="0 0 24 24"><path d="M3 8h11v9H3zM14 11h4l3 3v3h-7z"/><circle cx="7" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg>Delivery Rs. 300 ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Confirmed on WhatsApp first</span>'
+  +'<span class="stock'+(p.stock<=4?" low":"")+'">'+(p.stock<=4?("Only "+p.stock+" left in stock"):"In stock — ready to personalise")+'</span>'
+  +'<span class="del"><svg class="icon" viewBox="0 0 24 24"><path d="M3 8h11v9H3zM14 11h4l3 3v3h-7z"/><circle cx="7" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg>Delivery Rs. 300 • Confirmed on WhatsApp first</span>'
   +'<div class="price"><span class="now">'+rs(price(p))+'</span>'+(p.sale?'<span class="was">'+rs(p.price)+'</span>':'')+'</div>'
-  +'<button class="add" data-add="'+p.sku+'" type="button">'+BAG+'Add to Bag ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Order Now</button>'
+  +'<button class="add" data-add="'+p.sku+'" type="button">'+BAG+'Add to Bag — Order Now</button>'
   +'<button class="buy" data-buynow="'+p.sku+'" type="button"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2.5L4.8 13.4h6L9.7 21.5l8.2-10.9h-6z"/></svg>Buy Now</button></div></article>';
 }
 document.addEventListener("click",function(e){
@@ -1366,7 +1365,7 @@ $("shopSort").addEventListener("change",function(){renderShop(false)});
 function renderShop(skeleton){
   shopCats();
   var grid=$("shopGrid");
-  if(skeleton){grid.innerHTML='<div class="skel"></div>'.repeat(8);$("shopCount").textContent="Loading productsÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦";
+  if(skeleton){grid.innerHTML='<div class="skel"></div>'.repeat(8);$("shopCount").textContent="Loading products…";
     setTimeout(function(){renderShop(false)},450); return}
   var q=$("shopSearch").value.trim().toLowerCase(), pr=$("shopPrice").value, sort=$("shopSort").value;
   var list=PRODUCTS.filter(function(p){
@@ -1382,7 +1381,7 @@ function renderShop(skeleton){
   if(sort==="featured")list.sort(function(a,b){return BEST.indexOf(b.sku)-BEST.indexOf(a.sku)});
   grid.innerHTML=list.map(cardHTML).join("");
   $("shopEmpty").hidden=list.length>0;
-  $("shopCount").textContent="Showing "+list.length+" of "+PRODUCTS.length+" products"+(activeCat!=="All"?" ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â "+activeCat:"")+(q?' ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â search: "'+q+'"':"");
+  $("shopCount").textContent="Showing "+list.length+" of "+PRODUCTS.length+" products"+(activeCat!=="All"?" — "+activeCat:"")+(q?' — search: "'+q+'"':"");
 }
 
 /* ---------- product ---------- */
@@ -1397,7 +1396,7 @@ function openProduct(sku){
   $("pvWas").textContent=p.sale?rs(p.price):"";
   var off=p.sale?Math.round((1-p.sale/p.price)*100):0;
   $("pvOff").style.display=off?"inline-block":"none"; $("pvOff").textContent=off?"Save "+off+"%":"";
-  $("pvStock").textContent=p.stock<=4?("Only "+p.stock+" left in stock"):("In stock ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â "+p.stock+" available");
+  $("pvStock").textContent=p.stock<=4?("Only "+p.stock+" left in stock"):("In stock — "+p.stock+" available");
   $("pvStock").className="stock"+(p.stock<=4?" low":"");
   $("pvDesc").textContent=p.desc+" Hand-finished and personalised to order, then confirmed with you on WhatsApp before delivery.";
   $("pvSizeWrap").hidden=!(p.cat==="Frames & Wall Art"||/frame|mirror/i.test(p.name));
@@ -1411,14 +1410,14 @@ $("pvAdd").addEventListener("click",function(){
   var p=findP(curSku);
   var photo=$("pvPhoto").files&&$("pvPhoto").files[0]?$("pvPhoto").files[0].name:"";
   var note=$("pvNote").value.trim();
-  if(!$("pvSizeWrap").hidden) note=(note?note+" Ãƒâ€šÃ‚Â· ":"")+"Size: "+$("pvSize").value;
+  if(!$("pvSizeWrap").hidden) note=(note?note+" · ":"")+"Size: "+$("pvSize").value;
   addToCart(curSku,qty,$("pvPerson").value.trim(),note,photo);
   toast("Added to your bag"); openDrawer();
 });
 $("pvBuy").addEventListener("click",function(){
   var photo=$("pvPhoto").files&&$("pvPhoto").files[0]?$("pvPhoto").files[0].name:"";
   var note=$("pvNote").value.trim();
-  if(!$("pvSizeWrap").hidden) note=(note?note+" Ãƒâ€šÃ‚Â· ":"")+"Size: "+$("pvSize").value;
+  if(!$("pvSizeWrap").hidden) note=(note?note+" · ":"")+"Size: "+$("pvSize").value;
   buyNow(curSku,qty,$("pvPerson").value.trim(),note,photo);
 });
 $("pvWish").addEventListener("click",function(){toggleWish(curSku);$("pvWish").querySelector("span").textContent=wish[curSku]?"Saved in wishlist":"Save to wishlist"});
@@ -1429,7 +1428,7 @@ $("crumbCat").addEventListener("click",function(){activeCat=this.getAttribute("d
 function openLightbox(){
   var p=findP(curSku); if(!p)return;
   $("lbImg").src=p.img; $("lbImg").alt=p.name;
-  $("lbCap").textContent=p.name+" ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â "+p.cat;
+  $("lbCap").textContent=p.name+" — "+p.cat;
   $("pvLightbox").hidden=false; document.body.style.overflow="hidden";
 }
 function closeLightbox(){$("pvLightbox").hidden=true; document.body.style.overflow=""}
@@ -1475,7 +1474,7 @@ $("dClose").addEventListener("click",closeDrawer);
 $("scrim").addEventListener("click",closeDrawer);
 $("waBtn").addEventListener("click",function(){
   var sub=cart.reduce(function(s,i){return s+i.price*i.qty},0), del=300;
-  var lines=cart.map(function(it){return "ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ "+it.name+" ÃƒÆ’Ã¢â‚¬â€ "+it.qty+" ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â "+rs(it.price*it.qty)+(it.person?"\n   Name: "+it.person:"")+(it.note?"\n   Note: "+it.note:"")+(it.photo?"\n   Photo: "+it.photo:"")}).join("\n");
+  var lines=cart.map(function(it){return "• "+it.name+" × "+it.qty+" — "+rs(it.price*it.qty)+(it.person?"\n   Name: "+it.person:"")+(it.note?"\n   Note: "+it.note:"")+(it.photo?"\n   Photo: "+it.photo:"")}).join("\n");
   var msg="Hello GiftWALA, I would like to order:\n\n"+lines+"\n\nSubtotal: "+rs(sub)+"\nDelivery: "+rs(del)+"\nTotal: "+rs(sub+del);
   openModal("Your WhatsApp order","<p>On the live site this button opens WhatsApp with your order already written. Here is exactly what it sends:</p><div class='form-card' style='max-width:none;margin-top:14px'><pre style='white-space:pre-wrap;font-family:inherit;font-size:14.5px;color:var(--ink-dim)'>"+esc(msg)+"</pre></div><button class='btn btn-gold' id='copyOrder' type='button' style='margin-top:16px'>Copy order details</button>");
   $("copyOrder").addEventListener("click",function(){
@@ -1519,18 +1518,18 @@ function renderCheckout(){
     +(it.person?'<small>Name: '+esc(it.person)+'</small>':'')
     +(it.note?'<small>'+esc(it.note)+'</small>':'')
     +(it.photo?'<small>Photo: '+esc(it.photo)+'</small>':'')
-    +'<small>Qty '+it.qty+' ÃƒÆ’Ã¢â‚¬â€ '+rs(it.price)+'</small></div>'
+    +'<small>Qty '+it.qty+' × '+rs(it.price)+'</small></div>'
     +'<span class="pr">'+rs(it.price*it.qty)+'</span></div>';
-  }).join("")+(buyNowItem?'<p style="color:var(--ink-faint);font-size:13px;padding-top:12px">Buy Now checkout ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â this order is just this item. The rest of your bag stays saved in your bag.</p>':'');
+  }).join("")+(buyNowItem?'<p style="color:var(--ink-faint);font-size:13px;padding-top:12px">Buy Now checkout — this order is just this item. The rest of your bag stays saved in your bag.</p>':'');
   $("coSub").textContent=rs(t.sub);
   $("coDiscRow").hidden=t.disc===0;
-  $("coDisc").textContent="ÃƒÂ¢Ã‹â€ Ã¢â‚¬â„¢ "+rs(t.disc);
+  $("coDisc").textContent="− "+rs(t.disc);
   $("coDel").textContent=rs(t.del);
   $("coTotal").textContent=rs(t.total);
   var prepaid=t.prepaid;
   $("coTxnWrap").hidden=!prepaid;
   $("coPayNote").hidden=!prepaid;
-  $("coPlace").innerHTML="Place Order ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â "+rs(t.total);
+  $("coPlace").innerHTML="Place Order — "+rs(t.total);
 }
 $("coPays").addEventListener("change",function(){
   document.querySelectorAll("#coPays .payopt").forEach(function(o){
@@ -1573,7 +1572,7 @@ $("coForm").addEventListener("submit",function(e){
   var t=coTotals();
   lastOrderId="GW-"+Math.floor(10000+Math.random()*90000);
   var fromCart=!buyNowItem;
-  $("coSuccessTxt").textContent="Thank you, "+name.value.trim()+". Your total is "+rs(t.total)+" ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â "+CO_PAY_LABEL[coPayMethod()]+(t.disc?" (includes your 15% prepaid discount of "+rs(t.disc)+")":"")+", delivery included.";
+  $("coSuccessTxt").textContent="Thank you, "+name.value.trim()+". Your total is "+rs(t.total)+" — "+CO_PAY_LABEL[coPayMethod()]+(t.disc?" (includes your 15% prepaid discount of "+rs(t.disc)+")":"")+", delivery included.";
   $("coOid").textContent=lastOrderId;
   $("coMain").style.display="none";
   $("coEmpty").hidden=true;
@@ -1599,7 +1598,7 @@ $("trackForm").addEventListener("submit",function(e){
   e.preventDefault();
   var id=$("trackId").value.trim(), m=$("trackMsg");
   m.className="msg warn show";
-  m.textContent="Order ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ"+id+"ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â was not found in this preview. On the live site, Track Order checks your real order in the store database ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â try the ID from your checkout message after deploy.";
+  m.textContent="Order “"+id+"” was not found in this preview. On the live site, Track Order checks your real order in the store database — try the ID from your checkout message after deploy.";
 });
 
 /* ---------- modal / policies ---------- */
@@ -1637,10 +1636,10 @@ function renderAdmin(){
   $("stProducts").textContent=PRODUCTS.length;
   var low=PRODUCTS.filter(function(p){return p.stock<=4});
   $("stLow").textContent=low.length;
-  $("lowRows").innerHTML=low.map(function(p){return '<tr><td><img loading="lazy" class="pimg" src="'+p.img+'" alt=""></td><td>'+esc(p.name)+'</td><td>'+p.sku+'</td><td>'+rs(price(p))+'</td><td><span class="pill low">'+p.stock+' left</span></td></tr>'}).join("");
+  $("lowRows").innerHTML=low.map(function(p){return '<tr><td><img class="pimg" src="'+p.img+'" alt=""></td><td>'+esc(p.name)+'</td><td>'+p.sku+'</td><td>'+rs(price(p))+'</td><td><span class="pill low">'+p.stock+' left</span></td></tr>'}).join("");
   $("prodRows").innerHTML=PRODUCTS.slice(0,14).map(function(p){
-    return '<tr><td><img loading="lazy" class="pimg" src="'+p.img+'" alt=""></td><td>'+esc(p.name)+'</td><td>'+esc(p.cat)+'</td><td>'+rs(p.price)+'</td><td>'+(p.sale?rs(p.sale):"ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â")+'</td><td>'+p.stock+'</td><td><span class="pill '+(p.stock<=4?"low":"ok")+'">'+(p.stock<=4?"Low stock":"Live")+'</span></td></tr>';
-  }).join("")+'<tr><td colspan="7" style="color:var(--ink-faint)">ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦and '+(PRODUCTS.length-14)+' more products in the full panel.</td></tr>';
+    return '<tr><td><img class="pimg" src="'+p.img+'" alt=""></td><td>'+esc(p.name)+'</td><td>'+esc(p.cat)+'</td><td>'+rs(p.price)+'</td><td>'+(p.sale?rs(p.sale):"—")+'</td><td>'+p.stock+'</td><td><span class="pill '+(p.stock<=4?"low":"ok")+'">'+(p.stock<=4?"Low stock":"Live")+'</span></td></tr>';
+  }).join("")+'<tr><td colspan="7" style="color:var(--ink-faint)">…and '+(PRODUCTS.length-14)+' more products in the full panel.</td></tr>';
   var cats=[],cc={};
   PRODUCTS.forEach(function(p){if(cats.indexOf(p.cat)===-1)cats.push(p.cat);cc[p.cat]=(cc[p.cat]||0)+1});
   $("catRows").innerHTML=cats.map(function(c){return '<tr><td>'+esc(c)+'</td><td>'+cc[c]+'</td></tr>'}).join("");
@@ -1663,14 +1662,14 @@ function reveal(){document.querySelectorAll(".rv:not(.in)").forEach(function(el)
 setTimeout(function(){document.querySelectorAll(".rv").forEach(function(el){el.classList.add("in")})},1400);
 
 /* --- Pro upgrade interactions --- */
-function waHelp(){openModal("Order on WhatsApp","<p>On the live site this button opens WhatsApp with your order already written. In this preview, add items to your bag and tap <b>Order on WhatsApp</b> to see the exact order message.</p><p style='margin-top:10px'>Your bag is empty ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â add a gift first, then order in one tap.</p>")}
+function waHelp(){openModal("Order on WhatsApp","<p>On the live site this button opens WhatsApp with your order already written. In this preview, add items to your bag and tap <b>Order on WhatsApp</b> to see the exact order message.</p><p style='margin-top:10px'>Your bag is empty — add a gift first, then order in one tap.</p>")}
 var wf=$("waFloat"); if(wf) wf.addEventListener("click",function(){if(cart.length){openDrawer()}else{waHelp()}});
 var sw=$("stickyWa"); if(sw) sw.addEventListener("click",function(){if(cart.length){openDrawer()}else{waHelp()}});
 var cw=$("ctaWa"); if(cw) cw.addEventListener("click",function(){if(cart.length){openDrawer()}else{go("shop");toast("Add a gift to your bag first")}});
 var fb=$("finderBtn"); if(fb) fb.addEventListener("click",function(){
   var b=$("fBudget").value, occ=$("fOcc").value;
   activeCat="All"; go("shop");
-  setTimeout(function(){ if(b){$("shopPrice").value=b; renderShop(false)} if(occ){$("shopSearch").value=(occ.indexOf("Birthday")>-1?"Birthday":occ.indexOf("Anniversary")>-1?"Anniversary":""); renderShop(false)} toast("Gift Finder ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â your best matches are ready") },80);
+  setTimeout(function(){ if(b){$("shopPrice").value=b; renderShop(false)} if(occ){$("shopSearch").value=(occ.indexOf("Birthday")>-1?"Birthday":occ.indexOf("Anniversary")>-1?"Anniversary":""); renderShop(false)} toast("Gift Finder — your best matches are ready") },80);
 });
 document.addEventListener("click",function(e){
   var oc=e.target.closest("[data-occ]"); if(oc){activeCat="All"; go("shop"); setTimeout(function(){$("shopSearch").value=oc.getAttribute("data-occ"); renderShop(false)},480); return}
@@ -1680,11 +1679,11 @@ var hs=$("headSearch"); if(hs){hs.addEventListener("keydown",function(e){if(e.ke
 
 window.addEventListener("scroll",function(){var sb=document.getElementById("stickyBar"); if(sb) sb.classList.toggle("show",window.scrollY>650)},{passive:true});
 
-/* ---------- customer reviews ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â fetched from the live store ---------- */
+/* ---------- customer reviews — fetched from the live store ---------- */
 /* Approved reviews come from the store's own API:
    GET https://giftwalapk.store/api/reviews
-   Nothing here is invented ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â if the API returns an empty list or cannot be
-   reached, the honest empty state ("No verified reviews yet ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â be the first")
+   Nothing here is invented — if the API returns an empty list or cannot be
+   reached, the honest empty state ("No verified reviews yet — be the first")
    is what shows. A review submitted via the form below is kept separately as
    "Awaiting verification" until it is approved on the store. */
 var REVIEWS = [];
@@ -1722,7 +1721,7 @@ function loadReviews(){
       REVIEWS=list.map(normaliseReview).filter(function(r){return !!r});
       renderReviews();
     })
-    .catch(function(){ /* fetch failed ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the honest empty state stays */ });
+    .catch(function(){ /* fetch failed — the honest empty state stays */ });
 }
 var STAR_PATH = "M12 3l2.2 4.9 5.3.6-3.9 3.6 1 5.2L12 14.7l-4.6 2.6 1-5.2-3.9-3.6 5.3-.6z";
 function starsRow(n,lg){
@@ -1750,7 +1749,7 @@ function renderReviews(){
   grid.innerHTML=all.map(function(r){
     var initials=r.name.trim().split(/\s+/).map(function(w){return w.charAt(0)}).slice(0,2).join("").toUpperCase();
     return '<article class="rev-card">'
-      +'<div class="rev-head"><div class="rev-ava" aria-hidden="true">'+esc(initials)+'</div><div><div class="rev-name">'+esc(r.name)+'</div><div class="rev-meta">'+esc(r.city)+(r.date?' ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ '+esc(r.date):"")+'</div></div></div>'
+      +'<div class="rev-head"><div class="rev-ava" aria-hidden="true">'+esc(initials)+'</div><div><div class="rev-name">'+esc(r.name)+'</div><div class="rev-meta">'+esc(r.city)+(r.date?' • '+esc(r.date):"")+'</div></div></div>'
       +starsRow(r.stars)
       +(r.product?'<div class="rev-prod">'+esc(r.product)+'</div>':"")
       +'<p class="rev-text">'+esc(r.text)+'</p>'
@@ -1778,11 +1777,11 @@ function paintStarPick(){
 function openReviewForm(){
   var opts=PRODUCTS.map(function(p){return '<option value="'+esc(p.name)+'">'+esc(p.name)+'</option>'}).join("");
   openModal("Write a review",
-    '<p>Ordered from GiftWALA? Tell other customers how it went. Every review is checked against a delivered order before it counts as verified ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â that is what keeps this section honest.</p>'
+    '<p>Ordered from GiftWALA? Tell other customers how it went. Every review is checked against a delivered order before it counts as verified — that is what keeps this section honest.</p>'
     +'<form id="revForm" style="margin-top:18px">'
     +'<div class="field"><label for="rvName">Your name</label><input id="rvName" type="text" placeholder="e.g. Ayesha Khan" autocomplete="name"></div>'
     +'<div class="field"><label for="rvCity">Your city</label><input id="rvCity" type="text" placeholder="e.g. Lahore" autocomplete="address-level2"></div>'
-    +'<div class="field"><label for="rvProduct">What did you order?</label><select id="rvProduct"><option value="">Choose a productÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦</option>'+opts+'<option value="Something else">Something else</option></select></div>'
+    +'<div class="field"><label for="rvProduct">What did you order?</label><select id="rvProduct"><option value="">Choose a product…</option>'+opts+'<option value="Something else">Something else</option></select></div>'
     +'<div class="field"><label>Your rating</label><div class="star-pick" id="rvStars" role="group" aria-label="Choose a star rating"></div></div>'
     +'<div class="field"><label for="rvText">Your review</label><textarea id="rvText" rows="4" placeholder="How was the gift, the personalisation and the delivery?"></textarea></div>'
     +'<p id="rvError" style="color:var(--red);font-size:14px;margin-bottom:10px" hidden></p>'
@@ -1803,7 +1802,7 @@ function submitReview(e){
   SUBMITTED_REVIEWS.unshift({name:name, city:city||"Pakistan", product:prod, stars:reviewStars, text:text, date:"Just now", pending:true});
   renderReviews();
   openModal("Thank you, "+esc(name.split(" ")[0]),
-    '<p>Your review has been received and is now in the Reviews section on the home page, marked <b>Awaiting verification</b>.</p><p style="margin-top:10px">Once it is matched with your delivered order it becomes a <b>Verified order</b> review and counts in the star rating ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the same check every GiftWALA review goes through.</p>');
+    '<p>Your review has been received and is now in the Reviews section on the home page, marked <b>Awaiting verification</b>.</p><p style="margin-top:10px">Once it is matched with your delivered order it becomes a <b>Verified order</b> review and counts in the star rating — the same check every GiftWALA review goes through.</p>');
 }
 var wrb=$("writeReviewBtn"); if(wrb) wrb.addEventListener("click",openReviewForm);
 loadReviews();
@@ -1812,4 +1811,3 @@ renderHome(); renderAdmin(); renderCart(); syncCounts(); renderReviews(); reveal
 </script>
 </body>
 </html>
-<style id="remove-preview-banner">.strip{display:none!important}</style>
