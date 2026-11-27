@@ -1845,3 +1845,22 @@ document.addEventListener('DOMContentLoaded',function(){var el=document.getEleme
 <script>
 document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('mobileTheme'),t=document.getElementById('themeToggle');if(b&&t)b.addEventListener('click',function(){t.click();document.getElementById('mnav').classList.remove('open')})});
 </script>
+<style id="compact-mobile-product-cards">
+@media(max-width:640px){
+  .shop-grid,.best-grid,.wish-grid{gap:10px}
+  .card .ph{aspect-ratio:1/0.82}
+  .card .cb{padding:9px 10px 10px;gap:4px}
+  .card .cat{font-size:9px;letter-spacing:.1em}
+  .card h3{font-size:13px;line-height:1.2}
+  .card h3 button{min-height:28px}
+  .card .meta{gap:3px;flex-wrap:wrap}
+  .card .tag{font-size:9px;padding:3px 6px}
+  .card .stock,.card .del{font-size:10px;line-height:1.3}
+  .card .del{max-height:28px;overflow:hidden}
+  .card .price .now{font-size:15px}
+  .card .price .was{font-size:11px}
+  .card .add,.card .buy{min-height:35px;font-size:12px;margin-top:4px;padding:5px 6px}
+  .card .wish{width:30px;height:30px;top:6px;right:6px}
+  .card .badge{font-size:9px;top:6px;left:6px;padding:3px 6px}
+}
+</style>
