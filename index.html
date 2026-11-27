@@ -19,6 +19,7 @@
 <meta name="twitter:title" content="Personalised Gifts in Pakistan | GiftWALA">
 <meta name="twitter:description" content="Shop custom gifts and gift boxes with nationwide delivery across Pakistan.">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"GiftWALA","url":"https://giftwalapk.store/","logo":"https://giftwalapk.store/assets/brand/giftwala-logo-original.png","description":"Personalised gifts, custom gift boxes and accessories delivered across Pakistan.","areaServed":"PK","potentialAction":{"@type":"SearchAction","target":"https://giftwalapk.store/all-shop.html?search={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<script type="application/ld+json" id="giftwala-breadcrumb-schema">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://giftwalapk.store/"},{"@type":"ListItem","position":2,"name":"Personalised Gifts","item":"https://giftwalapk.store/all-shop.html"}]}</script>
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1931,5 +1932,13 @@ document.addEventListener('error',function(e){
   else if(step==='webp'){im.dataset.fallbackStep='jpg';im.src='/assets/products/'+sku+'.webp';}
   else {im.dataset.fallbackStep='done';im.src='/assets/products/'+sku+'.jpg';}
 },true);
+</script>
+<script>
+fetch('/api/products?home=1').then(function(r){return r.ok?r.json():[]}).then(function(rows){
+  if(!Array.isArray(rows)||!rows.length)return;
+  var node=document.createElement('script');node.type='application/ld+json';
+  node.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList","name":"GiftWALA personalised gifts","itemListElement":rows.slice(0,24).map(function(p,i){return {"@type":"ListItem","position":i+1,"url":"https://giftwalapk.store/product.html?id="+encodeURIComponent(p.sku),"name":p.name}})});
+  document.head.appendChild(node);
+}).catch(function(){});
 </script>
 </body></html>
