@@ -3,6 +3,7 @@
 <head><style>.strip{display:none!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9043627698998310" crossorigin="anonymous"></script>
 <title>GiftWALA — Personalised Gifts, Pakistan</title>
 <meta name="description" content="Personalised gifts, gift boxes and accessories delivered across Pakistan.">
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/giftwala-favicon-512.png">
@@ -1905,5 +1906,17 @@ function renderBankDetails(){var el=$("bankDetails");if(!el)return;var isBank=co
     if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].indexOf(k)>=0)||(e.ctrlKey&&['u','s','p','c'].indexOf(k)>=0)){if(!editable(e)){e.preventDefault();e.stopPropagation()}}
   },true);
 })();
+</script>
+<script>
+document.addEventListener('error',function(e){
+  var im=e.target;
+  if(!im||im.tagName!=='IMG'||im.dataset.fallbackStep==='done')return;
+  var m=(im.currentSrc||im.src||'').match(/\/api\/product-images\/([^/?#]+)/);
+  if(!m)return;
+  var sku=encodeURIComponent(m[1]),step=im.dataset.fallbackStep||'png';
+  if(step==='png'){im.dataset.fallbackStep='webp';im.src='/assets/products/'+sku+'.png';}
+  else if(step==='webp'){im.dataset.fallbackStep='jpg';im.src='/assets/products/'+sku+'.webp';}
+  else {im.dataset.fallbackStep='done';im.src='/assets/products/'+sku+'.jpg';}
+},true);
 </script>
 </body></html>
