@@ -67,7 +67,14 @@ document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.an
 (function(){
   var KEY='giftwala-theme';
   function resolve(){try{var v=localStorage.getItem(KEY);if(v==='dark'||v==='light')return v;}catch(e){}try{if(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)return 'light';}catch(e){}return 'dark';}
-  function syncLogo(t){var f=t==='light'?'/assets/brand/giftwala-logo-light.png':'/assets/brand/giftwala-logo-dark.png';document.querySelectorAll('img.brand-logo,.footer-brand img').forEach(function(im){if(im.getAttribute('src')!==f)im.setAttribute('src',f);});}
+  /* ROUND 22 (2026-11-27): the storefront header AND footer are dark in
+     BOTH themes (measured 360px + 1280px: header bg #11100f, footer
+     #1c1712 — no light header exists), so the gold/white logo is correct
+     in both themes. The old theme swap sent the dark-text "light" logo
+     to the dark header in light theme, making "Gift" invisible. The
+     light logo variant is admin-only (admin-panel.html has its own swap);
+     this file is never loaded by the admin. */
+  function syncLogo(t){var f='/assets/brand/giftwala-logo-dark.png';document.querySelectorAll('img.brand-logo,.footer-brand img').forEach(function(im){if(im.getAttribute('src')!==f)im.setAttribute('src',f);});}
   function apply(t){document.documentElement.setAttribute('data-theme',t);syncLogo(t);document.querySelectorAll('.theme-toggle').forEach(function(b){var toLight=t==='dark';b.setAttribute('aria-label',toLight?'Switch to light theme':'Switch to dark theme');b.setAttribute('title',toLight?'Switch to light theme':'Switch to dark theme');b.setAttribute('aria-pressed',String(t==='light'));});}
   function current(){return document.documentElement.getAttribute('data-theme')||resolve();}
   window.__giftwalaTheme={get:current,set:function(t){try{localStorage.setItem(KEY,t);}catch(e){}apply(t);},toggle:function(){var n=current()==='dark'?'light':'dark';try{localStorage.setItem(KEY,n);}catch(e){}apply(n);}};
@@ -97,3 +104,4 @@ document.addEventListener('DOMContentLoaded',()=>{const clean=()=>{document.quer
    header being re-injected (mobile) and works on static headers too. */
 document.addEventListener('click',e=>{const b=e.target&&e.target.closest?e.target.closest('#headerSearchBtn'):null;if(!b)return;const shop=document.getElementById('shopSearch');if(location.pathname.indexOf('all-shop')>-1&&shop){shop.focus();shop.scrollIntoView({block:'nearest'})}else location.href='/all-shop.html?openSearch=1'});
 window.gwGoSearch=function(){const shop=document.getElementById('shopSearch');if(location.pathname.indexOf('all-shop')>-1&&shop){shop.focus();shop.scrollIntoView({block:'nearest'})}else location.href='/all-shop.html?openSearch=1'};
+document.addEventListener('DOMContentLoaded',()=>{fetch('/sf-header/header.html?v=2').then(r=>r.text()).then(markup=>{const d=new DOMParser().parseFromString(markup,'text/html');const a=d.querySelector('.announcement'),h=d.querySelector('.site-header');if(a&&document.querySelector('.announcement'))document.querySelector('.announcement').replaceWith(a);if(h&&document.querySelector('.site-header'))document.querySelector('.site-header').replaceWith(h);}).catch(()=>{})});

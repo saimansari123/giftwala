@@ -53,17 +53,36 @@
 
   /* Header link "Wishlist (n)" — injected into .header-actions. The header
      is rebuilt by header-sync.js, so re-inject whenever it changes. */
+  /* ROUND 22 (2026-11-27) — MutationObserver feedback loop (page freeze):
+     syncWishlistUI() used to write innerHTML / textContent unconditionally
+     on every call, and a body-subtree MutationObserver re-invoked it on
+     every mutation — an infinite microtask loop that froze All Shop,
+     product and wishlist pages ~1s after load (main thread starved, tab
+     unresponsive). Every write below is now conditional: the DOM is only
+     touched when the value actually changed, so a sync that changes
+     nothing queues no mutations and the loop terminates. A re-entrancy
+     guard on the observers (see init) is belt-and-braces. */
   function syncWishlistUI() {
     var n = wishlistCount();
-    document.querySelectorAll('.wishlist-count').forEach(function (el) { el.textContent = n; });
+    var ns = String(n);
+    document.querySelectorAll('.wishlist-count').forEach(function (el) { if (el.textContent !== ns) el.textContent = ns; });
     document.querySelectorAll('.wishlist-btn').forEach(function (btn) {
       var id = btn.dataset.wishId;
       if (!id) return;
       var on = isWishlisted(id);
       btn.classList.toggle('active', on);
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', on ? 'Remove from wishlist' : 'Save to wishlist');
-      btn.innerHTML = on ? HEART_FILLED : HEART_OUTLINE;
+      var pressed = on ? 'true' : 'false';
+      if (btn.getAttribute('aria-pressed') !== pressed) btn.setAttribute('aria-pressed', pressed);
+      var label = on ? 'Remove from wishlist' : 'Save to wishlist';
+      if (btn.getAttribute('aria-label') !== label) btn.setAttribute('aria-label', label);
+      /* Compare via a state marker, not innerHTML: serialised innerHTML
+         need not equal the assigned string, so a string compare could
+         keep "changing" forever. The marker only flips on a real change. */
+      var state = on ? 'filled' : 'outline';
+      if (btn.dataset.heartState !== state) {
+        btn.dataset.heartState = state;
+        btn.innerHTML = on ? HEART_FILLED : HEART_OUTLINE;
+      }
     });
     var actions = document.querySelector('.site-header .header-actions');
     if (actions && !actions.querySelector('.wishlist-link')) {
@@ -175,10 +194,18 @@
     addHearts(document);
     syncWishlistUI();
     var target = document.getElementById('products') || document.body;
+    /* ROUND 22: re-entrancy guard — a sync triggered by an observer must
+       never re-trigger itself while it is still running. */
+    var syncing = false;
+    function guardedSync() {
+      if (syncing) return;
+      syncing = true;
+      try { syncWishlistUI(); } finally { syncing = false; }
+    }
     new MutationObserver(function () { addCartButtons(); addHearts(document); }).observe(target, { childList: true, subtree: true });
-    new MutationObserver(function () { syncWishlistUI(); }).observe(document.body, { childList: true, subtree: true });
-    window.addEventListener('storage', syncWishlistUI);
-    setInterval(syncWishlistUI, 1000);
+    new MutationObserver(guardedSync).observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('storage', guardedSync);
+    setInterval(guardedSync, 1000);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

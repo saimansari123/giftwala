@@ -1432,3 +1432,90 @@ body header.site-header .header-actions .menu-btn{display:grid!important}
 .home-reviews-cta a{color:var(--gold-dark);font-weight:700;font-size:13px}
 html[data-theme="dark"] #reviews .rv-summary,html[data-theme="dark"] .home-review-grid .rv-card,html[data-theme="dark"] .rv-card{background:var(--gw-surface);border-color:var(--gw-line)}
 @media(max-width:850px){.home-review-grid{grid-template-columns:1fr}#reviews .rv-summary{flex-wrap:wrap}#reviews .rv-dist{margin-left:0;width:100%}}
+
+/* ---- ROUND 22 (2026-11-27): mobile 360px audit fixes + marquee text restore ----
+   Found by the first live-browser (Playwright) audit of the site — every fix
+   below was measured, not guessed. Desktop layout is untouched except where
+   the bug also showed there (marquee text was 0px on desktop too). */
+
+/* A. MARQUEE TEXT WAS INVISIBLE (all pages, both themes, desktop + mobile).
+   The legacy line-194 rule ".announcement span{font-size:0!important}"
+   (0,1,1) outranks the Round 4 marquee rules ".gw-marquee__item"
+   (0,1,0), so the scrolling messages rendered as an empty gold/black
+   bar since Round 4. These (0,2,0) rules restore size + margins + a
+   readable colour per theme (dark bar = cream text, light gold bar =
+   dark text). */
+.announcement .gw-marquee__item{font-size:11px!important;margin:0!important;color:#f7e4b6!important}
+.announcement .gw-marquee__sep{font-size:11px!important;margin:0 14px!important;color:#dba83d!important}
+@media(max-width:850px){.announcement .gw-marquee__item,.announcement .gw-marquee__sep{font-size:10px!important}}
+html[data-theme="light"] .announcement .gw-marquee__item{color:#241a05!important}
+html[data-theme="light"] .announcement .gw-marquee__sep{color:#6E530C!important}
+
+/* B. FOOTER OVERFLOW AT 360px (all pages).
+   The footer grid tracks sized to min-content (70px + 250px against a
+   310px container), so the footer was cut off ~5px on the right (masked
+   only by html,body overflow-x:hidden). minmax(0,1fr) lets the tracks
+   shrink; min-width:0 on the children stops long contact strings
+   re-inflating them. Validated live: tracks 144.8/144.8 after the fix. */
+@media(max-width:850px){
+  footer.reference-footer .footer-inner,.reference-footer .footer-inner{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .reference-footer .footer-inner>div{min-width:0!important}
+  .reference-footer .footer-contact-row span,.reference-footer .footer-contact-row a{overflow-wrap:anywhere!important}
+  /* F. NEWSLETTER FORM (found after B: the 144px column left the form
+     250px wide, its Subscribe button 80px off-screen). The Talk-to-us
+     block spans full width, so the form fits; min-width:0 lets the
+     email input shrink instead of pushing the button out. */
+  .reference-footer .footer-inner>div:last-child{grid-column:1/-1!important}
+  .reference-footer form{min-width:0!important}
+  .reference-footer form input{min-width:0!important;flex:1 1 auto!important}
+}
+
+/* C. WISHLIST HEART INVISIBLE IN LIGHT THEME (header is dark in both
+   themes, desktop + mobile). The heart <a> computed to #171513 while
+   every sibling icon is cream #fff8ed. Explicit cream, with the same
+   gold hover as the sibling buttons. */
+.site-header .header-actions .wishlist-btn{color:#fff8ed!important}
+.site-header .header-actions .wishlist-btn svg{color:#fff8ed!important}
+.site-header .header-actions .wishlist-btn:hover{color:#f8d47b!important}
+
+/* D. HEADER ACTIONS OVERFLOWED ON MOBILE (all-shop / product / wishlist).
+   The injected "Wishlist (n)" text link (~95px) pushed .header-actions
+   14px past the viewport, clipping the hamburger button (and wrapping
+   the product header onto two rows). On mobile the heart icon button
+   already links to the wishlist, so the text link is hidden there;
+   desktop keeps it unchanged. */
+@media(max-width:850px){
+  .site-header .wishlist-link{display:none!important}
+}
+
+/* E. HERO NOTES UNREADABLE IN LIGHT THEME.
+   The pill spans carry their own cream colour (#f4e6c8, index.html
+   inline rule), so the container-level light override never applied.
+   Span-level override with a dark readable text on a soft gold pill. */
+html[data-theme="light"] .gw-hero__notes span{color:#6f6a63!important;border-color:#dba83d66!important;background:#dba83d14!important}
+
+/* G. PRODUCT PAGE HEADER, MOBILE ONLY (<=850px).
+   product.html closes </body></html> at line 70, so every <style> block
+   after it is ignored by the parser — the header was styled by this
+   file alone and fell back to display:block, with the action buttons
+   stacked vertically, spilling below the 72px header, and the hamburger
+   deleted by an old script (now removed). UPDATE 2026-11-27 (probe22):
+   the real culprit was three inline <script>s in product.html (lines
+   97/101/110) that set INLINE !important styles on the header/actions
+   (display:block, width:100%, height:72px) and absolutely positioned
+   the buttons — align() even re-applied them every 250ms, so no CSS
+   rule could ever win. All three scripts are now DELETED from
+   product.html; this CSS owns the mobile product header. fixMenu
+   (kept) still styles the open dropdown. Scoped to body.gw-product-page
+   so the homepage's centred-logo mobile header is untouched. One-row
+   grid (brand left, actions right); the dropdown (.desktop-nav.open)
+   overlays content exactly as on the homepage. Desktop untouched.
+   Sizing: header padding 12px + 38px buttons + 4px gaps so the 116px
+   logo and the 5 action buttons fit in 328px at 360px width. */
+@media(max-width:850px){
+  body.gw-product-page>header.site-header{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"brand . actions"!important;align-items:center!important;column-gap:8px!important;min-height:72px!important;padding:8px 12px!important;position:sticky!important;top:0!important;z-index:20!important}
+  body.gw-product-page>header.site-header>.brand{position:static!important;left:auto!important;top:auto!important;transform:none!important;margin:0!important}
+  body.gw-product-page>header.site-header .header-actions{position:static!important;right:auto!important;top:auto!important;transform:none!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:4px!important;width:auto!important;height:auto!important;margin:0!important}
+  body.gw-product-page>header.site-header .header-actions .icon-btn,body.gw-product-page>header.site-header .header-actions .menu-btn{position:relative!important;top:auto!important;right:auto!important;left:auto!important;transform:none!important;width:38px!important;height:38px!important}
+  body.gw-product-page>header.site-header .header-actions .menu-btn{display:grid!important;opacity:1!important}
+}
