@@ -1890,4 +1890,18 @@ var bankSettings={};
 fetch('/api/builder-settings').then(function(r){return r.ok?r.json():{}}).then(function(x){bankSettings=x||{}}).catch(function(){});
 function renderBankDetails(){var el=$("bankDetails");if(!el)return;var isBank=coPayMethod()==="bank";el.hidden=!isBank;if(isBank){var s=bankSettings,bits=[s.bankAccountTitle,s.bankName,s.bankAccountNumber,s.bankIban].filter(Boolean);el.textContent=bits.length?'Bank details: '+bits.join(' • '):'Bank details will be shared after WhatsApp confirmation.';}}
 </script>
+<script>
+(function(){
+  function editable(e){return /INPUT|TEXTAREA|SELECT/.test(e.target&&e.target.tagName||'')}
+  document.addEventListener('contextmenu',function(e){if(!editable(e))e.preventDefault()});
+  document.addEventListener('selectstart',function(e){if(!editable(e))e.preventDefault()});
+  document.addEventListener('dragstart',function(e){if(e.target&&e.target.tagName==='IMG')e.preventDefault()});
+  document.addEventListener('copy',function(e){if(!editable(e))e.preventDefault()});
+  document.addEventListener('cut',function(e){if(!editable(e))e.preventDefault()});
+  document.addEventListener('keydown',function(e){
+    var k=String(e.key||'').toLowerCase();
+    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].indexOf(k)>=0)||(e.ctrlKey&&['u','s','p','c'].indexOf(k)>=0)){if(!editable(e)){e.preventDefault();e.stopPropagation()}}
+  },true);
+})();
+</script>
 </body></html>
