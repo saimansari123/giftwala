@@ -794,7 +794,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
     <button data-go="home" data-scroll="cats" type="button">Categories</button>
     <button data-go="faq" type="button">FAQ</button>
     <button data-go="track" type="button">Track Order</button>
-    <button data-go="wishlist" type="button">Wishlist</button>
+    <button data-go="wishlist" type="button">Wishlist</button><button id="mobileTheme" type="button">Light / Dark theme</button>
   </nav>
 </div></header>
 
@@ -813,7 +813,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
         <button class="btn btn-ghost" data-go="home" data-scroll="finder" type="button">Gift Finder — Find a gift in 10 seconds</button>
       </div>
       <div class="hero-proof"><div class="proof-txt"><b>How ordering works:</b> Pick a gift → Add name / photo → We confirm the design on WhatsApp → Pay on delivery. No hidden charges, no surprises.</div></div>
-      <div class="stats-row"><div><b id="liveProductCount">200+</b><span>Products</span></div><div><b>11</b><span>Collections</span></div><div><b>Rs. 300</b><span>Flat Delivery</span></div><div><b>COD</b><span>Cash on Delivery</span></div></div>
+      <div class="stats-row"><div><b id="liveProductCount">1</b><span>Products</span></div><div><b>11</b><span>Collections</span></div><div><b>Rs. 300</b><span>Flat Delivery</span></div><div><b>COD</b><span>Cash on Delivery</span></div></div>
       <div class="chips">
         <span class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>15% OFF on prepaid</span>
         <span class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Design confirmed first</span>
@@ -1822,5 +1822,26 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded',function(){var el=document.getElementById('liveProductCount');if(!el)return;var target=200;fetch('/api/products').then(function(r){return r.json()}).then(function(rows){target=Math.max(200,Array.isArray(rows)?rows.length:200);var n=200;el.textContent="200+";var step=Math.max(1,Math.ceil((target-200)/20));var timer=setInterval(function(){n=Math.min(target,n+step);el.textContent=n+'+';if(n>=target)clearInterval(timer)},35)}).catch(function(){el.textContent='200+'})});
+document.addEventListener('DOMContentLoaded',function(){var el=document.getElementById('liveProductCount');if(!el)return;var target=200;fetch('/api/products').then(function(r){return r.json()}).then(function(rows){target=Math.max(200,Array.isArray(rows)?rows.length:200);var n=1;el.textContent="1";var step=Math.max(1,Math.ceil((target-1)/35));var timer=setInterval(function(){n=Math.min(target,n+step);el.textContent=n+'+';if(n>=target)clearInterval(timer)},35)}).catch(function(){el.textContent='200+'})});
+</script>
+<style id="mobile-header-layout-fix">
+@media(max-width:640px){
+  .header-in{min-height:70px;padding:8px 0;justify-content:center}
+  .header-in>.brand{position:absolute;left:50%;transform:translateX(-50%);z-index:2}
+  .header-in>.brand img{height:42px}
+  .hicons{width:100%;margin-left:0;justify-content:flex-end;gap:4px}
+  .hicons .burger{display:grid;position:absolute;left:0;z-index:3}
+  .hicons .hbtn{width:38px;height:38px}
+}
+</style>
+<style id="mobile-header-cleanup">
+@media(max-width:640px){
+  .header-in>.brand{left:50%!important;top:50%;transform:translate(-50%,-50%)!important;margin:0!important}
+  .header-in>.brand img{height:48px!important;width:auto!important}
+  .hicons #hWish,.hicons #themeToggle{display:none!important}
+  .hicons .hbtn{width:38px;height:38px}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('mobileTheme'),t=document.getElementById('themeToggle');if(b&&t)b.addEventListener('click',function(){t.click();document.getElementById('mnav').classList.remove('open')})});
 </script>
