@@ -1864,3 +1864,22 @@ document.addEventListener('DOMContentLoaded',function(){var b=document.getElemen
   .card .badge{font-size:9px;top:6px;left:6px;padding:3px 6px}
 }
 </style>
+<style id="responsive-footer-fix">
+@media(max-width:640px){
+  footer.site{padding:42px 0 92px;overflow:hidden}
+  footer.site .wrap{width:min(100% - 28px,540px)}
+  footer.site .fgrid{grid-template-columns:1fr 1fr;gap:26px 22px;align-items:start}
+  footer.site .fbrand{grid-column:1/-1}
+  footer.site .fbrand img{height:58px;margin-bottom:10px}
+  footer.site p{font-size:12px;line-height:1.5;max-width:44ch}
+  footer.site .pay-row{gap:6px;margin-top:10px}
+  footer.site .pay{font-size:10px;padding:6px 8px}
+  footer.site .news{max-width:100%;width:100%;gap:6px}
+  footer.site .news input{font-size:12px;padding:9px 12px;min-height:40px}
+  footer.site .news button{min-height:40px;padding:9px 15px;font-size:12px}
+  footer.site h4{font-size:13px;margin-bottom:8px}
+  footer.site button.fl{font-size:12px;min-height:30px;padding:3px 0}
+  footer.site .fbot{margin-top:24px;padding-top:14px;display:block;font-size:10px;line-height:1.5}
+  footer.site .fbot span{display:block;margin:3px 0!important}
+}
+</style>
