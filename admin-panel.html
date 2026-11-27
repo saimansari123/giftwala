@@ -183,6 +183,11 @@ tbody tr:hover{background:var(--panel-2)}
   .kv .input:nth-child(2){grid-column:1/-1}
   .search{min-width:0;width:100%}
 }
+.password-field{position:relative}
+.password-field .input{width:100%;padding-right:48px}
+.password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:18px;line-height:1}
+.password-toggle:hover{background:rgba(255,255,255,.08);color:var(--text)}
+.password-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 </style>
 <style>
 /* ROUND 12 (2026-11-26): light-theme bright-gold buttons — the light
@@ -204,7 +209,10 @@ html[data-theme="light"] .btn.primary{background:linear-gradient(135deg,#F2CE68,
     <p class="sub" style="margin:0 0 16px">Sign in to manage products, orders and reviews.</p>
     <div class="grid" style="gap:12px">
       <input class="input" name="email" type="email" placeholder="Admin email" required autocomplete="username">
-      <input class="input" name="password" type="password" placeholder="Password" required autocomplete="current-password">
+      <div class="password-field">
+        <input class="input" id="adminLoginPassword" name="password" type="password" placeholder="Password" required autocomplete="current-password">
+        <button class="password-toggle" id="toggleAdminPassword" type="button" aria-label="Show password" aria-pressed="false">&#128065;</button>
+      </div>
       <button class="btn primary" type="submit" id="loginBtn">Sign in</button>
       <div class="err" id="loginErr"></div>
     </div>
@@ -1359,6 +1367,15 @@ async function saveSettings(){
 }
 
 /* ---------- Events ---------- */
+$('toggleAdminPassword').addEventListener('click', () => {
+  const input = $('adminLoginPassword');
+  const button = $('toggleAdminPassword');
+  const visible = input.type === 'password';
+  input.type = visible ? 'text' : 'password';
+  button.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+  button.setAttribute('aria-pressed', String(visible));
+  button.innerHTML = visible ? '&#128584;' : '&#128065;';
+});
 $('loginForm').addEventListener('submit', async e => {
   e.preventDefault();
   const f = e.target, btn = $('loginBtn');
