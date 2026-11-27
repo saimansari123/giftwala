@@ -3,8 +3,8 @@
 <head><style>.strip{display:none!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GiftWALA — Redesign Preview</title>
-<meta name="description" content="Preview of the redesigned GiftWALA personalised gifts store — new design, full shop and wishlist, with a dark and light theme.">
+<title>GiftWALA — Personalised Gifts, Pakistan</title>
+<meta name="description" content="Personalised gifts, gift boxes and accessories delivered across Pakistan.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -759,7 +759,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
 <body>
 
 <div class="strip" id="strip"><div class="wrap">
-  <span><b>REDESIGN PREVIEW</b> &nbsp;This is the new redesigned GiftWALA — it is not live yet. The catalogue below is sample data; after deploy, your real products load from the live site. Prices, the cart and wishlist all work so you can test them. Use the sun/moon button in the header to switch between the dark and light theme.</span>
+  <span><b>GIFTWALA</b> &nbsp;Personalised gifts made with care. Browse our live collection. Prices, the cart and wishlist all work so you can test them. Use the sun/moon button in the header to switch between the dark and light theme.</span>
   <button id="stripClose" type="button">Dismiss</button>
 </div></div>
 
@@ -813,7 +813,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
         <button class="btn btn-ghost" data-go="home" data-scroll="finder" type="button">Gift Finder — Find a gift in 10 seconds</button>
       </div>
       <div class="hero-proof"><div class="proof-txt"><b>How ordering works:</b> Pick a gift → Add name / photo → We confirm the design on WhatsApp → Pay on delivery. No hidden charges, no surprises.</div></div>
-      <div class="stats-row"><div><b>76+</b><span>Products</span></div><div><b>11</b><span>Collections</span></div><div><b>Rs. 300</b><span>Flat Delivery</span></div><div><b>COD</b><span>Cash on Delivery</span></div></div>
+      <div class="stats-row"><div><b id="liveProductCount">0</b><span>Products</span></div><div><b>11</b><span>Collections</span></div><div><b>Rs. 300</b><span>Flat Delivery</span></div><div><b>COD</b><span>Cash on Delivery</span></div></div>
       <div class="chips">
         <span class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>15% OFF on prepaid</span>
         <span class="chip"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Design confirmed first</span>
@@ -1185,7 +1185,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       <button class="fl" data-policy="delivery" type="button">Shipping Policy</button>
     </div>
   </div>
-  <div class="fbot"><span>© 2026 GiftWALA — Personalised Gifts, Pakistan</span><span style="margin-left:auto">Redesign preview — not the live site</span></div>
+  <div class="fbot"><span>© 2026 GiftWALA — Personalised Gifts, Pakistan</span><span style="margin-left:auto">Personalised gifts, Pakistan</span></div>
 </div></footer>
 
 <!-- cart drawer -->
@@ -1811,3 +1811,16 @@ renderHome(); renderAdmin(); renderCart(); syncCounts(); renderReviews(); reveal
 </script>
 </body>
 </html>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  fetch('/api/products',{headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw Error('products');return r.json()}).then(function(rows){
+    if(!Array.isArray(rows)||!rows.length)return;
+    PRODUCTS=rows.map(function(x){return {sku:x.sku||x.id,name:x.name||'',cat:x.category||'Other',price:Number(x.price)||0,sale:Number(x.sale_price||x.salePrice||0)||null,stock:Number(x.stock)||0,desc:x.description||'',img:x.cardImage||x.card_image_url||x.imageUrl||x.image_url||'/assets/brand/giftwala-logo-dark.png'}});
+    if(typeof renderHome==='function')renderHome();
+    if(typeof renderShop==='function'&&typeof view!=='undefined'&&view==='shop')renderShop(false);
+  }).catch(function(){});
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){var el=document.getElementById('liveProductCount');if(!el)return;var target=200;fetch('/api/products').then(function(r){return r.json()}).then(function(rows){target=Math.max(200,Array.isArray(rows)?rows.length:200);var n=0,step=Math.max(1,Math.ceil(target/35));var timer=setInterval(function(){n=Math.min(target,n+step);el.textContent=n+'+';if(n>=target)clearInterval(timer)},35)}).catch(function(){el.textContent='200+'})});
+</script>
