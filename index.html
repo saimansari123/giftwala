@@ -983,7 +983,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
       <p class="desc" id="pvDesc" style="margin-top:14px"></p>
       <div class="field"><label for="pvPerson">Name to print (personalisation)</label><input id="pvPerson" type="text" placeholder="e.g. Happy Birthday, Ayesha" maxlength="60"></div>
       <div class="field"><label for="pvPhoto">Your photo for this gift</label><input id="pvPhoto" type="file" accept="image/*"><small style="color:var(--ink-faint)">The file stays on your device — we confirm the photo with you on WhatsApp.</small></div>
-      <div class="field" id="pvSizeWrap" hidden><label for="pvSize">Frame size</label><select id="pvSize"><option>A5</option><option selected>A4</option><option>A3</option></select><small style="color:var(--ink-faint)">Size prices are confirmed on WhatsApp — no made-up prices here.</small></div>
+      <div class="field" id="pvSizeWrap" hidden><label for="pvSize">Frame size</label><select id="pvSize"><option value="A5">A5 — Rs. 699</option><option value="A4" selected>A4 — Rs. 999</option><option value="A3">A3 — Rs. 1,399</option></select><small style="color:var(--ink-faint)">Simple frame sizes: A5 Rs. 699 · A4 Rs. 999 · A3 Rs. 1,399.</small></div>
       <div class="field"><label for="pvNote">Gift note (optional)</label><textarea id="pvNote" rows="2" maxlength="200" placeholder="A short message to include with the gift"></textarea></div>
       <div class="pv-actions">
         <div class="qty"><button id="qMinus" type="button" aria-label="Decrease quantity">−</button><output id="qVal">1</output><button id="qPlus" type="button" aria-label="Increase quantity">+</button></div>
@@ -1407,12 +1407,14 @@ function openProduct(sku){
 }
 $("qMinus").addEventListener("click",function(){qty=Math.max(1,qty-1);$("qVal").textContent=qty});
 $("qPlus").addEventListener("click",function(){qty=Math.min(9,qty+1);$("qVal").textContent=qty});
+$("pvSize").addEventListener("change",function(){var prices={A5:699,A4:999,A3:1399};if(!$("pvSizeWrap").hidden){$("pvNow").textContent=rs(prices[this.value]||999)}});
 $("pvAdd").addEventListener("click",function(){
   var p=findP(curSku);
   var photo=$("pvPhoto").files&&$("pvPhoto").files[0]?$("pvPhoto").files[0].name:"";
   var note=$("pvNote").value.trim();
   if(!$("pvSizeWrap").hidden) note=(note?note+" · ":"")+"Size: "+$("pvSize").value;
   addToCart(curSku,qty,$("pvPerson").value.trim(),note,photo);
+  if(!$("pvSizeWrap").hidden){var framePrices={A5:699,A4:999,A3:1399};if(cart.length)cart[cart.length-1].price=framePrices[$("pvSize").value]||999;renderCart();}
   toast("Added to your bag"); openDrawer();
 });
 $("pvBuy").addEventListener("click",function(){
