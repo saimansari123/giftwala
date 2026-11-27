@@ -313,6 +313,17 @@ export default {
         }
       }
 
+      // Public product detail includes the optional gallery images. The list
+      // endpoint intentionally stays lightweight so the storefront loads fast.
+      const publicProduct = url.pathname.match(/^\/api\/products\/([^/]+)$/);
+      if (publicProduct && req.method === 'GET') {
+        const key = decodeURIComponent(publicProduct[1]);
+        const r = await env.DB.prepare(
+          "SELECT id,name,sku,category,price,sale_price,stock,description,CASE WHEN image_url LIKE 'data:image/%' THEN '/api/product-images/' || id ELSE image_url END AS image_url,CASE WHEN card_image_url <> '' THEN '/api/product-images/' || id || '/card' ELSE '' END AS card_image_url,images,featured,created_at,sizes FROM products WHERE (id=? OR sku=?) AND (hidden IS NULL OR hidden=0) LIMIT 1"
+        ).bind(key, key).first();
+        return r ? json(productOut(r)) : json({ message: 'Product not found' }, 404);
+      }
+
       // List products (public)
       if (url.pathname === '/api/products' && req.method === 'GET') {
         try {

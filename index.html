@@ -1403,6 +1403,7 @@ function openProduct(sku){
   $("pvPerson").value=""; $("pvNote").value=""; $("pvPhoto").value="";
   $("pvWish").querySelector("span").textContent=wish[sku]?"Saved in wishlist":"Save to wishlist";
   go("product");
+  fetch("/api/products/"+encodeURIComponent(sku)).then(function(r){return r.ok?r.json():null}).then(function(full){if(!full||curSku!==sku)return;var gallery=Array.isArray(full.images)?full.images.filter(Boolean):[];var thumbs=$("pvThumbMain").parentElement;thumbs.querySelectorAll(".pv-extra-thumb").forEach(function(x){x.remove()});gallery.slice(0,20).forEach(function(src,i){if(i===0)return;var b=document.createElement("button");b.className="pv-thumb pv-extra-thumb";b.type="button";b.innerHTML='<img loading="lazy" decoding="async" src="'+src+'" alt="Product photo '+(i+1)+'">';b.addEventListener("click",function(){$("pvImg").src=src;document.querySelectorAll(".pv-thumb").forEach(function(x){x.classList.remove("on")});b.classList.add("on")});thumbs.insertBefore(b,thumbs.querySelector(".pv-photo-note"))})}).catch(function(){});
 }
 $("qMinus").addEventListener("click",function(){qty=Math.max(1,qty-1);$("qVal").textContent=qty});
 $("qPlus").addEventListener("click",function(){qty=Math.min(9,qty+1);$("qVal").textContent=qty});
@@ -1815,7 +1816,7 @@ renderHome(); renderAdmin(); renderCart(); syncCounts(); renderReviews(); reveal
 document.addEventListener('DOMContentLoaded',function(){
   fetch('/api/products',{headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw Error('products');return r.json()}).then(function(rows){
     if(!Array.isArray(rows)||!rows.length)return;
-    PRODUCTS=rows.map(function(x){return {sku:x.sku||x.id,name:x.name||'',cat:x.category||'Other',price:Number(x.price)||0,sale:Number(x.sale_price||x.salePrice||0)||null,stock:Number(x.stock)||0,desc:x.description||'',img:x.cardImage||x.card_image_url||x.imageUrl||x.image_url||'/assets/brand/giftwala-logo-dark.png'}});
+    PRODUCTS=rows.map(function(x){return {sku:x.sku||x.id,name:x.name||'',cat:x.category||'Other',price:Number(x.price)||0,sale:Number(x.sale_price||x.salePrice||0)||null,stock:Number(x.stock)||0,desc:x.description||'',images:Array.isArray(x.images)?x.images:[],img:x.cardImage||x.card_image_url||x.imageUrl||x.image_url||'/assets/brand/giftwala-logo-dark.png'}});
     if(typeof renderHome==='function')renderHome();
     if(typeof renderShop==='function'&&typeof view!=='undefined'&&view==='shop')renderShop(false);
   }).catch(function(){});
@@ -1883,3 +1884,6 @@ document.addEventListener('DOMContentLoaded',function(){var b=document.getElemen
   footer.site .fbot span{display:block;margin:3px 0!important}
 }
 </style>
+  var gallery=(p.images&&p.images.length?p.images:[p.img]).filter(Boolean);
+  var thumbs=$("pvThumbMain").parentElement; thumbs.querySelectorAll(".pv-extra-thumb").forEach(function(x){x.remove()});
+  gallery.slice(0,20).forEach(function(src,i){if(i===0)return;var b=document.createElement("button");b.className="pv-thumb pv-extra-thumb";b.type="button";b.innerHTML='<img loading="lazy" decoding="async" src="'+src+'" alt="'+esc(p.name)+' photo '+(i+1)+'">';b.addEventListener("click",function(){document.querySelectorAll(".pv-thumb").forEach(function(x){x.classList.remove("on")});b.classList.add("on");$("pvImg").src=src});thumbs.insertBefore(b,thumbs.querySelector(".pv-photo-note"));});
