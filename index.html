@@ -1884,4 +1884,6 @@ document.addEventListener('DOMContentLoaded',function(){var b=document.getElemen
   footer.site .fbot span{display:block;margin:3px 0!important}
 }
 </style>
- 
+  var gallery=(p.images&&p.images.length?p.images:[p.img]).filter(Boolean);
+  var thumbs=$("pvThumbMain").parentElement; thumbs.querySelectorAll(".pv-extra-thumb").forEach(function(x){x.remove()});
+  gallery.slice(0,20).forEach(function(src,i){if(i===0)return;var b=document.createElement("button");b.className="pv-thumb pv-extra-thumb";b.type="button";b.innerHTML='<img loading="lazy" decoding="async" src="'+src+'" alt="'+esc(p.name)+' photo '+(i+1)+'">';b.addEventListener("click",function(){document.querySelectorAll(".pv-thumb").forEach(function(x){x.classList.remove("on")});b.classList.add("on");$("pvImg").src=src});thumbs.insertBefore(b,thumbs.querySelector(".pv-photo-note"));});
