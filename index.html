@@ -1031,7 +1031,7 @@ nav.main{flex:1 1 auto;justify-content:center;margin:0;padding:0;flex-wrap:nowra
         <label class="payopt"><input type="radio" name="coPay" value="bank"><span class="po-txt"><b>Bank Transfer</b><small>Pay in advance and save 15% on your order.</small></span><span class="po-badge">15% OFF</span></label>
       </div>
       <div class="field" id="coTxnWrap" hidden style="margin-top:14px"><label for="coTxn">Transaction ID (optional)</label><input id="coTxn" type="text" placeholder="e.g. 12345678901" maxlength="30"><small style="color:var(--ink-faint)">If you have already paid, add the transaction ID — otherwise just place the order and pay after we confirm.</small></div>
-      <div class="co-note" id="coPayNote" hidden><b>Prepaid — 15% off applied.</b> Payment details are shared at checkout confirmation — pay after we confirm your design on WhatsApp, never before.</div>
+      <div class="co-note" id="coPayNote" hidden><b>Prepaid — 15% off applied.</b> Payment details are shared at checkout confirmation — pay after we confirm your design on WhatsApp, never before.<div id="bankDetails" hidden></div></div>
       <div class="msg warn" id="coMsg"></div>
       <button class="btn btn-gold" id="coPlace" type="submit" style="width:100%;justify-content:center;margin-top:18px">Place Order</button>
       <p style="color:var(--ink-faint);font-size:13px;text-align:center;margin-top:12px">Flat Rs. 300 delivery, anywhere in Pakistan · Every order confirmed on WhatsApp first</p>
@@ -1538,6 +1538,7 @@ $("coPays").addEventListener("change",function(){
     o.classList.toggle("sel",!!(inp&&inp.checked));
   });
   renderCheckoutSoft();
+  renderBankDetails();
 });
 function renderCheckoutSoft(){
   if($("view-checkout").classList.contains("on")&&$("coSuccess").hidden) renderCheckout();
@@ -1887,3 +1888,6 @@ document.addEventListener('DOMContentLoaded',function(){var b=document.getElemen
   var gallery=(p.images&&p.images.length?p.images:[p.img]).filter(Boolean);
   var thumbs=$("pvThumbMain").parentElement; thumbs.querySelectorAll(".pv-extra-thumb").forEach(function(x){x.remove()});
   gallery.slice(0,20).forEach(function(src,i){if(i===0)return;var b=document.createElement("button");b.className="pv-thumb pv-extra-thumb";b.type="button";b.innerHTML='<img loading="lazy" decoding="async" src="'+src+'" alt="'+esc(p.name)+' photo '+(i+1)+'">';b.addEventListener("click",function(){document.querySelectorAll(".pv-thumb").forEach(function(x){x.classList.remove("on")});b.classList.add("on");$("pvImg").src=src});thumbs.insertBefore(b,thumbs.querySelector(".pv-photo-note"));});
+var bankSettings={};
+fetch('/api/builder-settings').then(function(r){return r.ok?r.json():{}}).then(function(x){bankSettings=x||{};}).catch(function(){});
+function renderBankDetails(){var el=$("bankDetails");if(!el)return;var isBank=coPayMethod()==="bank";el.hidden=!isBank;if(isBank){var s=bankSettings;var bits=[s.bankAccountTitle,s.bankName,s.bankAccountNumber,s.bankIban].filter(Boolean);el.textContent=bits.length?'Bank details: '+bits.join(' • '):'Bank details will be shared after WhatsApp confirmation.';}}

@@ -1101,10 +1101,14 @@ function renderDeliverySettings(){
   // Delivery is a flat Rs. 300 per order (owner decision, 25 Nov 2026).
   $('whatsappNumber').value = s.whatsappNumber ?? '+92 301 074 6622';
   $('supportEmail').value = s.supportEmail ?? 'hello@giftwala.pk';
+  $('bankAccountTitle').value = s.bankAccountTitle ?? '';
+  $('bankName').value = s.bankName ?? '';
+  $('bankAccountNumber').value = s.bankAccountNumber ?? '';
+  $('bankIban').value = s.bankIban ?? '';
   $('announcementBar').value = s.announcementBar ?? '';
 }
 async function saveDeliverySettings(){
-  const body = { deliveryCharge: $('deliveryCharge').value.trim(), whatsappNumber: $('whatsappNumber').value.trim(), supportEmail: $('supportEmail').value.trim(), announcementBar: $('announcementBar').value.trim() };
+  const body = { deliveryCharge: $('deliveryCharge').value.trim(), whatsappNumber: $('whatsappNumber').value.trim(), supportEmail: $('supportEmail').value.trim(), bankAccountTitle: $('bankAccountTitle').value.trim(), bankName: $('bankName').value.trim(), bankAccountNumber: $('bankAccountNumber').value.trim(), bankIban: $('bankIban').value.trim(), announcementBar: $('announcementBar').value.trim() };
   if (Number(body.deliveryCharge) < 0) { toast('Delivery charge must be 0 or more.', true); return; }
   if (!body.whatsappNumber || !body.supportEmail) { toast('WhatsApp number and support email are required.', true); return; }
   try { await api('/api/admin/builder-settings', {method:'PATCH', body, auth:true}); Object.assign(state.settings, body); toast('Delivery & settings saved'); }
