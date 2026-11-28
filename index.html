@@ -1570,7 +1570,7 @@ function coValidPhone(v){
   if(d.indexOf("92")===0&&d.length===12)d="0"+d.slice(2);
   return /^03\d{9}$/.test(d);
 }
-$("coForm").addEventListener("submit",function(e){
+$("coForm").addEventListener("submit",async function(e){
   e.preventDefault();
   var lines=coLines();
   var name=$("coName"),phone=$("coPhone"),city=$("coCity"),addr=$("coAddr"),msg=$("coMsg");
@@ -1589,17 +1589,21 @@ $("coForm").addEventListener("submit",function(e){
   }
   msg.className="msg"; msg.textContent="";
   var t=coTotals();
-  lastOrderId="GW-"+Math.floor(10000+Math.random()*90000);
-  var fromCart=!buyNowItem;
-  $("coSuccessTxt").textContent="Thank you, "+name.value.trim()+". Your total is "+rs(t.total)+" — "+CO_PAY_LABEL[coPayMethod()]+(t.disc?" (includes your 15% prepaid discount of "+rs(t.disc)+")":"")+", delivery included.";
-  $("coOid").textContent=lastOrderId;
-  $("coMain").style.display="none";
-  $("coEmpty").hidden=true;
-  $("coSuccess").hidden=false;
-  window.scrollTo({top:0});
-  if(fromCart){cart=[];syncCounts();renderCart()}
-  buyNowItem=null;
-  toast("Order "+lastOrderId+" placed");
+  var paymentMap={cod:"Cash on Delivery",easypaisa:"Easypaisa - 15% off prepaid",jazzcash:"JazzCash - 15% off prepaid",bank:"Bank Transfer - 15% off prepaid"};
+  var payload={customer:{name:name.value.trim(),phone:phone.value.trim(),city:city.value.trim(),address:addr.value.trim()},paymentMethod:paymentMap[coPayMethod()]||"Cash on Delivery",paymentReference:$("coTxn")?.value.trim()||"",message:$("coMsg")?.value.trim()||"",items:lines.map(function(it){return {sku:it.sku||it.id,name:it.name,quantity:it.qty||1,price:it.price,person:it.person||"",photo:it.photo||"",note:it.note||""}})};
+  try {
+    var response=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var result=await response.json();
+    if(!response.ok) throw new Error(result.message||'Order could not be saved');
+    lastOrderId=result._id;
+    var fromCart=!buyNowItem;
+    $("coSuccessTxt").textContent="Thank you, "+name.value.trim()+". Your total is "+rs(result.total||t.total)+" — "+CO_PAY_LABEL[coPayMethod()]+(t.disc?" (includes your 15% prepaid discount of "+rs(t.disc)+")":"")+", delivery included.";
+    $("coOid").textContent=lastOrderId;
+    $("coMain").style.display="none"; $("coEmpty").hidden=true; $("coSuccess").hidden=false; window.scrollTo({top:0});
+    if(fromCart){cart=[];syncCounts();renderCart()}; buyNowItem=null; toast("Order "+lastOrderId+" placed");
+  } catch(err) {
+    msg.className="msg warn show"; msg.textContent=err.message||"Order could not be saved. Please try again.";
+  }
 });
 $("coTrackBtn").addEventListener("click",function(){
   go("track");
