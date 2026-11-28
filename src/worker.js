@@ -1007,6 +1007,35 @@ export default {
       }
 
       // List orders (admin only)
+      // Coupons (admin only).  The table is present in the production D1
+      // database; keep the CRUD endpoint here so the admin screen does not
+      // fail with a 404 and coupon records can be managed safely.
+      if (url.pathname === '/api/coupons' && req.method === 'GET') {
+        const r = await env.DB.prepare('SELECT id,code,type,value,min_order AS minOrder,expires_at AS expiresAt,active,created_at AS createdAt FROM coupons ORDER BY created_at DESC').all();
+        return json(r.results);
+      }
+      if (url.pathname === '/api/coupons' && req.method === 'POST') {
+        const b = asObject(await body(req));
+        const code = sanitizeText(b?.code, 40).toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+        const type = b?.type === 'flat' ? 'flat' : 'percent';
+        const value = Number(b?.value);
+        const minOrder = Number(b?.minOrder || 0);
+        const expiresAt = b?.expiresAt ? Number(b.expiresAt) : null;
+        if (!code || !Number.isFinite(value) || value <= 0 || !Number.isFinite(minOrder) || minOrder < 0) return json({message:'Invalid coupon details'},400);
+        if (type === 'percent' && value > 100) return json({message:'Percent cannot exceed 100'},400);
+        try {
+          const id = crypto.randomUUID();
+          await env.DB.prepare('INSERT INTO coupons (id,code,type,value,min_order,expires_at,active,created_at) VALUES (?,?,?,?,?,?,?,?)').bind(id,code,type,value,minOrder,expiresAt,b?.active === false ? 0 : 1,Date.now()).run();
+          return json({id,code,type,value,minOrder,expiresAt,active:b?.active === false ? 0 : 1},201);
+        } catch (e) { return json({message:e.message.includes('UNIQUE')?'Coupon code already exists':'Failed to save coupon'},409); }
+      }
+      const couponDelete = url.pathname.match(/^\/api\/coupons\/([^/]+)$/);
+      if (couponDelete && req.method === 'DELETE') {
+        const result = await env.DB.prepare('DELETE FROM coupons WHERE id=?').bind(decodeURIComponent(couponDelete[1])).run();
+        if (!result.meta.changes) return json({message:'Coupon not found'},404);
+        return json({ok:true});
+      }
+
       if (url.pathname === '/api/orders' && req.method === 'GET') {
         const r = await env.DB.prepare(
           'SELECT * FROM orders ORDER BY created_at DESC LIMIT 200'

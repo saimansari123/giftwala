@@ -1590,7 +1590,7 @@ $("coForm").addEventListener("submit",async function(e){
   msg.className="msg"; msg.textContent="";
   var t=coTotals();
   var paymentMap={cod:"Cash on Delivery",easypaisa:"Easypaisa - 15% off prepaid",jazzcash:"JazzCash - 15% off prepaid",bank:"Bank Transfer - 15% off prepaid"};
-  var payload={customer:{name:name.value.trim(),phone:phone.value.trim(),city:city.value.trim(),address:addr.value.trim()},paymentMethod:paymentMap[coPayMethod()]||"Cash on Delivery",paymentReference:$("coTxn")?.value.trim()||"",message:$("coMsg")?.value.trim()||"",items:lines.map(function(it){return {sku:it.sku||it.id,name:it.name,quantity:it.qty||1,price:it.price,person:it.person||"",photo:it.photo||"",note:it.note||""}})};
+  var payload={customer:{name:name.value.trim(),phone:phone.value.trim(),city:city.value.trim(),address:addr.value.trim()},paymentMethod:paymentMap[coPayMethod()]||"Cash on Delivery",paymentReference:$("coTxn")?.value?.trim()||"",message:$("coMsg")?.value?.trim()||"",items:lines.map(function(it){return {sku:it.sku||it.id,name:it.name,quantity:it.qty||1,price:it.price,person:it.person||"",photo:it.photo||"",note:it.note||""}})};
   try {
     var response=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     var result=await response.json();
